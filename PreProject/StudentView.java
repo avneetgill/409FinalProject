@@ -70,7 +70,12 @@ public class StudentView extends JFrame{
         return JOptionPane.showInputDialog(this, "Enter the file name: ");
     }
     public String getID(){
-        return JOptionPane.showInputDialog(this, "Enter the student's id: ");
+        String input = JOptionPane.showInputDialog(this, "Enter the student's id: ");
+        if(input!= null){
+            return input;
+        }
+        else
+            return null;
     }
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);

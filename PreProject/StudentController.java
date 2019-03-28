@@ -44,6 +44,9 @@ public class StudentController {
         view.addFindListener(new ActionListener(){
             public void actionPerformed(ActionEvent evt){
                 String temp = view.getID();
+                if(temp == null){
+                    return;
+                }
                 Node n = model.find(temp);
                 if(n == null){
                     view.errorMessage("Student not found");
