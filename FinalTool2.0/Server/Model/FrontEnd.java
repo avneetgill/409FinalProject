@@ -12,8 +12,12 @@ import java.util.*;
  * @version 1.0
  * @since February 6, 2019
  */
-public class FrontEnd{
-    
+public class FrontEnd implements Runnable{
+    Shop theShop;
+
+    public FrontEnd(Shop s) {
+        theShop = s;
+    }
     /**
      * Acts as a menu to be able to use all the functionality of 
      * the shop app, prompting the to enter how they would like to 
@@ -64,7 +68,7 @@ public class FrontEnd{
      * @param args command line arguments
      * @throws IOException thrown if there is an issue with IO stream. 
      */
-    public static void main(String[] args) throws IOException{
+    /* public static void main(String[] args) throws IOException{
         FrontEnd f = new FrontEnd();
         
         ArrayList<OrderLine> line = new ArrayList<OrderLine>();
@@ -75,7 +79,7 @@ public class FrontEnd{
 
         ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
 
-        Shop store = new Shop(order, suppliers, inventory);
+        // Shop store = new Shop(order, suppliers, inventory);
 
         boolean quit = false;
         while(true){
@@ -114,6 +118,20 @@ public class FrontEnd{
             }
             if(quit == true)
                 break;
+        }
+    }
+ */
+    
+ @Override
+    public void run() {
+        try{
+            theShop.menuRunner();
+        }catch(IOException a){
+            System.err.println(" run caught error ");
+            a.printStackTrace();
+        }catch(Exception b){
+            System.err.println(" run caught error 2 ");
+            b.printStackTrace();
         }
     }
 }

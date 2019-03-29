@@ -2,7 +2,11 @@ package Server.Model;
 
 import java.util.ArrayList;
 import java.io.IOException;
-import java.util.*; 
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -30,6 +34,10 @@ public class Shop{
      */
     private Inventory inventory;
 
+    Socket socketIn;
+    PrintWriter out;
+    BufferedReader in;
+    
     /**
      * Constructs an object of Shop with the specified objects. Calls functions
      * to intialize the suppliers from a text file, to initialize inventory
@@ -44,11 +52,154 @@ public class Shop{
         order = o;
         suppliers = s;
         inventory = i;
+        // socketIn = socket;
+
+        // try{
+        //     in = new BufferedReader(new InputStreamReader(socketIn.getInputStream()));
+		// 	out = new PrintWriter((socketIn.getOutputStream()), true);
+        // }catch(Exception a){
+        //     sendString("error");
+        //     a.printStackTrace();
+        // }
+
         addSuppliersText();
-        inventory.addItemsText();
+        // inventory.addItemsText();
         assignSuppliers();
     }
 
+    public void setSocketIn(Socket socketIn) {
+        this.socketIn = socketIn;
+        try{
+            in = new BufferedReader(new InputStreamReader(socketIn.getInputStream()));
+			out = new PrintWriter((socketIn.getOutputStream()), true);
+        }catch(Exception a){
+            sendString("error");
+            a.printStackTrace();
+        }
+    }
+    
+    public int menu2(){      // deprecated
+        sendString("***************************");
+        sendString("Choose an Option: \n");
+        sendString("1. List all Tools\n");
+        sendString("2. List all Suppliers\n");
+        sendString("3. Search tool by name\n");
+        sendString("4. Search tool by ID\n");
+        sendString("5. Check item quantity\n");
+        sendString("6. Decrease item Quanity\n");
+        sendString("7. Add an item manually\n");
+        sendString("> Or type 'quit' to exit <");
+        Scanner input = new Scanner(System.in);
+        int choice = -1;
+        String temp;
+        
+        temp = input.nextLine();
+        if(temp.equals("quit")){
+            input.close();
+            return 8;
+        }
+
+        while(choice == -1){ 
+            try{choice = Integer.parseInt(temp);}catch(Exception a){
+                sendString("Invalid input. Please Try Again: \n");
+                temp = input.nextLine();
+            }
+        }
+        return choice;
+    }
+
+    public int menu(){      // testing
+        sendString("***************************");
+        sendString("Choose an Option: \n");
+        sendString("1. List all Tools\n");
+        sendString("2. List all Suppliers\n");
+        sendString("3. Search tool by name\n");
+        sendString("4. Search tool by ID\n");
+        sendString("5. Check item quantity\n");
+        sendString("6. Decrease item Quanity\n");
+        sendString("7. Add an item manually\n");
+        sendString("> Or type 'quit' to exit <\0");
+        // Scanner input = new Scanner(System.in);
+        int choice = -1;
+        String temp;
+        
+        try{
+            temp = in.readLine();
+            if(temp.equalsIgnoreCase("quit")){
+                // input.close();
+                return 8;
+            }
+
+            while(choice == -1){ 
+                try{choice = Integer.parseInt(temp);}catch(Exception a){
+                    sendString("Invalid input. Please Try Again: \n\0");
+                    temp = in.readLine();
+                }
+            }
+        }catch(IOException a){
+            sendString(" error reading from socket menu ");
+            a.printStackTrace();
+        }
+        return choice;
+    }
+
+
+    void sendString(String toSend){
+        out.println(toSend);
+        out.flush();
+    }
+
+    public void pressEnter() throws IOException{
+        sendString("<<< Press enter to continue >>>\n\0");
+        // Scanner enter = new Scanner(System.in);
+        // String s = enter.nextLine();
+        String s = in.readLine();
+    }
+
+    public void menuRunner() throws IOException{
+        boolean quit = false;
+        while(true){
+            switch(menu()){
+                case 1:
+                    listAllItems();
+                    pressEnter();
+                    break;
+                case 2:
+                    listAllSuppliers();
+                    pressEnter();
+                    break;
+                case 3:
+                    searchName(1);
+                    pressEnter();
+                    break;
+                case 4:
+                    searchID(1);
+                    pressEnter();
+                    break;
+                case 5:
+                    checkQuantity();
+                    pressEnter();
+                    break;
+                case 6:
+                    decreaseQuantity();
+                    pressEnter();
+                    break;
+                case 7:
+                    addItem();
+                    pressEnter();
+                    break;
+                default:
+                    // sendString("Goodbye");
+                    quit = true;                // this was below
+                    sendString("Goodbye\1");    //order of these 2 lines were flipped
+            }
+            if(quit == true)
+                break;
+        }
+
+    }
+    
+    
     /**
      * Decreases the amount in stock for an Item by a specified amount, read 
      * from the input stream by prompting the user. 
@@ -56,18 +207,21 @@ public class Shop{
      */
     public void decreaseQuantity() throws IOException{
         Item p;
-        System.out.println("Please choose how you would like to select an item to decrease quantity ");
-        System.out.println("1. Search item by name");
-        System.out.println("2. Search item by id");
-        Scanner scan = new Scanner(System.in);
-        String temp; int choice = -1, amount = -1;
+        sendString("Please choose how you would like to select an item to decrease quantity ");
+        sendString("1. Search item by name");
+        sendString("2. Search item by id\0");
+        // Scanner scan = new Scanner(System.in);
+        String temp; 
+        int choice = -1, amount = -1;
         do{
-            temp = scan.nextLine();
-            try{choice = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Non Integer input. Please Try Again");
+            temp = in.readLine();
+            try{
+                choice = Integer.parseInt(temp);
+            }catch(Exception a){
+                sendString("Non Integer input. Please Try Again\0");
             }
             if(choice != 1 && choice != 2)
-                System.err.println("Invalid input. Please Try Again: \n");
+                sendString("Invalid input. Please Try Again: \n\0");
         }while(choice != 1 && choice != 2);
 
         if(choice == 1)
@@ -75,24 +229,27 @@ public class Shop{
         else
             p = searchID(2);
 
-        System.out.println("How much would you like to decrease: ");
+        sendString("How much would you like to decrease: \0");
         do{
-            temp = scan.nextLine();
-            try{amount = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Non Integer input. Please Try Again");
+            temp = in.readLine();
+            try{
+                amount = Integer.parseInt(temp);
+            }catch(Exception a){
+                sendString("Non Integer input. Please Try Again\0");
             }
             if(amount < 0)
-                System.err.println("Invalid input. Please Try Again: \n");
+                sendString("Invalid input. Please Try Again: \n\0");
         } while(amount < 0);
+
         if(amount > p.getStock()){
-            System.out.println("Sorry we dont have that much of " + p.getName() + " in stock");
-            System.out.println("Selling " + p.getStock() + " of " + p.getName() + " instead");
+            sendString("Sorry we dont have that much of " + p.getName() + " in stock");
+            sendString("Selling " + p.getStock() + " of " + p.getName() + " instead");
             amount =  p.getStock();
         }
         p.setStock(p.getStock() - amount);
         if(p.getStock() < 40)
         orderMore(p);
-        System.out.println("Stock decreased");
+        sendString("Stock decreased");
     }
 
     /**
@@ -171,62 +328,66 @@ public class Shop{
      * Adds an item to the inventory, read from the input stream, prompting the
      * user.  
      */
-    public void addItem(){
-        Scanner scan = new Scanner(System.in);
+    public void addItem()throws IOException{
+        // Scanner scan = new Scanner(System.in);
         String temp, name = ""; int id = -1; int stock = -1; int supID = -1; double price = -1;
-        System.out.println("Enter the name of the new Item:");
+        sendString("Enter the name of the new Item:\0");
         while(name.equals("")){
-            name = scan.nextLine();
+            name = in.readLine();
             if(name.equals(""))
-                System.err.println("invalid name");
+                sendString("invalid name\0");
         }
-        System.out.println("Enter id of new Item");
+        sendString("Enter id of new Item\0");
         do{
-            temp = scan.nextLine();
+            temp = in.readLine();
             try{id = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Non Integer input. Please Try Again");
+                sendString("Non Integer input. Please Try Again\0");
             }
             if(id < 0 || id > 9999)
-                System.err.println("Invalid input. Please Try Again: \n");
+                sendString("Invalid input. Please Try Again: \n\0");
             if(inventory.itemIDChecker(id)){
-                System.err.println("That id is already used, please enter a unique id number");
+                sendString("That id is already used, please enter a unique id number\0");
                 id = -1;
             }
         }while(id < 0 || id > 9999);
-        System.out.println("Enter quantity of new item");
+
+        sendString("Enter quantity of new item\0");
         do{
-            temp = scan.nextLine();
+            temp = in.readLine();
             try{stock = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Non Integer input. Please Try Again");
+                sendString("Non Integer input. Please Try Again\0");
             }
             if(stock < 40)
-                System.err.println("Invalid input. Please Try Again, stock must be >= 40: \n");
+                sendString("Invalid input. Please Try Again, stock must be >= 40: \n\0");
         }while(stock < 40);
-        System.out.println("Enter supplier id of new Item");
+
+        sendString("Enter supplier id of new Item\0");
         do{
-            temp = scan.nextLine();
+            temp = in.readLine();
             try{supID = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Non Integer input. Please Try Again");
+                sendString("Non Integer input. Please Try Again\0");
             }
             if(supID < 0 || supID > 9999)
-                System.err.println("Invalid input. Please Try Again: \n");
+                sendString("Invalid input. Please Try Again: \n\0");
             if(!supplierIDChecker(supID)){
-                System.err.println("That Supplier doesn't exist, please enter valid supplier id");
+                sendString("That Supplier doesn't exist, please enter valid supplier id\0");
                 supID = -1;
             }
         }while(supID < 0 || supID > 9999);
-        System.out.println("Enter price of new Item");
+
+        sendString("Enter price of new Item\0");
         do{
-            temp = scan.nextLine();
+            temp = in.readLine();
             try{price = Double.parseDouble(temp);}catch(Exception a){
-                System.err.println("Non Double input. Please Try Again");
+                sendString("Non Double input. Please Try Again\0");
             }
             if(price < 0)
-                System.err.println("Invalid input. Please Try Again: \n");
+                sendString("Invalid input. Please Try Again: \n\0");
         }while(price < 0);
+
         addItem(name, id, price, stock, supID);
         assignSuppliers();
-        System.out.println("Item added!");
+        sendString("Item added!");
     }
 
     /**
@@ -234,74 +395,76 @@ public class Shop{
      * the user and reading from the input stream.
      * @param p the Item which is to be deleted.
      */
-    public void deleteItem(Item p){
-        System.out.println("\nWould you like to delete this item?");
-        System.out.println("press 'y' if yes");
-        System.out.println("press 'n' if no");
-        Scanner scan = new Scanner(System.in);
+    public void deleteItem(Item p)throws IOException{
+        sendString("\nWould you like to delete this item?");
+        sendString("press 'y' if yes");
+        sendString("press 'n' if no\0");
+        // Scanner scan = new Scanner(System.in);
         String temp = "";
         do{
-            temp = scan.nextLine();
+            temp = in.readLine();
             if(!temp.equals("y") && !temp.equals("n")){
                 temp = "";
-                System.out.println("invalid input, try again: ");
+                sendString("invalid input, try again: \0");
             }
         } while(temp.equals(""));
         
         if(temp.equals("y")){
             inventory.deleteItem(p);
-            System.out.println("Item deleted");
+            sendString("Item deleted");
             return;
         }
-        System.out.println("Ok Item not deleted");
+        sendString("Ok Item not deleted");
     }
 
     /**
      * Prints all items in the inventory with their details.
      */
     public void listAllItems(){
-        System.out.println("Items in inventory and their details:");
-        System.out.println(inventory.toString());
+        // sendString("Items in inventory and their details:");    
+        sendString("Items in inventory and their details:");
+        sendString(inventory.toString());
     }
 
     /**
      * Prints all Suppliers that the shop has with their details.
      */
     public void listAllSuppliers(){
-        System.out.println("Suppliers and their details:");
+        sendString("Suppliers and their details:");
         String s = "";
         for(Supplier sup: suppliers){
             s += sup.toString() + "\n";
         }
-        System.out.println(s);
+        sendString(s);
     }
 
     /**
      * Prints the quantity in stock of an item by prompting the user to select
      * an item. 
      */
-    public void checkQuantity(){
-        System.out.println("Please choose how you would like to select an item to be checked: ");
-        System.out.println("1. Search item by name");
-        System.out.println("2. Search item by id");
-        Scanner scan = new Scanner(System.in);
+    public void checkQuantity()throws IOException{
+        sendString("Please choose how you would like to select an item to be checked: ");
+        sendString("1. Search item by name");
+        sendString("2. Search item by id\0");
+        // Scanner scan = new Scanner(System.in);
         String temp; int choice = -1;
         do{
-            temp = scan.nextLine();
+            temp = in.readLine();
             try{choice = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Non Integer input. Please Try Again");
+                sendString("Non Integer input. Please Try Again\0");
             }
             if(choice != 1 && choice != 2)
-                System.err.println("Invalid input. Please Try Again: \n");
+                sendString("Invalid input. Please Try Again: \n\0");
         }while(choice != 1 && choice != 2);
 
         if(choice == 1){
-            System.out.println("The quantity of the item is " + searchName(2).getStock());
+            sendString("The quantity of the item is " + searchName(2).getStock());
             
         } else if(choice ==  2)
-            System.out.println("The quantity of the item is " + searchID(2).getStock());
+            sendString("The quantity of the item is " + searchID(2).getStock());
         else
-            System.err.println("Error");
+            sendString("Error");
+            // sendString("Error");
     }
 
     /**
@@ -312,23 +475,23 @@ public class Shop{
      * @return returns an item if the parameter is 1, returns null if user
      * quits or the parameter is 2. 
      */
-    public Item searchName(int option){
+    public Item searchName(int option)throws IOException{
         String name;
         Item p;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter the name of the item you are looking for: ");
-        name = scan.nextLine();
+        // Scanner scan = new Scanner(System.in);
+        sendString("Please enter the name of the item you are looking for: \0");
+        name = in.readLine();
         p = inventory.searchByName(name);
         while(p == null){
-            System.out.println("That item was not found, please try again, or type quit to exit: ");
-            name = scan.nextLine();
+            sendString("That item was not found, please try again, or type quit to exit: \0");
+            name = in.readLine();
             if(name.equals("quit"))
                 return null;
             p = inventory.searchByName(name);
         }
         if(option == 1){
-            System.out.println("The item you were looking for: ");
-            System.out.println(p.toString());
+            sendString("The item you were looking for: ");
+            sendString(p.toString());
             deleteItem(p);
         } else {
             return p;
@@ -344,36 +507,36 @@ public class Shop{
      * @return returns an item if the parameter is 1, returns null if user
      * quits or the parameter is 2. 
      */
-    public Item searchID(int option){
+    public Item searchID(int option)throws IOException{
         String id;
         int num;
         Item p;
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Please enter the id of the item you are looking for: ");
-        id = scan.nextLine();
+        // Scanner scan = new Scanner(System.in);
+        sendString("Please enter the id of the item you are looking for: \0");
+        id = in.readLine();
         try{
             num = Integer.parseInt(id);
             p = inventory.searchById(num);
         }catch(Exception a){
-            System.err.println("Invalid input");
+            sendString("Invalid input");
             p = null;
         }
         while(p == null){
-            System.out.println("That item was not found, please try again, or type quit to exit: ");
-            id = scan.nextLine();
+            sendString("That item was not found, please try again, or type quit to exit: \0");
+            id = in.readLine();
             if(id.equals("quit"))
                 return null;
             try{
                 num = Integer.parseInt(id);
                 p = inventory.searchById(num);
             }catch(Exception a){
-                System.err.println("Invalid input");
+                sendString("Invalid input");
                 p = null;
             }
         }
         if(option == 1){
-            System.out.println("The item you were looking for: ");
-            System.out.println(p.toString());
+            sendString("The item you were looking for: ");
+            sendString(p.toString());
             deleteItem(p);
         } else{
             return p;
