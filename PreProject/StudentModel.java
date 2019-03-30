@@ -17,15 +17,29 @@ import java.util.stream.Stream;
  * StudentModel
  */
 public class StudentModel {
+    /**
+     * The binary search tree that houses current enteries of students and their data
+     */
     public BinSearchTree tree;
 
     public StudentModel() {
         tree = new BinSearchTree();
     }
+    /**
+     * finds a student given the id 
+     * @param num - student id number
+     * @return the student with that id
+     */
     public Node find(String num){
         Node n = tree.find(tree.root, num);
         return n;
     }
+    /**
+     * adds students from the file to the binary search tree
+     * @param Filename - name of file containing data
+     * @return status of read (true = successfuly read and added to tree)
+     * (false = IO exception)
+     */
     public boolean readFromFile(String Filename) {
         FileReader f = null;
 
@@ -56,6 +70,14 @@ public class StudentModel {
         }
         return true;
     }
+    /**
+     * adds a new student to the binary search tree
+     * @param id - student's id
+     * @param faculty - student's faculty
+     * @param major - student's major
+     * @param year - student's year of study
+     * @return - status of insert (true = inserted, false = not inserted)
+     */
     public boolean insertNode(String id, String faculty, String major, String year){
 
         Node n = tree.find(tree.root, id);
@@ -67,6 +89,9 @@ public class StudentModel {
         }
         return true;
     }
+    /**
+     * function used to display all of the current students in the binary search tree
+     */
     public String getList(){
         String temp, s = "";
         FileReader f;

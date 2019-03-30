@@ -10,20 +10,31 @@ import javax.swing.*;
 public class InsertStudentView extends JDialog{
 
     // JDialog dialog = new JDialog();
+    /**
+     * Panels for main frame, text fields and buttons
+     */
     JPanel headerPanel = new JPanel();
     JPanel textFields = new JPanel();
     JPanel buttons = new JPanel();
-
+    /**
+     * Label for inserting a new node
+     */
     JLabel header = new JLabel ("Insert a New Node");
-
+    /**
+     * buttons for insert and return (cancel)
+     */
     JButton insertButton = new JButton("insert");
     JButton returnButton = new JButton("Return to Main Window");
-
+    /**
+     * textfields for student id, faculty, major and year
+     */
     JTextField field1 =  new JTextField(10);
     JTextField field2 =  new JTextField(10);
     JTextField field3 =  new JTextField(10);
     JTextField field4 =  new JTextField(10);
-
+    /**
+     * inner class used to set up the GUI with in a border layout
+     */
     public InsertStudentView(){
         
         this.setLayout(new BorderLayout());
@@ -54,22 +65,40 @@ public class InsertStudentView extends JDialog{
         this.add("South", buttons);
 
     }
+    /**
+     * adds a window listener to panel used to call function
+     * @param a - window adapter used to monitor events
+     */
     public void addWindowListener(WindowAdapter a){
         this.addWindowListener(a);
     }
-    //code for textfields
+    /**
+     * getter for ID from text field
+     */
     public String getID(){
         return field1.getText();
     }
+    /**
+     * getter for faculty from text field
+     */
     public String getFaculty(){
         return field2.getText();
     }
+    /**
+     * getter for major from text field
+     */
     public String getMajor(){
         return field3.getText();
     }
+    /**
+     * getter for year from text field
+     */
     public String getYear(){
         return field4.getText();
     }
+    /**
+     * removes all current entries
+     */
     public void clearText(){
         field1.setText(null);
         field2.setText(null);
@@ -77,14 +106,24 @@ public class InsertStudentView extends JDialog{
         field4.setText(null);
     }
 
-    //code for action listeners
+    /**
+     * Assigns an action lister to the insert button to monitor events
+     * @param a - the action listener being assigned to insert button
+     */
     public void addInsertListener(ActionListener a){
         insertButton.addActionListener(a);
     }
+    /**
+     * Assigns an action listener to the return button to monitor events
+     * @param a - the action listener being assigned to the return button
+     */
     public void addReturnListener(ActionListener a){
         returnButton.addActionListener(a);
     }
-    // for errors
+    /**
+     * Function used to display error messages to the user
+     * @param error - the error message to display
+     */
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);
     }
