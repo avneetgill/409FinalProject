@@ -5,11 +5,20 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * StudentController
+ * StudentController class, used to comunicate with the server & client
  */
 public class StudentController {
+    /**
+     * instance of the student view (ie. Client)
+     */
     private StudentView view;
+    /**
+     * instance of the student model (ie. server)
+     */
     private StudentModel model;
+    /**
+     * instance of insert view used for dialogs and pop ups
+     */
     private InsertStudentView insertView;
 
     public StudentController(StudentView v, StudentModel m, InsertStudentView i) {
@@ -20,8 +29,10 @@ public class StudentController {
         addMainListeners();
         addInsertionListeners();
     }
-
-    public void addMainListeners() { // for the main screen
+    /**
+     * inner class used to assign action listeners to the main screen
+     */
+    public void addMainListeners() { 
 
         view.addInsertListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -58,7 +69,10 @@ public class StudentController {
         });
     }
 
-    public void addInsertionListeners() { // for the insert node dialog box
+    /**
+     * inner class used to assign action listeners to the insert node dialog box
+     */
+    public void addInsertionListeners() { 
 
         insertView.addInsertListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
