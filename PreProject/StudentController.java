@@ -113,12 +113,6 @@ public class StudentController {
     }
 
     public static void main(String[] args) {
-        try {
-            // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
-            e.printStackTrace();
-        }
         StudentView v = new StudentView();
         StudentModel m = new StudentModel();
         InsertStudentView i = new InsertStudentView();
