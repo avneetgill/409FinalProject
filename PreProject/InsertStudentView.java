@@ -33,7 +33,7 @@ public class InsertStudentView extends JDialog{
     JTextField field3 =  new JTextField(10);
     JTextField field4 =  new JTextField(10);
     /**
-     * inner class used to set up the GUI with in a border layout
+     * constructor used to set up the GUI with in a border layout
      */
     public InsertStudentView(){
         
@@ -107,7 +107,7 @@ public class InsertStudentView extends JDialog{
     }
 
     /**
-     * Assigns an action lister to the insert button to monitor events
+     * Assigns an action listener to the insert button to monitor events
      * @param a - the action listener being assigned to insert button
      */
     public void addInsertListener(ActionListener a){

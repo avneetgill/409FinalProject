@@ -5,22 +5,29 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * StudentController class, used to comunicate with the server & client
+ * StudentController class, uses data and methods from model to supply view with useful information and 
+ * uses input from view to modify data. 
  */
 public class StudentController {
     /**
-     * instance of the student view (ie. Client)
+     * instance of the student view (ie. main screen GUI)
      */
     private StudentView view;
     /**
-     * instance of the student model (ie. server)
+     * instance of the student model (ie. data)
      */
     private StudentModel model;
     /**
-     * instance of insert view used for dialogs and pop ups
+     * instance of insert view used for insert student dialogs
      */
     private InsertStudentView insertView;
 
+    /**
+     * Constructs the controller with two views and a model.
+     * @param v the main screen GUI
+     * @param m the model for data and methods
+     * @param i the insert student dialog GUI
+     */
     public StudentController(StudentView v, StudentModel m, InsertStudentView i) {
         view = v;
         model = m;
@@ -30,7 +37,7 @@ public class StudentController {
         addInsertionListeners();
     }
     /**
-     * inner class used to assign action listeners to the main screen
+     * Assigns listeners to buttons in main view using anonymous inner classes. 
      */
     public void addMainListeners() { 
 
@@ -70,7 +77,7 @@ public class StudentController {
     }
 
     /**
-     * inner class used to assign action listeners to the insert node dialog box
+     * Assigns listeners to buttons in insert student dialogue view using anonymous inner classes. 
      */
     public void addInsertionListeners() { 
 

@@ -8,7 +8,7 @@ import javax.swing.*;
 
 import com.sun.prism.paint.Color;
 /**
- * Student view class
+ * Class that acts as the main GUI
  */
 public class StudentView extends JFrame{
 	/**
@@ -16,7 +16,7 @@ public class StudentView extends JFrame{
      */
 	private JLabel title = new JLabel ("Student Record Maintainer" + "\u2122");
 	/**
-     * text box 
+     * TextArea that displays all students when browse is pressed. 
      */
 	private JTextArea textBox = new JTextArea(30, 30);
     /**
@@ -27,7 +27,7 @@ public class StudentView extends JFrame{
     private JButton browseButton = new JButton ("Browse");
     private JButton createButton = new JButton ("Create Tree from File");
     /**
-     * inner class used to set up the gui in a border layout
+     * Constructs the main GUI with its components. 
      */
 	public StudentView(){
         JPanel mainPanel = new JPanel ();
@@ -60,7 +60,7 @@ public class StudentView extends JFrame{
         add("South", bottomButtons);
     }
     /**
-     * displays a text to the text box 
+     * displays String in the TextArea 
      * @param text - text to be displayed
      */
     public void setTextArea(String text){
