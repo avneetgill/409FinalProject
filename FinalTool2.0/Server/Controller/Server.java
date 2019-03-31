@@ -1,0 +1,135 @@
+package Server.Controller;
+
+import Server.Model.*;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+/**
+ * Provides methods and attributes to run a server to play a game of Tic Tac Toe on with many clients. 
+ * 
+ * @author Shamin Rahman
+ * @version 1.0
+ * @since March 25, 2019
+ */
+public class Server {
+    /**
+     * Writer to write to the Player's Socket
+     */
+    private PrintWriter out;
+    /**
+     * Socket to communicate to the client with. 
+     */
+    private Socket aSocket;
+    /**
+     * Socket to function as the server, accepts many clients
+     */
+    private ServerSocket myServer;
+    /**
+     * Pool for threads, each game is ran as a seperate thread
+     */
+    private ExecutorService pool;
+
+    /** 
+     * Constructs a Server and initializes the ServerSocket. 
+     * @param portNumber the port that the ServerSocket will be initialized to
+     */
+    public Server(int portNumber){
+        try{
+            myServer = new ServerSocket(portNumber);
+        } catch(IOException a){
+            System.err.println("Error creating new ServerSocket");
+            a.printStackTrace();
+        }
+        System.out.println("<< Server is Running >>");
+    }
+    
+    ArrayList<OrderLine> line;
+    Order order;
+
+    ArrayList<Item> items;
+    Inventory inventory;
+
+    ArrayList<Supplier> suppliers;
+
+    Shop store;
+    FrontEnd f;
+
+    void constructObjects()throws Exception{
+
+        line = new ArrayList<OrderLine>();
+        order = new Order(line);
+
+        items = new ArrayList<Item>();
+        inventory = new Inventory(items);
+        inventory.addItemsText();
+
+        suppliers = new ArrayList<Supplier>();
+
+        // store = new Shop(order, suppliers, inventory);//, aSocket);
+
+        // f = new FrontEnd(store);
+    }
+    /**
+     * Allows communication between the Server and the clients, runs the game of tic tac toe once enough clients have joined. 
+     * @throws IOException thrown if there is an issue with I/O. 
+     */
+    public void communicateClient()throws IOException{
+        try{
+            while(true){
+                System.out.println(" At loopTop ");
+                pool = Executors.newCachedThreadPool();
+                aSocket = myServer.accept();
+
+                store = new Shop(order, suppliers, inventory);
+                store.setSocketIn(aSocket);
+
+                f = new FrontEnd(store);
+                // frontEnd main calls
+                // ArrayList<OrderLine> line = new ArrayList<OrderLine>();
+                // Order order = new Order(line);
+        
+                // ArrayList<Item> items = new ArrayList<Item>();
+                // Inventory inventory = new Inventory(items);
+
+                // ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+
+                // Shop store = new Shop(order, suppliers, inventory, aSocket);
+
+                // FrontEnd f = new FrontEnd(store);
+
+                System.out.println("<< Shop app started >>");
+                pool.execute(f);
+                pool.shutdown();
+                // System.out.println(">> The End <<");
+            }
+        } catch(Exception a){
+            System.err.println("-- Exception caught in server loop --");
+            a.printStackTrace();
+            pool.shutdown();
+        } finally{
+            out.close();
+        }
+    }
+    /**
+     * runs the server with port number 8988
+     * @param args command line arguments.
+     */
+    public static void main(String[] args) {
+        Server s = new Server(8988);
+        try {
+            s.constructObjects();
+            s.communicateClient();
+        } catch (IOException e) {
+            System.err.println("Server main issue");
+            e.printStackTrace();
+        } catch(Exception a){
+            System.err.println("Server issue main 2");
+            a.printStackTrace();
+        }
+    }
+}
