@@ -9,6 +9,7 @@ public class GUIController{
 
     public GUIController(ToolShopView view){
         this.view = view;
+        view.setVisible(true);
     }
 
     public void addListeners(){
