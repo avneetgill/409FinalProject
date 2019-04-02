@@ -1,3 +1,5 @@
+package Client.View;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -58,6 +60,11 @@ public class ToolShopView extends JFrame{
 
     }
 
+    public void errorMessage(String error){
+        JOptionPane.showMessageDialog(this, error);
+    }
+
+    //#region   <<<button listeners below>>> 
     public void addSearchListener(ActionListener a){
         searchButton.addActionListener(a);
     }
@@ -80,5 +87,5 @@ public class ToolShopView extends JFrame{
     public void addAddListener(ActionListener a){
         addButton.addActionListener(a);
     }
-
+    //#endregion
 }

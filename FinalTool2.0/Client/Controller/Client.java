@@ -33,7 +33,9 @@ public class Client {
 	/**
 	 * Reader to get what is written to the socket by the server
 	 */
-    private BufferedReader socketIn;
+	private BufferedReader socketIn;
+	
+	private GUIController controller;
 
 	/**
 	 * Constructs a Client with the specified port name and number, opens and initializes sockets and I/O streams required for operation. 
