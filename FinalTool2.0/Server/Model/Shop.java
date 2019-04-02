@@ -77,36 +77,6 @@ public class Shop{
             a.printStackTrace();
         }
     }
-    
-    public int menu2(){      // deprecated
-        sendString("***************************");
-        sendString("Choose an Option: \n");
-        sendString("1. List all Tools\n");
-        sendString("2. List all Suppliers\n");
-        sendString("3. Search tool by name\n");
-        sendString("4. Search tool by ID\n");
-        sendString("5. Check item quantity\n");
-        sendString("6. Decrease item Quanity\n");
-        sendString("7. Add an item manually\n");
-        sendString("> Or type 'quit' to exit <");
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
-        String temp;
-        
-        temp = input.nextLine();
-        if(temp.equals("quit")){
-            input.close();
-            return 8;
-        }
-
-        while(choice == -1){ 
-            try{choice = Integer.parseInt(temp);}catch(Exception a){
-                sendString("Invalid input. Please Try Again: \n");
-                temp = input.nextLine();
-            }
-        }
-        return choice;
-    }
 
     public int menu(){      // testing
         sendString("***************************");

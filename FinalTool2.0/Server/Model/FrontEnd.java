@@ -1,9 +1,7 @@
 package Server.Model;
-import Server.Model.*;
+// import Server.Model.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.*; 
 
 /**
  * Provides a console based frontend to interact with the shop app.
@@ -18,51 +16,7 @@ public class FrontEnd implements Runnable{
     public FrontEnd(Shop s) {
         theShop = s;
     }
-    /**
-     * Acts as a menu to be able to use all the functionality of 
-     * the shop app, prompting the to enter how they would like to 
-     * interact with the app. 
-     * @return returns the user's choice.
-     */
-    public int menu(){
-        System.out.println("***************************");
-        System.out.println("Choose an Option: \n");
-        System.out.println("1. List all Tools\n");
-        System.out.println("2. List all Suppliers\n");
-        System.out.println("3. Search tool by name\n");
-        System.out.println("4. Search tool by ID\n");
-        System.out.println("5. Check item quantity\n");
-        System.out.println("6. Decrease item Quanity\n");
-        System.out.println("7. Add an item manually\n");
-        System.out.println("> Or type 'quit' to exit <");
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
-        String temp;
-        
-        temp = input.nextLine();
-        if(temp.equals("quit")){
-            input.close();
-            return 8;
-        }
 
-        while(choice == -1){ 
-            try{choice = Integer.parseInt(temp);}catch(Exception a){
-                System.err.println("Invalid input. Please Try Again: \n");
-                temp = input.nextLine();
-            }
-        }
-        return choice;
-    }
-
-    /**
-     * Provides a middlepoint between different user inputs, prompting
-     * the user to press a key to continue. 
-     */
-    public void pressEnter(){
-        System.out.println("<<< Press enter to continue >>>\n");
-        Scanner enter = new Scanner(System.in);
-        String s = enter.nextLine();
-    }
     /**
      * The main function to act as a frontend to the Shop app. 
      * @param args command line arguments
