@@ -56,8 +56,8 @@ public class Server {
 
     ArrayList<Supplier> suppliers;
 
-    Shop store;
-    FrontEnd f;
+    // Shop store;
+    // FrontEnd f;
 
     void constructObjects()throws Exception{
 
@@ -79,33 +79,34 @@ public class Server {
      * @throws IOException thrown if there is an issue with I/O. 
      */
     public void communicateClient()throws IOException{
+        items = new ArrayList<Item>();
+        inventory = new Inventory(items);
+        inventory.addItemsText();
         try{
             while(true){
                 System.out.println(" At loopTop ");
                 pool = Executors.newCachedThreadPool();
                 aSocket = myServer.accept();
 
-                store = new Shop(order, suppliers, inventory);
-                store.setSocketIn(aSocket);
 
-                f = new FrontEnd(store);
-                // frontEnd main calls
-                // ArrayList<OrderLine> line = new ArrayList<OrderLine>();
-                // Order order = new Order(line);
-        
-                // ArrayList<Item> items = new ArrayList<Item>();
-                // Inventory inventory = new Inventory(items);
+                line = new ArrayList<OrderLine>();
+                order = new Order(line);
 
-                // ArrayList<Supplier> suppliers = new ArrayList<Supplier>();
+                // items = new ArrayList<Item>();
+                // inventory = new Inventory(items);
+                // inventory.addItemsText();
 
-                // Shop store = new Shop(order, suppliers, inventory, aSocket);
+                suppliers = new ArrayList<Supplier>();
 
-                // FrontEnd f = new FrontEnd(store);
+
+                Shop store = new Shop(order, suppliers, inventory, aSocket);
+                // store.setSocketIn(aSocket);
+
+                FrontEnd f = new FrontEnd(store);
 
                 System.out.println("<< Shop app started >>");
                 pool.execute(f);
                 pool.shutdown();
-                // System.out.println(">> The End <<");
             }
         } catch(Exception a){
             System.err.println("-- Exception caught in server loop --");
@@ -120,9 +121,11 @@ public class Server {
      * @param args command line arguments.
      */
     public static void main(String[] args) {
+        // to run this main: javac -d classes Server/Controller/Server.java
+        // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Server.Controller.Server
         Server s = new Server(8988);
         try {
-            s.constructObjects();
+            // s.constructObjects();
             s.communicateClient();
         } catch (IOException e) {
             System.err.println("Server main issue");

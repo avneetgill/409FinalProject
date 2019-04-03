@@ -2,6 +2,7 @@ package Server.Model;
 import Server.Model.*;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.*; 
 
@@ -122,10 +123,14 @@ public class FrontEnd implements Runnable{
     }
  */
     
- @Override
+    @Override
     public void run() {
         try{
             theShop.menuRunner();
+        }catch(SocketException a){
+            System.err.println("    >>socket issue frontEnd");
+            Thread.currentThread().interrupt();
+            return;      
         }catch(IOException a){
             System.err.println(" run caught error ");
             a.printStackTrace();
