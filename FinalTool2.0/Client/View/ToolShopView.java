@@ -10,16 +10,18 @@ import javax.swing.*;
 import com.sun.prism.paint.Color;
 
 public class ToolShopView extends JFrame{
-    private JLabel title = new JLabel("Inventory Manager Pro" + "\u2122");
-    private JList textBox = new JList();
 
-    private JButton searchButton = new JButton("Search");
-    private JButton listToolButton = new JButton("List Tools");
-    private JButton listSupButton = new JButton("List Suppliers");
-    private JButton loadButton = new JButton("Load from database");
-    private JButton decreaseButton = new JButton("Decrease Quantity"); //maybe change to 'buy'
-    private JButton deleteButton = new JButton("Delete");
-    private JButton addButton = new JButton("Add");
+    JLabel title = new JLabel("Inventory Manager Pro" + "\u2122");
+    // public JList textBox = new JList();
+    public JTextArea textBox = new JTextArea(70, 30);
+
+    public JButton searchButton = new JButton("Search");
+    public JButton listToolButton = new JButton("List Tools");
+    public JButton listSupButton = new JButton("List Suppliers");
+    public JButton loadButton = new JButton("quit");
+    public JButton decreaseButton = new JButton("Decrease Quantity"); //maybe change to 'buy'
+    public JButton deleteButton = new JButton("Delete");
+    public JButton addButton = new JButton("Add");
 
     public ToolShopView(){
         JPanel mainPanel = new JPanel ();
@@ -28,11 +30,11 @@ public class ToolShopView extends JFrame{
         JPanel topTitle = new JPanel();
 
         setTitle("Main");
-        this.setSize(500, 350);
+        this.setSize(700, 500);
         this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
 
         title.setFont(new Font("Castellar", Font.BOLD, 20));
         topTitle.add(title);
@@ -48,16 +50,24 @@ public class ToolShopView extends JFrame{
         bottomButtons.add(deleteButton);
         bottomButtons.add(addButton);
 
-        //textBox.setEditable(false);
+        textBox.setEditable(false);
         JScrollPane scrollText = new JScrollPane(textBox, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(scrollText, BorderLayout.CENTER);
         
         add(topTitle);
-        add(topButtons);
-        add(mainPanel);
-        add(bottomButtons);
+        add("North", topButtons);
+        add("Center", mainPanel);
+        add("South", bottomButtons);
 
+    }
+
+    public void refreshTextBox(){
+        textBox.setText("");
+    }
+
+    public void setText(String s){
+        textBox.setText(s);
     }
 
     public void errorMessage(String error){

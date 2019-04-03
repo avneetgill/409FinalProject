@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -48,19 +50,19 @@ public class Shop{
      * @param i the inventory to be assigned to the Shop. 
      * @throws FileNotFoundException thrown if there is an issue with file access. 
      */
-    public Shop(Order o, ArrayList<Supplier> s, Inventory i) throws FileNotFoundException{
+    public Shop(Order o, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
         order = o;
         suppliers = s;
         inventory = i;
-        // socketIn = socket;
+        socketIn = socket;
 
-        // try{
-        //     in = new BufferedReader(new InputStreamReader(socketIn.getInputStream()));
-		// 	out = new PrintWriter((socketIn.getOutputStream()), true);
-        // }catch(Exception a){
-        //     sendString("error");
-        //     a.printStackTrace();
-        // }
+        try{
+            in = new BufferedReader(new InputStreamReader(socketIn.getInputStream()));
+			out = new PrintWriter((socketIn.getOutputStream()), true);
+        }catch(Exception a){
+            sendString("error");
+            a.printStackTrace();
+        }
 
         addSuppliersText();
         // inventory.addItemsText();
@@ -108,7 +110,7 @@ public class Shop{
         return choice;
     }
 
-    public int menu(){      // testing
+    public int menu3(){      // testing
         sendString("***************************");
         sendString("Choose an Option: \n");
         sendString("1. List all Tools\n");
@@ -143,6 +145,29 @@ public class Shop{
         return choice;
     }
 
+    public int menu() throws IOException {
+        // sendString("Welcome\0");
+        String temp; int choice = 0;
+        // try{
+            temp = in.readLine();
+            if(temp.equalsIgnoreCase("quit")){
+                // input.close();
+                return 8;
+            }
+            choice = Integer.parseInt(temp);
+
+        // } catch(SocketException b){
+        //     System.err.println("Socket error, must restart server");
+        //     socketIn.close();
+        //     in.close();
+        //     out.close();
+        //     // b.printStackTrace();
+        // } catch (IOException a){
+        //     System.err.println("IOexcpetion in shop menu");
+        //     return 8;
+        // }   
+        return choice;
+    }
 
     void sendString(String toSend){
         out.println(toSend);
@@ -162,39 +187,42 @@ public class Shop{
             switch(menu()){
                 case 1:
                     listAllItems();
-                    pressEnter();
                     break;
+                    // pressEnter();
                 case 2:
                     listAllSuppliers();
-                    pressEnter();
                     break;
+                    // pressEnter();
                 case 3:
                     searchName(1);
-                    pressEnter();
                     break;
+                    // pressEnter();
                 case 4:
                     searchID(1);
-                    pressEnter();
+                    // pressEnter();
                     break;
                 case 5:
                     checkQuantity();
-                    pressEnter();
+                    // pressEnter();
                     break;
                 case 6:
                     decreaseQuantity();
-                    pressEnter();
+                    // pressEnter();
                     break;
                 case 7:
                     addItem();
-                    pressEnter();
+                    // pressEnter();
                     break;
                 default:
                     // sendString("Goodbye");
                     quit = true;                // this was below
                     sendString("Goodbye\1");    //order of these 2 lines were flipped
             }
-            if(quit == true)
+            if(quit == true){
+                in.close();
+                out.close();
                 break;
+            }
         }
 
     }
@@ -422,7 +450,7 @@ public class Shop{
      */
     public void listAllItems(){
         // sendString("Items in inventory and their details:");    
-        sendString("Items in inventory and their details:");
+        // sendString("Items in inventory and their details:");
         sendString(inventory.toString());
     }
 
@@ -430,11 +458,13 @@ public class Shop{
      * Prints all Suppliers that the shop has with their details.
      */
     public void listAllSuppliers(){
-        sendString("Suppliers and their details:");
+        // sendString("Suppliers and their details:");
+        System.out.println("in lisTsupplier");
         String s = "";
         for(Supplier sup: suppliers){
             s += sup.toString() + "\n";
         }
+        s = s.substring(0, s.length()-2);
         sendString(s);
     }
 

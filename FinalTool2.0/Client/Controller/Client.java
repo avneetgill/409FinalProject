@@ -4,11 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.Socket;
 
+import Client.View.ToolShopView;
+
 /**
- * Provides A client for the user to interact with, allows user to send messages to
- * the client and receive messages from the server.
+ * Provides A client for the user to interact with, allows user to send messages
+ * to the client and receive messages from the server.
  * 
  * @author Shamin Rahman
  * @version 1.0
@@ -19,7 +23,7 @@ public class Client {
 	 * Writer to allow the client to write to the socket
 	 */
 	private PrintWriter socketOut;
-	
+
 	/**
 	 * Socket that is used to communicate to server
 	 */
@@ -34,20 +38,26 @@ public class Client {
 	 * Reader to get what is written to the socket by the server
 	 */
 	private BufferedReader socketIn;
-	
+
 	private GUIController controller;
 
 	/**
-	 * Constructs a Client with the specified port name and number, opens and initializes sockets and I/O streams required for operation. 
+	 * Constructs a Client with the specified port name and number, opens and
+	 * initializes sockets and I/O streams required for operation.
+	 * 
 	 * @param port port number for the socket
 	 * @param name port name for the socket
 	 */
-    public Client(int port, String name){
-        try{
-            palinSocket = new Socket(name, port);
-			stdIn = new BufferedReader(new InputStreamReader(System.in));
+	public Client(int port, String name, GUIController c) {
+		controller = c;
+
+		try {
+			palinSocket = new Socket(name, port);
+			// stdIn = new BufferedReader(new InputStreamReader(System.in));
+			// stdIn = new BufferedReader(new InputStreamReader(controller.in));
 			socketIn = new BufferedReader(new InputStreamReader(palinSocket.getInputStream()));
 			socketOut = new PrintWriter((palinSocket.getOutputStream()), true);
+			// controller.addSocket(palinSocket);
         }catch(IOException a){
             a.printStackTrace();
         }
@@ -102,11 +112,16 @@ public class Client {
 		}
 	}
 	/**
-	 * runs the client with port localhost 8988
+	 * runs the client with port localhost 8988 
 	 * @param args command line arguments. 
 	 */
 	public static void main(String[] args) {
-        Client c = new Client(8988, "localhost");
+		// to run this main: javac -d classes Client/Controller/Client.java
+        // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Client.Controller.Client
+        
+		ToolShopView view = new ToolShopView();
+		// GUIController controller = new GUIController(view);
+        // Client c = new Client(8988, "localhost", controller);
 		c.communicate();
     }
 }

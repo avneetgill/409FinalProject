@@ -139,9 +139,10 @@ public class Inventory{
      */
     public String toString(){
         String s = "";
+        s += items.size() + "\n";
         for(Item i: items){
             s += i.toString() + "\n";
         }
-        return s;
+        return s.substring(0, s.length()-2);
     }
 }
