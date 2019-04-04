@@ -122,6 +122,6 @@ public class Client {
 		ToolShopView view = new ToolShopView();
 		// GUIController controller = new GUIController(view);
         // Client c = new Client(8988, "localhost", controller);
-		c.communicate();
+		// c.communicate();
     }
 }

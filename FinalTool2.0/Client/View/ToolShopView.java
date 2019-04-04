@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import com.sun.prism.paint.Color;
 
@@ -29,10 +30,11 @@ public class ToolShopView extends JFrame{
         JPanel bottomButtons = new JPanel();
         JPanel topTitle = new JPanel();
 
-        setTitle("Main");
+        setTitle("Inventory Manager Pro" + "\u2122");
         this.setSize(700, 500);
         this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
         setLayout(new BorderLayout());
 
@@ -44,16 +46,19 @@ public class ToolShopView extends JFrame{
         topButtons.add(listToolButton);
         topButtons.add(loadButton);
         topButtons.add(listSupButton);
+        topButtons.setBorder(new EmptyBorder(10, 15, 0, 15));
 
         bottomButtons.setLayout(new FlowLayout());
         bottomButtons.add(decreaseButton);
         bottomButtons.add(deleteButton);
         bottomButtons.add(addButton);
+        bottomButtons.setBorder(new EmptyBorder(0, 15, 10, 15));
 
         textBox.setEditable(false);
         JScrollPane scrollText = new JScrollPane(textBox, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(scrollText, BorderLayout.CENTER);
+        mainPanel.setBorder(new EmptyBorder(10, 15, 10, 15));
         
         add(topTitle);
         add("North", topButtons);
@@ -68,6 +73,7 @@ public class ToolShopView extends JFrame{
 
     public void setText(String s){
         textBox.setText(s);
+        textBox.setCaretPosition(0);
     }
 
     public void errorMessage(String error){
