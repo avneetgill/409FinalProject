@@ -124,9 +124,8 @@ public class GUIController {
                         b.printStackTrace();
                     }
                 }
-                // view.refreshTextBox();
-                // cleanBuffer();
 
+                
             }catch(Exception a){
                 a.printStackTrace();
                 System.err.println(" *** problem *** ");
