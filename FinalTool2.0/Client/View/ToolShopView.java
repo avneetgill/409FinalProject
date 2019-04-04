@@ -7,14 +7,17 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionListener;
 
 import com.sun.prism.paint.Color;
 
 public class ToolShopView extends JFrame{
 
     JLabel title = new JLabel("Inventory Manager Pro" + "\u2122");
-    // public JList textBox = new JList();
-    public JTextArea textBox = new JTextArea(70, 30);
+
+    // public JTextArea textBox = new JTextArea(70, 30);
+    public DefaultListModel<String> model = new DefaultListModel<>();
+    public JList<String> textBox = new JList<>(model);
 
     public JButton searchButton = new JButton("Search");
     public JButton listToolButton = new JButton("List Tools");
@@ -31,7 +34,7 @@ public class ToolShopView extends JFrame{
         JPanel topTitle = new JPanel();
 
         setTitle("Inventory Manager Pro" + "\u2122");
-        this.setSize(700, 500);
+        this.setSize(750, 500);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -42,6 +45,7 @@ public class ToolShopView extends JFrame{
         topTitle.add(title);
 
         topButtons.setLayout(new FlowLayout());
+        setButtonFontSize(20);
         topButtons.add(searchButton);
         topButtons.add(listToolButton);
         topButtons.add(loadButton);
@@ -52,10 +56,16 @@ public class ToolShopView extends JFrame{
         bottomButtons.add(decreaseButton);
         bottomButtons.add(deleteButton);
         bottomButtons.add(addButton);
+        // decreaseButton.setEnabled(false);                                                        // danger code
+        // deleteButton.setEnabled(false);                                                        // danger code
+        changeButtonState(false);                               // "danger code"
         bottomButtons.setBorder(new EmptyBorder(0, 15, 10, 15));
 
-        textBox.setEditable(false);
+        // textBox.setEditable(false);
+        textBox.setFont(new Font("Sans", Font.PLAIN, 16));
+        textBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollText = new JScrollPane(textBox, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(scrollText, BorderLayout.CENTER);
         mainPanel.setBorder(new EmptyBorder(10, 15, 10, 15));
@@ -67,14 +77,41 @@ public class ToolShopView extends JFrame{
 
     }
 
-    public void refreshTextBox(){
-        textBox.setText("");
+    public void setButtonFontSize(int fontSize){
+        searchButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        listSupButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        listToolButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        loadButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        addButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        decreaseButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        deleteButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
     }
 
-    public void setText(String s){
-        textBox.setText(s);
-        textBox.setCaretPosition(0);
+    public void addElementTextBox(String value){
+        model.addElement(value);
     }
+
+    public void addSelectionListener(ListSelectionListener a){
+        textBox.addListSelectionListener(a);
+    }
+
+    public void changeButtonState(boolean enabled){
+        decreaseButton.setEnabled(enabled);                                                       
+        deleteButton.setEnabled(enabled);  
+    }
+
+    public String decreaseItemDialog(){
+        return JOptionPane.showInputDialog(this, "Enter how much to decrease: ");
+    }
+
+    // public void refreshTextBox(){
+    //     textBox.setText("");
+    // }
+
+    // public void setText(String s){
+    //     textBox.setText(s);
+    //     textBox.setCaretPosition(0);
+    // }
 
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);

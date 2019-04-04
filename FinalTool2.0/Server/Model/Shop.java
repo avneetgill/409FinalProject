@@ -459,7 +459,7 @@ public class Shop{
      */
     public void listAllSuppliers(){
         // sendString("Suppliers and their details:");
-        System.out.println("in lisTsupplier");
+        // System.out.println("in lisTsupplier");
         String s = "";
         for(Supplier sup: suppliers){
             s += sup.toString() + "\n";

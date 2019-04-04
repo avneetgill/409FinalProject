@@ -23,7 +23,7 @@ public class LoginView extends JFrame {
 
     public LoginView() {
         this.setTitle("Login");
-        this.setSize(200, 240);
+        this.setSize(260, 240);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -38,12 +38,13 @@ public class LoginView extends JFrame {
         b.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         f.setLayout(new FlowLayout());
+        // f.setLayout(new BoxLayout(f, BoxLayout.Y_AXIS));
+        f.setBorder(new EmptyBorder(10, 30, 10, 30));
         f.add(input);
         f.add(userName);
         f.add(passwordLabel);
         f.add(password);
         f.add(b);
-        f.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         // userName.addActionListener(new ActionListener() {
 
