@@ -1,4 +1,5 @@
 package Client.View;
+import java.awt.Dimension;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
 
 import com.sun.prism.paint.Color;
 
@@ -19,22 +21,24 @@ public class ToolShopView extends JFrame{
     public JButton searchButton = new JButton("Search");
     public JButton listToolButton = new JButton("List Tools");
     public JButton listSupButton = new JButton("List Suppliers");
-    public JButton loadButton = new JButton("quit");
+    public JButton loadButton = new JButton("Quit");
     public JButton decreaseButton = new JButton("Decrease Quantity"); //maybe change to 'buy'
     public JButton deleteButton = new JButton("Delete");
     public JButton addButton = new JButton("Add");
 
     public ToolShopView(){
         JPanel mainPanel = new JPanel ();
+        //mainPanel.setBackground(Color.WHITE);
         JPanel topButtons = new JPanel();
         JPanel bottomButtons = new JPanel();
         JPanel topTitle = new JPanel();
 
         setTitle("Inventory Manager Pro" + "\u2122");
-        this.setSize(700, 500);
+        this.setSize(750, 500);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        
 
         setLayout(new BorderLayout());
 
@@ -61,7 +65,14 @@ public class ToolShopView extends JFrame{
         mainPanel.setBorder(new EmptyBorder(10, 15, 10, 15));
         
         add(topTitle);
-        add("North", topButtons);
+        ImageIcon image = new ImageIcon("icon.jpg");
+        JLabel label = new JLabel(image);
+        JPanel north = new JPanel();
+        north.setLayout(new BorderLayout());
+        north.add(label, BorderLayout.NORTH);
+        north.add(topButtons, BorderLayout.CENTER);
+        add(north, BorderLayout.NORTH);
+        //add(topButtons, BorderLayout.NORTH);
         add("Center", mainPanel);
         add("South", bottomButtons);
 
@@ -104,4 +115,9 @@ public class ToolShopView extends JFrame{
         addButton.addActionListener(a);
     }
     //#endregion
+
+    public static void main(String[] args) {
+        ToolShopView tsv = new ToolShopView();
+        tsv.setVisible(true);
+    }
 }
