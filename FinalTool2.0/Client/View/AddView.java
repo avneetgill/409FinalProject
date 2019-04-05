@@ -1,4 +1,4 @@
-//package Client.View;
+package Client.View;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class AddView extends JFrame{
     JPanel headerPanel = new JPanel();
@@ -14,8 +15,8 @@ public class AddView extends JFrame{
     
     JLabel header = new JLabel ("Add a new tool");
     
-    JButton insertButton = new JButton("Add");
-    JButton returnButton = new JButton("Return to Main Window");
+    public JButton insertButton = new JButton("Add");
+    public JButton returnButton = new JButton("Return to Main Window");
 
     JTextField field1 =  new JTextField(10);
     JTextField field2 =  new JTextField(10);
@@ -26,33 +27,57 @@ public class AddView extends JFrame{
     public AddView(){
         this.setLayout(new BorderLayout());
         this.setTitle("Add New Item");
-        this.setSize(300, 300);
+        this.setSize(400, 400);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setLocationRelativeTo(null);
 
-        header.setFont(new Font("Sans", Font.BOLD, 18));
-        headerPanel.add(header);
+        header.setFont(new Font("Sans", Font.BOLD, 20));
+        // headerPanel.add(header);
 
         buttons.setLayout(new FlowLayout());
         buttons.add(insertButton);
         buttons.add(returnButton);
+        insertButton.setFont(new Font("Sans", Font.PLAIN, 20));
+        returnButton.setFont(new Font("Sans", Font.PLAIN, 20));
 
         textFields.setLayout(new BoxLayout(textFields, BoxLayout.Y_AXIS));
-        textFields.add(new JLabel("Enter Item Name"));
+        setTextBoxFont(20);
+        JLabel l1 = new JLabel("Enter Item Name");
+        l1.setFont(new Font("Sans", Font.PLAIN, 20));
+        textFields.add(l1);
         textFields.add(field1);
-        textFields.add(new JLabel("Enter Item Price"));
+        JLabel l2 = new JLabel("Enter Item Price");
+        l2.setFont(new Font("Sans", Font.PLAIN, 20));
+        textFields.add(l2);
         textFields.add(field2);
-        textFields.add(new JLabel("Enter Item ID"));
+        JLabel l3 = new JLabel("Enter Item ID");
+        l3.setFont(new Font("Sans", Font.PLAIN, 20));
+        textFields.add(l3);
         textFields.add(field3);
-        textFields.add(new JLabel("Enter Item Stock"));
+        JLabel l4 = new JLabel("Enter Item Stock");
+        l4.setFont(new Font("Sans", Font.PLAIN, 20));
+        textFields.add(l4);
         textFields.add(field4);
-        textFields.add(new JLabel("Enter Item's Supplier ID"));
+        JLabel l5 = new JLabel("Enter Item's Supplier ID");
+        l5.setFont(new Font("Sans", Font.PLAIN, 20));
+        textFields.add(l5);
         textFields.add(field5);
+        
+        textFields.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         this.add("Center", textFields);
-        this.add("North", headerPanel);
+        // this.add("North", headerPanel);
         this.add("South", buttons);
         
+    }
+
+    public void setTextBoxFont(int fontSize){
+        field1.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        field2.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        field3.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        field4.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        field5.setFont(new Font("Sans", Font.PLAIN, fontSize));
     }
 
     public void addWindowListener(WindowAdapter a){
@@ -63,20 +88,20 @@ public class AddView extends JFrame{
         return field1.getText();
     }
 
-    public int getPrice(){
-        return Integer.parseInt(field2.getText());
+    public String getPrice(){
+        return field2.getText();
     }
 
-    public int getID(){
-        return Integer.parseInt(field3.getText());
+    public String getID(){
+        return field3.getText();
     }
 
-    public int getStock(){
-        return Integer.parseInt(field4.getText());
+    public String getStock(){
+        return field4.getText();
     }
 
-    public int getSupID(){
-        return Integer.parseInt(field5.getText());
+    public String getSupID(){
+        return field5.getText();
     }
 
     public void clearText(){
@@ -84,6 +109,7 @@ public class AddView extends JFrame{
         field2.setText(null);
         field3.setText(null);
         field4.setText(null);
+        field5.setText(null);
     }
 
     public void addInsertListener(ActionListener a){
@@ -99,6 +125,8 @@ public class AddView extends JFrame{
     }
 
     public static void main(String[] args) {
+        // to run this main: javac -d classes Client/View/AddView.java
+        // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Client.View.AddView
         AddView av = new AddView();
         av.setVisible(true);
     }
