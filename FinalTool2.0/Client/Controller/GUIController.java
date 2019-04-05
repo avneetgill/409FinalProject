@@ -78,7 +78,7 @@ public class GUIController {
                 if(e.getSource() == login.b){
                     String username = login.getUserName();
                     String pass = login.getPassword();
-                    System.out.println(username + " xxxx " + pass);
+                    System.out.println("usernam: " + username + ", password: " + pass);
                     if(username.equals("") || pass.equals("")){
                         System.out.println("error");
                         login.errorMessage("Please Enter Username and Password");
@@ -171,14 +171,40 @@ public class GUIController {
                 }
 
                 else if(e.getSource() == view.addButton){
-                    String id, name, price, supplierID, stock;
                     add.setVisible(true);
+                }
+
+                else if(e.getSource() == add.returnButton){
+                    add.setVisible(false);
+                    add.clearText();
+
+                }
+
+                else if(e.getSource() == add.insertButton){
+                    String id, name, price, supplierID, stock;
+                    int idi, supplierIDi, stocki; double pricei;
+
                     name = add.getName();
                     id = add.getID();
                     price = add.getPrice();
                     supplierID = add.getSupID();
                     stock = add.getSupID();
-                    
+
+                    if(name.equals("") || id.equals("") || price.equals("") || supplierID.equals("") || stock.equals("")){
+                        add.errorMessage("Enter all fields");
+                    } else{
+                        try{
+                            idi = Integer.parseInt(id);
+                            supplierIDi = Integer.parseInt(supplierID);
+                            stocki = Integer.parseInt(stock);
+                            pricei = Double.parseDouble(price);
+                        }catch(NumberFormatException a){
+                            add.errorMessage("Enter valid numbers");
+                            return;
+                        }
+
+                        
+                    }
                 }
 
             }catch(Exception a){
@@ -200,6 +226,9 @@ public class GUIController {
 
         login.addSubmitListener(listener);
 
+        add.addReturnListener(listener);
+        add.addInsertListener(listener);
+        
         view.addSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {

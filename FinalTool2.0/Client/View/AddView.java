@@ -15,8 +15,8 @@ public class AddView extends JFrame{
     
     JLabel header = new JLabel ("Add a new tool");
     
-    JButton insertButton = new JButton("Add");
-    JButton returnButton = new JButton("Return to Main Window");
+    public JButton insertButton = new JButton("Add");
+    public JButton returnButton = new JButton("Return to Main Window");
 
     JTextField field1 =  new JTextField(10);
     JTextField field2 =  new JTextField(10);
@@ -109,6 +109,7 @@ public class AddView extends JFrame{
         field2.setText(null);
         field3.setText(null);
         field4.setText(null);
+        field5.setText(null);
     }
 
     public void addInsertListener(ActionListener a){
