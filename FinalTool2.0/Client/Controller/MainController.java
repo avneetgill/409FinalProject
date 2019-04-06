@@ -14,104 +14,101 @@ import Client.View.*;
 /**
  * MainController
  */
-public class MainController extends Controller{
+public class MainController {
     
     private MyListener listener;
-    public Controller c;
+    private ToolShopView view;
     
-    public MainController(ToolShopView v, Controller c) {
-        super();
-        c.setView(v);
-        this.c = c;
-        System.out.println("view set");
+    public MainController(ToolShopView v, AddController addController) {
+        view = v;
         listener = new MyListener();
-        // addListeners();
+        addListeners();
     }
 
     class MyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
             try{
-                if(e.getSource() == c.view.listToolButton){
+                if(e.getSource() == view.listToolButton){
                     
-                    // c.view.errorMessage("list tools pressed");
-                    c.view.textBox.clearSelection();
+                    // view.errorMessage("list tools pressed");
+                    view.textBox.clearSelection();
                     itemOrSupplier = "item";
-                    c.view.model.clear();
-                    c.socketOut.println("1");
-                    c.socketOut.flush();
-                    int itemAmount = Integer.parseInt(c.socketIn.readLine());
+                    view.model.clear();
+                    socketOut.println("1");
+                    socketOut.flush();
+                    int itemAmount = Integer.parseInt(socketIn.readLine());
                     String s = "";
                     for(int i = 0; i < itemAmount; i++){
-                        // s += c.socketIn.readLine() + "\n";
-                        c.view.addElementTextBox(c.socketIn.readLine());
+                        // s += socketIn.readLine() + "\n";
+                        view.addElementTextBox(socketIn.readLine());
                     }
                     // s = s.substring(0, s.length() - 2);
                     System.out.println("Showing items");
-                    c.view.changeButtonState(true);
-                    // c.view.setText(s);
+                    view.changeButtonState(true);
+                    // view.setText(s);
                 } 
                 
-                else if(e.getSource() == c.view.listSupButton){
-                    // c.view.errorMessage("list suppliers pressed");
-                    c.view.changeButtonState(false);
-                    c.view.textBox.clearSelection();
+                else if(e.getSource() == view.listSupButton){
+                    // view.errorMessage("list suppliers pressed");
+                    view.changeButtonState(false);
+                    view.textBox.clearSelection();
                     itemOrSupplier = "supplier";
-                    c.view.model.clear();
-                    c.socketOut.println("2");
-                    c.socketOut.flush();
-                    // int itemAmount = Integer.parseInt(c.socketIn.readLine());
+                    view.model.clear();
+                    socketOut.println("2");
+                    socketOut.flush();
+                    // int itemAmount = Integer.parseInt(socketIn.readLine());
                     String m = "";
                     for(int i = 0; i < 20; i++){
-                        // m += c.socketIn.readLine() + "\n";
-                        c.view.addElementTextBox(c.socketIn.readLine());
+                        // m += socketIn.readLine() + "\n";
+                        view.addElementTextBox(socketIn.readLine());
                     }
                     // m = m.substring(0, m.length() - 2);
                     System.out.println("Showing suppliers");
-                    // c.view.setText(m);
+                    // view.setText(m);
                     // cleanBuffer();
-                    // c.view.addButton.setEnabled(true);
+                    // view.addButton.setEnabled(true);
                 }
 
-                else if(e.getSource() == c.view.deleteButton){
+                else if(e.getSource() == view.deleteButton){
                     if(selected == null){
-                        c.view.errorMessage("Please select an item");
+                        view.errorMessage("Please select an item");
                     } else{
                         if(selected.contains(", contact: ")){               // in the rare case that supplier does enable delete button
-                            c.view.errorMessage("Cannot delete suppliers");
+                            view.errorMessage("Cannot delete suppliers");
                         } else{
-                            c.view.model.removeElement(selected);
+                            view.model.removeElement(selected);
                             // code to actually delete item from database
-                            c.view.errorMessage("Item removed");
+                            view.errorMessage("Item removed");
                         }
-                        // c.view.errorMessage(selected);
+                        // view.errorMessage(selected);
                     }
                 }
 
-                else if(e.getSource() == c.view.decreaseButton){
+                else if(e.getSource() == view.decreaseButton){
                     if(selected == null){
-                        c.view.errorMessage("Please select an item");
+                        view.errorMessage("Please select an item");
                     } else{
                         if(selected.contains(", contact: ")){               // in the rare case that supplier does enable delete button
-                            c.view.errorMessage("Cannot decrease amount of suppliers");
+                            view.errorMessage("Cannot decrease amount of suppliers");
                         } else{
                             String temp = null; int amount = 0;
-                            temp = c.view.decreaseItemDialog();
+                            temp = view.decreaseItemDialog();
                             try{
                                 amount = Integer.parseInt(temp);
                             }catch(NumberFormatException a){
-                                c.view.errorMessage("Please enter an integer value");
+                                view.errorMessage("Please enter an integer value");
                                 return;
                             }
                             
                             // code to actually decrease items from database
-                            c.view.errorMessage(amount + "");
+                            view.errorMessage(amount + "");
 
                         }
                     }
                 }
 
-                else if(e.getSource() == c.view.addButton){
+                else if(e.getSource() == view.addButton){
                     add.setVisible(true);
                 }
 
@@ -125,26 +122,26 @@ public class MainController extends Controller{
 
     @Override
     public void addListeners() {
-        c.view.addSearchListener(listener);
-        c.view.addListToolListener(listener);
-        c.view.addLoadListener(listener);
-        c.view.addListSupListener(listener);
-        c.view.addDecreaseListener(listener);
-        c.view.addDeleteListener(listener);
-        c.view.addAddListener(listener);
+        view.addSearchListener(listener);
+        view.addListToolListener(listener);
+        view.addLoadListener(listener);
+        view.addListSupListener(listener);
+        view.addDecreaseListener(listener);
+        view.addDeleteListener(listener);
+        view.addAddListener(listener);
 
-        c.view.addSelectionListener(new ListSelectionListener(){
+        view.addSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(!e.getValueIsAdjusting()){
-                    selected = c.view.textBox.getSelectedValue();
+                    selected = view.textBox.getSelectedValue();
 
                     // if(itemOrSupplier.equals("item")){
-                    //     c.view.changeButtonState(true);
+                    //     view.changeButtonState(true);
                     // }
 
                     if(selected != null){
-                        // c.view.errorMessage(" xxxx " + selected);
+                        // view.errorMessage(" xxxx " + selected);
                     }
                 }
             }

@@ -13,41 +13,40 @@ import Client.View.*;
 /**
  * LoginController
  */
-public class LoginController extends Controller{
+public class LoginController{
     
     private MyListener listener;
-    public Controller c;
+    private MainController mainController;
+    private LoginView login;
 
-    public LoginController(LoginView login, Controller c) {
-        super();
-        c.setLogin(login);
-        this.c = c;
-        System.out.println("login set");
+    public LoginController(LoginView login, MainController view) {
+        this.login = login;
+        mainController = view;
         listener = new MyListener();
-        // addListeners();
+        addListeners();
     }
     
-    public void startGui(){
-        super.startGui();
+    public void setSuper(Controller c){
+        c.setLogin(login);
     }
 
     class MyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
             try{
-                if(e.getSource() == c.login.b){
-                    String username = c.login.getUserName();
-                    String pass = c.login.getPassword();
+                if(e.getSource() == login.b){
+                    String username = login.getUserName();
+                    String pass = login.getPassword();
                     System.out.println("usernam: " + username + ", password: " + pass);
                     if(username.equals("") || pass.equals("")){
                         System.out.println("error");
-                        c.login.errorMessage("Please Enter Username and Password");
+                        login.errorMessage("Please Enter Username and Password");
                     } else{
                         // if(username.valid() && password.valid()){
                             // check if user and pass are valid
                         // }
-                        c.login.setVisible(false);
-                        c.view.setVisible(true);
+                        login.setVisible(false);
+                        view.setVisible(true);
                     }
                 }
             }catch(Exception a){
@@ -58,9 +57,8 @@ public class LoginController extends Controller{
         }
     }
 
-    @Override
     public void addListeners() {
-        c.login.addSubmitListener(listener);
+        login.addSubmitListener(listener);
     }
     
 }
