@@ -21,6 +21,9 @@ import javax.swing.event.ListSelectionListener;
 
 import Client.View.*;
 
+/**
+ * Controls the GUI views and also acts as the client
+ */
 public class GUIController {
 
     private PrintWriter socketOut;
