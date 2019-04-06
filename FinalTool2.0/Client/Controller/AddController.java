@@ -31,23 +31,23 @@ public class AddController extends Controller{
         @Override
         public void actionPerformed(ActionEvent e){
             try{
-                if(e.getSource() == add.returnButton){
-                    add.setVisible(false);
-                    add.clearText();
+                if(e.getSource() == c.add.returnButton){
+                    c.add.setVisible(false);
+                    c.add.clearText();
                 }
 
-                else if(e.getSource() == add.insertButton){
+                else if(e.getSource() == c.add.insertButton){
                     String id, name, price, supplierID, stock;
                     int idi, supplierIDi, stocki; double pricei;
 
-                    name = add.getName();
-                    id = add.getID();
-                    price = add.getPrice();
-                    supplierID = add.getSupID();
-                    stock = add.getSupID();
+                    name = c.add.getName();
+                    id = c.add.getID();
+                    price = c.add.getPrice();
+                    supplierID = c.add.getSupID();
+                    stock = c.add.getSupID();
 
                     if(name.equals("") || id.equals("") || price.equals("") || supplierID.equals("") || stock.equals("")){
-                        add.errorMessage("Enter all fields");
+                        c.add.errorMessage("Enter all fields");
                     } else{
                         try{
                             idi = Integer.parseInt(id);
@@ -55,7 +55,7 @@ public class AddController extends Controller{
                             stocki = Integer.parseInt(stock);
                             pricei = Double.parseDouble(price);
                         }catch(NumberFormatException a){
-                            add.errorMessage("Enter valid numbers");
+                            c.add.errorMessage("Enter valid numbers");
                             return;
                         }
 

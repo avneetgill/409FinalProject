@@ -112,7 +112,7 @@ public class MainController extends Controller{
                 }
 
                 else if(e.getSource() == c.view.addButton){
-                    add.setVisible(true);
+                    c.add.setVisible(true);
                 }
 
             }catch(Exception a){
