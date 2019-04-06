@@ -20,9 +20,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Client.View.*;
-/** 
- * @author Shamin Rahman, Avneet Gill, Kelvin Tran
- * @version 1.0
+
+/**
+ * Controls the GUI views and also acts as the client
  */
 public class GUIController {
 
