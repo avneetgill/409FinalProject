@@ -1,7 +1,9 @@
 package Client.View;
+
 import java.awt.Dimension;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,8 +12,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
-
-import com.sun.prism.paint.Color;
 
 public class ToolShopView extends JFrame{
 
@@ -37,10 +37,15 @@ public class ToolShopView extends JFrame{
         JPanel topTitle = new JPanel();
 
         setTitle("Inventory Manager Pro" + "\u2122");
-        this.setSize(750, 500);
+        this.setSize(750, 600);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        
+        this.setBackground(Color.WHITE);
+        mainPanel.setBackground(Color.WHITE);
+        topButtons.setBackground(Color.WHITE);
+        bottomButtons.setBackground(Color.WHITE);
         
 
         setLayout(new BorderLayout());
@@ -78,6 +83,8 @@ public class ToolShopView extends JFrame{
         ImageIcon image = new ImageIcon("icon.jpg");
         JLabel label = new JLabel(image);
         JPanel north = new JPanel();
+        north.setBackground(Color.WHITE);
+
         north.setLayout(new BorderLayout());
         north.add(label, BorderLayout.NORTH);
         north.add(topButtons, BorderLayout.CENTER);

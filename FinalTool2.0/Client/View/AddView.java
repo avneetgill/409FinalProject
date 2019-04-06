@@ -1,6 +1,7 @@
 package Client.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -40,6 +41,11 @@ public class AddView extends JFrame{
         buttons.add(returnButton);
         insertButton.setFont(new Font("Sans", Font.PLAIN, 20));
         returnButton.setFont(new Font("Sans", Font.PLAIN, 20));
+
+        this.setBackground(Color.WHITE);
+        headerPanel.setBackground(Color.WHITE);
+        textFields.setBackground(Color.WHITE);
+        buttons.setBackground(Color.WHITE);
 
         textFields.setLayout(new BoxLayout(textFields, BoxLayout.Y_AXIS));
         setTextBoxFont(20);

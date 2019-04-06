@@ -1,6 +1,7 @@
 package Client.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -33,6 +34,10 @@ public class LoginView extends JFrame {
         userName.setFont(new Font("Sans", Font.PLAIN, 20));
         password.setFont(new Font("Sans", Font.PLAIN, 20));
         b.setFont(new Font("Sans", Font.BOLD, 20));
+
+        this.setBackground(Color.WHITE);
+        input.setBackground(Color.WHITE);
+        f.setBackground(Color.WHITE);
 
         // b.setBorder(new EtchedBorder());
         b.setBorder(new EmptyBorder(10, 10, 10, 10));
