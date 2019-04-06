@@ -23,6 +23,8 @@ import Client.View.*;
 
 /**
  * Controls the GUI views and also acts as the client
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
  */
 public class GUIController {
 

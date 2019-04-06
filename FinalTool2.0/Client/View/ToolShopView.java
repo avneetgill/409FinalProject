@@ -12,7 +12,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
-
+/**
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
+ */
 public class ToolShopView extends JFrame{
 
     JLabel title = new JLabel("Inventory Manager Pro" + "\u2122");
