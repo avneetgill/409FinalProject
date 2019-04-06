@@ -10,8 +10,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
-/**
- * LoginView
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
  */
 public class LoginView extends JFrame {
     private JTextField userName = new JTextField(10);

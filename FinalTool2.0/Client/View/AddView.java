@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
+ */
 public class AddView extends JFrame{
     JPanel headerPanel = new JPanel();
     JPanel textFields = new JPanel();

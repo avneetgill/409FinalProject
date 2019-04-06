@@ -20,7 +20,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Client.View.*;
-
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
+ */
 public class GUIController {
 
     private PrintWriter socketOut;

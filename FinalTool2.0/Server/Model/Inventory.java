@@ -5,13 +5,9 @@ import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-/**
- * Provides methods and data fields to create and manage 
- * an ArrayList of Item objects.
- * 
- * @author Shamin Rahman
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
- * @since February 6, 2019
  */
 public class Inventory{
 

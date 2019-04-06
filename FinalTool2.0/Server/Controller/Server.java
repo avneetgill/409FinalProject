@@ -9,12 +9,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-/**
- * Provides methods and attributes to run a server to play a game of Tic Tac Toe on with many clients. 
- * 
- * @author Shamin Rahman
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
- * @since March 25, 2019
  */
 public class Server {
     /**

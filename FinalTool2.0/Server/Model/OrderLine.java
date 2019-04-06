@@ -2,13 +2,9 @@ package Server.Model;
 
 import java.util.Date;
 
-/**
- * Provides methods and data fields to create and manage an 
- * object of Orderline.
- * 
- * @author Shamin Rahman
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
- * @since February 6, 2019
  */
 public class OrderLine{
     /**

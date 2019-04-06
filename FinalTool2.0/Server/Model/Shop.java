@@ -12,12 +12,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-/**
- * Provides methods and data fields to create and manage a store app. 
- * 
- * @author Shamin Rahman
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
- * @since February 6, 2019
  */
 public class Shop{
 
