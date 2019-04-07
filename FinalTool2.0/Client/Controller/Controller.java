@@ -18,18 +18,9 @@ public class Controller {
     protected PrintWriter socketOut;
     protected BufferedReader socketIn;
     
-    // protected MainController mainController;
-    // protected LoginController loginController;
-    // protected AddController addController;
-
-    protected ToolShopView view;
-    protected LoginView login;
-    protected AddView add;
-
-    protected String selected;
-    protected String itemOrSupplier;
-
-    public Controller(){}
+    public ToolShopView view;
+    public LoginView login;
+    public AddView add;
 
     public Controller(int port, String name){//, MainController main, LoginController login, AddController add) {
         try {
@@ -40,27 +31,13 @@ public class Controller {
             a.printStackTrace();
         }
 
-        // mainController = main;
-        // loginController = login;
-        // addController = add;
+        view = new ToolShopView();
+        login = new LoginView();
+        add = new AddView();
         
     }
 
-    public void setAdd(AddView add) {
-        this.add = add;
-    }
-    
-    public void setLogin(LoginView login) {
-        this.login = login;
-        // System.out.println(login);
-    }
-
-    public void setView(ToolShopView view) {
-        this.view = view;
-    }
-
     public void startGui(){
-        // System.out.println("in startGui");
         login.setVisible(true); 
     }
 
@@ -69,21 +46,11 @@ public class Controller {
         // to run this main: javac -d classes Client/Controller/Controller.java
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Client.Controller.Controller
 
-        ToolShopView view = new ToolShopView();
-        LoginView login = new LoginView();
-        AddView add = new AddView();
-
         Controller c = new Controller(8988, "localhost");
         
-        AddController addController = new AddController(add, c);
-        MainController main = new MainController(view, c);
-        LoginController loginController = new LoginController(login, c);
-        
-        loginController.addListeners();
-        main.addListeners();
-        addController.addListeners();
-        
-        // loginController.startGui();
+        AddController addController = new AddController(c);
+        MainController main = new MainController(c);
+        LoginController loginController = new LoginController(c);
         
         c.startGui();
 

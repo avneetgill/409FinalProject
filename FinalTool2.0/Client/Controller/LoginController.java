@@ -13,23 +13,18 @@ import Client.View.*;
 /**
  * LoginController
  */
-public class LoginController extends Controller{
+public class LoginController {
     
     private MyListener listener;
     public Controller c;
 
-    public LoginController(LoginView login, Controller c) {
-        super();
-        c.setLogin(login);
+    public LoginController(Controller c) {
+        // c.setLogin(login);
         this.c = c;
-        System.out.println("login set");
         listener = new MyListener();
-        // addListeners();
+        addListeners();
     }
     
-    public void startGui(){
-        super.startGui();
-    }
 
     class MyListener implements ActionListener {
         @Override
@@ -58,7 +53,6 @@ public class LoginController extends Controller{
         }
     }
 
-    @Override
     public void addListeners() {
         c.login.addSubmitListener(listener);
     }

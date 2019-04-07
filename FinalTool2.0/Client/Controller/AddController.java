@@ -13,18 +13,17 @@ import Client.View.*;
 /**
  * AddController
  */
-public class AddController extends Controller{
+public class AddController{
     
     private MyListener listener;
     public Controller c;
 
-    public AddController(AddView add, Controller c) {
-        super();
-        c.setAdd(add);
+    public AddController(Controller c) {
+        // super();
+        // c.setAdd(add);
         this.c = c;
-        System.out.println("add set");
         listener = new MyListener();
-        // addListeners();
+        addListeners();
     }
     
     class MyListener implements ActionListener {
@@ -70,7 +69,6 @@ public class AddController extends Controller{
         }
     }
 
-    @Override
     public void addListeners() {
         c.add.addReturnListener(listener);
         c.add.addInsertListener(listener);

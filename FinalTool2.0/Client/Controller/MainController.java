@@ -14,18 +14,20 @@ import Client.View.*;
 /**
  * MainController
  */
-public class MainController extends Controller{
+public class MainController{
     
     private MyListener listener;
     public Controller c;
+
+    public String selected;
+    public String itemOrSupplier;
     
-    public MainController(ToolShopView v, Controller c) {
-        super();
-        c.setView(v);
+    public MainController(Controller c) {
+        // super();
+        // c.setView(v);
         this.c = c;
-        System.out.println("view set");
         listener = new MyListener();
-        // addListeners();
+        addListeners();
     }
 
     class MyListener implements ActionListener {
@@ -74,14 +76,22 @@ public class MainController extends Controller{
                 }
 
                 else if(e.getSource() == c.view.deleteButton){
+                    System.out.println("delete item");
                     if(selected == null){
                         c.view.errorMessage("Please select an item");
                     } else{
                         if(selected.contains(", contact: ")){               // in the rare case that supplier does enable delete button
                             c.view.errorMessage("Cannot delete suppliers");
                         } else{
+                            c.socketOut.println("3");       // tells shop menu we're deleting item
+
+                            String[] arr = selected.split(",");     // to get the id of the item being deleted
+                            String temp = arr[0];
+                            String itemId = temp.replaceAll("id: ", "");
+
+                            c.socketOut.println(itemId);    // gives Shop.deleteItem() the item id
+
                             c.view.model.removeElement(selected);
-                            // code to actually delete item from database
                             c.view.errorMessage("Item removed");
                         }
                         // c.view.errorMessage(selected);
@@ -89,24 +99,42 @@ public class MainController extends Controller{
                 }
 
                 else if(e.getSource() == c.view.decreaseButton){
+                    System.out.println("decrease item");
                     if(selected == null){
                         c.view.errorMessage("Please select an item");
                     } else{
                         if(selected.contains(", contact: ")){               // in the rare case that supplier does enable delete button
                             c.view.errorMessage("Cannot decrease amount of suppliers");
                         } else{
-                            String temp = null; int amount = 0;
-                            temp = c.view.decreaseItemDialog();
+                            c.socketOut.println("4");
+
+                            String[] arr = selected.split(",");     // to get the id of the item being decreased
+                            String temp = arr[0];
+                            String itemId = temp.replaceAll("id: ", "");
+
+                            c.socketOut.println(itemId);    // gives Shop.decreaseItem() the item id
+
+                            String temp2 = null; int amount = 0;         //to get the amount to be decreased
+                            temp2 = c.view.decreaseItemDialog();
                             try{
-                                amount = Integer.parseInt(temp);
+                                amount = Integer.parseInt(temp2);
                             }catch(NumberFormatException a){
                                 c.view.errorMessage("Please enter an integer value");
                                 return;
                             }
-                            
-                            // code to actually decrease items from database
-                            c.view.errorMessage(amount + "");
 
+                            c.socketOut.println(temp2);             // gives Shop.decreaseItem() the amount to be deleted
+                            
+                            temp2 = c.socketIn.readLine();
+
+                            if(temp2.contains("notEnoughSelling: ")){       // if not enough to sell
+                                arr = temp2.split(" ");
+                                temp2 = arr[1];
+                                c.view.errorMessage("Did not have enough of this item to sell, instead sold " + temp2);
+                            } else{                                 // if yesss enough to sell
+                                c.view.errorMessage("Sold " + amount + " of this item");
+                            }
+                            c.view.errorMessage("Please press List items to refresh the list");
                         }
                     }
                 }
@@ -123,7 +151,6 @@ public class MainController extends Controller{
         }
     }
 
-    @Override
     public void addListeners() {
         c.view.addSearchListener(listener);
         c.view.addListToolListener(listener);
