@@ -139,6 +139,6 @@ public class Inventory{
         for(Item i: items){
             s += i.toString() + "\n";
         }
-        return s.substring(0, s.length()-2);
+        return s.substring(0, s.length()-1);
     }
 }

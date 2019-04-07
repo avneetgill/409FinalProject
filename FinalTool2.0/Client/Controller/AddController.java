@@ -26,6 +26,25 @@ public class AddController{
         addListeners();
     }
     
+    public void errorMeaning(String error){
+        String toShow = "";
+
+        if(error.contains("name")){
+            toShow += "Item Name must be proper words\n";
+        }
+        if(error.contains("id")){
+            toShow += "Item id must be unique, and 0 < id < 9999\n";
+        }
+        if(error.contains("stock")){
+            toShow += "Item initial stock must be >= 40\n";
+        }
+        if(error.contains("supplier")){
+            toShow += "Item's supplier must exist, choose from Supplier List\n";
+        }
+        
+        c.add.errorMessage(toShow);
+    }
+
     class MyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -43,7 +62,7 @@ public class AddController{
                     id = c.add.getID();
                     price = c.add.getPrice();
                     supplierID = c.add.getSupID();
-                    stock = c.add.getSupID();
+                    stock = c.add.getStock();
 
                     if(name.equals("") || id.equals("") || price.equals("") || supplierID.equals("") || stock.equals("")){
                         c.add.errorMessage("Enter all fields");
@@ -58,7 +77,23 @@ public class AddController{
                             return;
                         }
 
-                        
+                        c.socketOut.println("7");       // telling menu to add item
+
+                        c.socketOut.println(name);      // passes paramters to Shop.addItem(): void
+                        c.socketOut.println(id);
+                        c.socketOut.println(stock);
+                        c.socketOut.println(supplierID);
+                        c.socketOut.println(price);
+
+                        String temp = c.socketIn.readLine();
+                        if(temp.equals("success")){
+                            c.add.errorMessage(name + " added! Press List Tools to refresh list");
+                        } else{
+                            errorMeaning(temp);
+                        }
+
+                        c.add.setVisible(false);
+                        c.add.clearText();
                     }
                 }
 

@@ -110,6 +110,7 @@ public class Shop{
                     decreaseQuantity();
                     break;
                 case 5:
+
                     // checkQuantity();
                     break;
                 case 6:
@@ -258,65 +259,39 @@ public class Shop{
      * user.  
      */
     public void addItem()throws IOException{
-        // Scanner scan = new Scanner(System.in);
         String temp, name = ""; int id = -1; int stock = -1; int supID = -1; double price = -1;
-        sendString("Enter the name of the new Item:\0");
-        while(name.equals("")){
-            name = in.readLine();
-            if(name.equals(""))
-                sendString("invalid name\0");
-        }
-        sendString("Enter id of new Item\0");
-        do{
-            temp = in.readLine();
-            try{id = Integer.parseInt(temp);}catch(Exception a){
-                sendString("Non Integer input. Please Try Again\0");
+        String error = "";
+        
+        name = in.readLine();
+            if(name.equals("") || name.equals(" ")){
+                error += "name ";
             }
-            if(id < 0 || id > 9999)
-                sendString("Invalid input. Please Try Again: \n\0");
-            if(inventory.itemIDChecker(id)){
-                sendString("That id is already used, please enter a unique id number\0");
-                id = -1;
-            }
-        }while(id < 0 || id > 9999);
 
-        sendString("Enter quantity of new item\0");
-        do{
-            temp = in.readLine();
-            try{stock = Integer.parseInt(temp);}catch(Exception a){
-                sendString("Non Integer input. Please Try Again\0");
+        id = Integer.parseInt(in.readLine());
+            if(id < 0 || id > 9999 || inventory.itemIDChecker(id)){
+                error += "id ";
             }
-            if(stock < 40)
-                sendString("Invalid input. Please Try Again, stock must be >= 40: \n\0");
-        }while(stock < 40);
 
-        sendString("Enter supplier id of new Item\0");
-        do{
-            temp = in.readLine();
-            try{supID = Integer.parseInt(temp);}catch(Exception a){
-                sendString("Non Integer input. Please Try Again\0");
+        stock = Integer.parseInt(in.readLine());
+            if(stock < 40){
+                error += "stock ";
             }
-            if(supID < 0 || supID > 9999)
-                sendString("Invalid input. Please Try Again: \n\0");
+
+        supID = Integer.parseInt(in.readLine());
             if(!supplierIDChecker(supID)){
-                sendString("That Supplier doesn't exist, please enter valid supplier id\0");
-                supID = -1;
+                error += "supplier ";
             }
-        }while(supID < 0 || supID > 9999);
 
-        sendString("Enter price of new Item\0");
-        do{
-            temp = in.readLine();
-            try{price = Double.parseDouble(temp);}catch(Exception a){
-                sendString("Non Double input. Please Try Again\0");
-            }
-            if(price < 0)
-                sendString("Invalid input. Please Try Again: \n\0");
-        }while(price < 0);
-
-        addItem(name, id, price, stock, supID);
-        assignSuppliers();
-        sendString("Item added!");
+        price = Double.parseDouble(in.readLine());
+        
+        if(error.equals("")){
+            System.out.println(name+ id+ price+ stock+ supID);
+            addItem(name, id, price, stock, supID);
+            assignSuppliers();
+            sendString("success");
+        } else{
+            sendString(error);
+        }
     }
 
     /**

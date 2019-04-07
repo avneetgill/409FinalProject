@@ -94,7 +94,6 @@ public class MainController{
                             c.view.model.removeElement(selected);
                             c.view.errorMessage("Item removed");
                         }
-                        // c.view.errorMessage(selected);
                     }
                 }
 
