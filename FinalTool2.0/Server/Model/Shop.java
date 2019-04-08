@@ -110,11 +110,11 @@ public class Shop{
                     decreaseQuantity();
                     break;
                 case 5:
-
+                    search();
                     // checkQuantity();
                     break;
                 case 6:
-                    decreaseQuantity();
+                    // decreaseQuantity();
                     break;
                 case 7:
                     addItem();
@@ -179,6 +179,28 @@ public class Shop{
         p.setStock(p.getStock() - amount);
         if(p.getStock() < 40){
             orderMore(p);
+        }
+    }
+
+    public void search() throws IOException{
+        String nameOrId = in.readLine();
+        int id = -1;
+        Item p = null;
+
+        if(nameOrId.equals("id")){
+            try{
+                id = Integer.parseInt(in.readLine());
+            } catch(NumberFormatException a){
+                System.out.println("error converting socket input to int in Shop.search()");
+            }
+            p = searchID(id);
+        } else{
+            p = searchName(in.readLine());
+        }
+        if(p == null){
+            sendString("fail");
+        } else{
+            sendString(p.toString());
         }
     }
 
@@ -285,7 +307,6 @@ public class Shop{
         price = Double.parseDouble(in.readLine());
         
         if(error.equals("")){
-            System.out.println(name+ id+ price+ stock+ supID);
             addItem(name, id, price, stock, supID);
             assignSuppliers();
             sendString("success");
@@ -313,7 +334,7 @@ public class Shop{
         for(Supplier sup: suppliers){
             s += sup.toString() + "\n";
         }
-        s = s.substring(0, s.length()-2);
+        s = s.substring(0, s.length()-1);
         sendString(s);
     }
 
@@ -329,5 +350,9 @@ public class Shop{
      */
     public Item searchID(int itemId)throws IOException{
         return inventory.searchById(itemId);
+    }
+
+    public Item searchName(String name) throws IOException{
+        return inventory.searchByName(name);
     }
 }

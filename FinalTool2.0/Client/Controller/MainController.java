@@ -2,14 +2,8 @@ package Client.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import Client.View.*;
 
 /**
  * MainController
@@ -23,8 +17,6 @@ public class MainController{
     public String itemOrSupplier;
     
     public MainController(Controller c) {
-        // super();
-        // c.setView(v);
         this.c = c;
         listener = new MyListener();
         addListeners();
@@ -36,43 +28,32 @@ public class MainController{
             try{
                 if(e.getSource() == c.view.listToolButton){
                     
-                    // c.view.errorMessage("list tools pressed");
                     c.view.textBox.clearSelection();
                     itemOrSupplier = "item";
                     c.view.model.clear();
                     c.socketOut.println("1");
                     c.socketOut.flush();
                     int itemAmount = Integer.parseInt(c.socketIn.readLine());
-                    String s = "";
                     for(int i = 0; i < itemAmount; i++){
-                        // s += c.socketIn.readLine() + "\n";
                         c.view.addElementTextBox(c.socketIn.readLine());
                     }
-                    // s = s.substring(0, s.length() - 2);
                     System.out.println("Showing items");
                     c.view.changeButtonState(true);
-                    // c.view.setText(s);
                 } 
                 
                 else if(e.getSource() == c.view.listSupButton){
-                    // c.view.errorMessage("list suppliers pressed");
+
                     c.view.changeButtonState(false);
                     c.view.textBox.clearSelection();
                     itemOrSupplier = "supplier";
                     c.view.model.clear();
                     c.socketOut.println("2");
                     c.socketOut.flush();
-                    // int itemAmount = Integer.parseInt(c.socketIn.readLine());
                     String m = "";
                     for(int i = 0; i < 20; i++){
-                        // m += c.socketIn.readLine() + "\n";
                         c.view.addElementTextBox(c.socketIn.readLine());
                     }
-                    // m = m.substring(0, m.length() - 2);
                     System.out.println("Showing suppliers");
-                    // c.view.setText(m);
-                    // cleanBuffer();
-                    // c.view.addButton.setEnabled(true);
                 }
 
                 else if(e.getSource() == c.view.deleteButton){
@@ -133,13 +114,18 @@ public class MainController{
                             } else{                                 // if yesss enough to sell
                                 c.view.errorMessage("Sold " + amount + " of this item");
                             }
-                            c.view.errorMessage("Please press List items to refresh the list");
+                            // c.view.errorMessage("Please press List items to refresh the list");
+                            c.view.listToolButton.doClick();
                         }
                     }
                 }
 
                 else if(e.getSource() == c.view.addButton){
                     c.add.setVisible(true);
+                }
+
+                else if(e.getSource() == c.view.searchButton){
+                    c.search.setVisible(true);
                 }
 
             }catch(Exception a){

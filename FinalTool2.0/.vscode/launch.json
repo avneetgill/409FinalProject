@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SearchView",
+            "request": "launch",
+            "mainClass": "Client.View.SearchView",
+            "projectName": "FinalTool2.0_c5698744"
+        }
+    ]
+}

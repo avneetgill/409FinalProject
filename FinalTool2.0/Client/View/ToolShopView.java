@@ -40,7 +40,7 @@ public class ToolShopView extends JFrame{
         JPanel topTitle = new JPanel();
 
         setTitle("Inventory Manager Pro" + "\u2122");
-        this.setSize(750, 600);
+        this.setSize(800, 620);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);

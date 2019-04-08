@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
  * @version 1.0
  */
 public class AddView extends JFrame{
+
     JPanel headerPanel = new JPanel();
     JPanel textFields = new JPanel();
     JPanel buttons = new JPanel();
@@ -20,7 +21,7 @@ public class AddView extends JFrame{
     JLabel header = new JLabel ("Add a new tool");
     
     public JButton insertButton = new JButton("Add");
-    public JButton returnButton = new JButton("Return to Main Window");
+    // public JButton returnButton = new JButton("Return to Main Window");
 
     JTextField field1 =  new JTextField(10);
     JTextField field2 =  new JTextField(10);
@@ -41,9 +42,9 @@ public class AddView extends JFrame{
 
         buttons.setLayout(new FlowLayout());
         buttons.add(insertButton);
-        buttons.add(returnButton);
+        // buttons.add(returnButton);
         insertButton.setFont(new Font("Sans", Font.PLAIN, 20));
-        returnButton.setFont(new Font("Sans", Font.PLAIN, 20));
+        // returnButton.setFont(new Font("Sans", Font.PLAIN, 20));
 
         this.setBackground(Color.WHITE);
         headerPanel.setBackground(Color.WHITE);
@@ -89,7 +90,7 @@ public class AddView extends JFrame{
         field5.setFont(new Font("Sans", Font.PLAIN, fontSize));
     }
 
-    public void addWindowListener(WindowAdapter a){
+    public void addCloseListener(WindowAdapter a){
         this.addWindowListener(a);
     }
 
@@ -125,9 +126,9 @@ public class AddView extends JFrame{
         insertButton.addActionListener(a);
     }
 
-    public void addReturnListener(ActionListener a){
-        returnButton.addActionListener(a);
-    }
+    // public void addReturnListener(ActionListener a){
+    //     returnButton.addActionListener(a);
+    // }
 
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);

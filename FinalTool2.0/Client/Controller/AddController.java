@@ -2,14 +2,6 @@ package Client.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import Client.View.*;
 /**
  * AddController
  */
@@ -49,14 +41,9 @@ public class AddController{
         @Override
         public void actionPerformed(ActionEvent e){
             try{
-                if(e.getSource() == c.add.returnButton){
-                    c.add.setVisible(false);
-                    c.add.clearText();
-                }
-
-                else if(e.getSource() == c.add.insertButton){
+                if(e.getSource() == c.add.insertButton){
                     String id, name, price, supplierID, stock;
-                    int idi, supplierIDi, stocki; double pricei;
+                    // int idi, supplierIDi, stocki; double pricei;
 
                     name = c.add.getName();
                     id = c.add.getID();
@@ -68,10 +55,10 @@ public class AddController{
                         c.add.errorMessage("Enter all fields");
                     } else{
                         try{
-                            idi = Integer.parseInt(id);
-                            supplierIDi = Integer.parseInt(supplierID);
-                            stocki = Integer.parseInt(stock);
-                            pricei = Double.parseDouble(price);
+                            Integer.parseInt(id);
+                            Integer.parseInt(supplierID);
+                            Integer.parseInt(stock);
+                            Double.parseDouble(price);
                         }catch(NumberFormatException a){
                             c.add.errorMessage("Enter valid numbers");
                             return;
@@ -87,13 +74,14 @@ public class AddController{
 
                         String temp = c.socketIn.readLine();
                         if(temp.equals("success")){
-                            c.add.errorMessage(name + " added! Press List Tools to refresh list");
+                            c.add.errorMessage(name + " added!");
+                            c.view.listToolButton.doClick();
+                            c.add.setVisible(false);
+                            c.add.clearText();
                         } else{
                             errorMeaning(temp);
                         }
 
-                        c.add.setVisible(false);
-                        c.add.clearText();
                     }
                 }
 
@@ -105,8 +93,15 @@ public class AddController{
     }
 
     public void addListeners() {
-        c.add.addReturnListener(listener);
+        // c.add.addReturnListener(listener);
         c.add.addInsertListener(listener);
+        c.add.addCloseListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                c.add.clearText();
+                c.add.setVisible(false);
+            }
+        });
     }
     
 }

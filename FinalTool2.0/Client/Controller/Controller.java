@@ -1,15 +1,10 @@
 package Client.Controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import Client.View.*;
 
 public class Controller {
@@ -21,6 +16,7 @@ public class Controller {
     public ToolShopView view;
     public LoginView login;
     public AddView add;
+    public SearchView search;
 
     public Controller(int port, String name){//, MainController main, LoginController login, AddController add) {
         try {
@@ -34,6 +30,7 @@ public class Controller {
         view = new ToolShopView();
         login = new LoginView();
         add = new AddView();
+        search = new SearchView();
         
     }
 
@@ -51,6 +48,7 @@ public class Controller {
         AddController addController = new AddController(c);
         MainController main = new MainController(c);
         LoginController loginController = new LoginController(c);
+        SearchController searchController = new SearchController(c);
         
         c.startGui();
 
