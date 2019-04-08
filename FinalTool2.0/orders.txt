@@ -1,9 +1,16 @@
 **********************************************
-ORDER ID: 82423
-Date Ordered: Sun Apr 07 21:49:56 MDT 2019
+ORDER ID: 47095
+Date Ordered: Mon Apr 08 14:54:12 MDT 2019
 
-Item description: ew
+Item description: Handy Pandies
 Amount ordered: 50
-Supplier: Grommet Builders
+Supplier: E & O Industries
+**********************************************
+ORDER ID: 27379
+Date Ordered: Mon Apr 08 14:54:31 MDT 2019
+
+Item description: tre
+Amount ordered: 50
+Supplier: Twinkles Inc.
 **********************************************
 

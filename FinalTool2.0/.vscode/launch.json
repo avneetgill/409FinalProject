@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "mainClass": "src.Server.Controller.Server",
+            "projectName": "FinalTool2.0_c5698744"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - SearchView",
             "request": "launch",
             "mainClass": "Client.View.SearchView",
