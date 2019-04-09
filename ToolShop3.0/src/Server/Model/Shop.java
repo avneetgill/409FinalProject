@@ -149,7 +149,7 @@ public class Shop{
 
     }
 
-    public void decreaseQuantity() throws IOException{
+    public synchronized void decreaseQuantity() throws IOException{
         String itemId = in.readLine();
         int id = -1;
         
