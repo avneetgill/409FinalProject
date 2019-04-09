@@ -76,4 +76,31 @@ public class DatabaseController{
         }
     }
 
+    public String listAll(){
+        String query = "SELECT * FROM `items`";
+        try{
+        Statement stmt = myConn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        String list = "";
+        while(rs.next()){
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            Double price = rs.getDouble("price");
+            int supId = rs.getInt("suppId");
+            int stock = rs.getInt("stock");
+            list += toString(id, name, stock, price, supId) + "\n";
+        }
+        return list;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return "something went wrong";
+    }
+
+    public String toString(int id, String name, int stock, double price, int supId){
+        return "id: " + id + ", item name: " + name +
+                ", quantity in stock: " + stock + 
+                ", price: $" + price +
+                ", supplier id: " + supId;
+    }
 }
