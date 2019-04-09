@@ -120,7 +120,9 @@ public class Server {
     public static void main(String[] args) {
         // to run this main: javac -d classes Server/Controller/Server.java
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Server.Controller.Server
-        Server s = new Server(8988);
+
+        // my local ip address (ipv4): 10.0.0.94(Preferred)
+        Server s = new Server(9091);
         try {
             // s.constructObjects();
             s.communicateClient();
