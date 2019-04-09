@@ -1,0 +1,9 @@
+**********************************************
+ORDER ID: 23513
+Date Ordered: Fri Mar 29 14:32:29 MDT 2019
+
+Item description: Inny Outies
+Amount ordered: 50
+Supplier: Irkle Industries
+**********************************************
+
