@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Driver",
+            "request": "launch",
+            "mainClass": "jdbcDemo.Driver",
+            "projectName": "ToolShop3.0"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Controller",
             "request": "launch",
             "mainClass": "Client.Controller.Controller",
