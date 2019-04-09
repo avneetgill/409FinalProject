@@ -122,6 +122,7 @@ public class Server {
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Server.Controller.Server
 
         // my local ip address (ipv4): 10.0.0.94(Preferred)
+        //10.13.139.95
         Server s = new Server(9091);
         try {
             // s.constructObjects();
