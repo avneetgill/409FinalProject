@@ -97,10 +97,31 @@ public class DatabaseController{
         return "something went wrong";
     }
 
+    public void deleteItem(String itemName){
+        try{
+            query = "DELETE FROM `items` WHERE `name` =" + itemName;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.execute();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteItem(int itemId){
+        try{
+            query = "DELETE FROM `items` WHERE `id` = " + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.execute();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public String toString(int id, String name, int stock, double price, int supId){
         return "id: " + id + ", item name: " + name +
                 ", quantity in stock: " + stock + 
                 ", price: $" + price +
                 ", supplier id: " + supId;
     }
+    
 }
