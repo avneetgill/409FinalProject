@@ -27,7 +27,7 @@ public class DatabaseController{
 			while(read.hasNext()){
 				nextLine = read.nextLine();
 				arr = nextLine.split(";");
-				id = arr[0];
+                id = arr[0];
 				name = arr[1];
 				quantity = arr[2];
 				price = arr[3];
@@ -117,11 +117,39 @@ public class DatabaseController{
         }
     }
 
+    public void decreaseQuantity(int itemId, int amount){
+        int currentStock = 0;
+        String query = "SELECT * FROM `items`";
+        try{
+        Statement stmt = myConn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while(rs.next()){
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            Double price = rs.getDouble("price");
+            int supId = rs.getInt("suppId");
+            int stock = rs.getInt("stock");
+            if(id == itemId){
+                currentStock = stock;
+                break;
+            }
+        }
+            if(currentStock > amount){
+            int newStock = currentStock - amount;
+            query = "UPDATE `items` SET `stock` = " + newStock + " WHERE `id` = " + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.execute();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public String toString(int id, String name, int stock, double price, int supId){
         return "id: " + id + ", item name: " + name +
                 ", quantity in stock: " + stock + 
                 ", price: $" + price +
                 ", supplier id: " + supId;
     }
-    
+
 }
