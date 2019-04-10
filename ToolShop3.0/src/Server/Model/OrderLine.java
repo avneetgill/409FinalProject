@@ -10,7 +10,7 @@ public class OrderLine{
     /**
      * The item which the orderline is for.
      */
-    private Item item;
+    private int itemId;
 
     /**
      * The current date. 
@@ -27,6 +27,8 @@ public class OrderLine{
      */
     private int orderID;
 
+    private String itemToString2;
+
     /**
      * Constructs an object of Orderline with the specified values.
      * @param i the item that is making the order.
@@ -34,11 +36,11 @@ public class OrderLine{
      * @param id the id of the order.
      * @param quantity the amount of stock that needs to be ordered. 
      */
-    public OrderLine(Item i, Date d, int id, int quantity){
+    public OrderLine(int i, Date d, int id, String itemToString2){
         date = d;
-        item = i;
+        itemId = i;
         orderID = id;
-        amount = quantity;
+        this.itemToString2 = itemToString2;
     }
 
     /**
@@ -54,8 +56,9 @@ public class OrderLine{
      * @return returns a string containing all the information for the orderline. 
      */
     public String toString(){
-        return "ORDER ID: " + orderID + "\n" +
-               "Date Ordered: " + date + "\n\n" +
-                item.toString2(amount);
+        // return "ORDER ID: " + orderID + "\n" +
+        //        "Date Ordered: " + date + "\n\n" +
+        //         item.toString2(amount);
+        return itemToString2;
     }
 }

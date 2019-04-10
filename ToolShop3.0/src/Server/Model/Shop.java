@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import Server.Controller.*;
 
 /** 
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
@@ -33,6 +33,8 @@ public class Shop implements Runnable{
      */
     private Inventory inventory;
 
+    private DatabaseController database;
+
     Socket socketIn;
     PrintWriter out;
     BufferedReader in;
@@ -47,7 +49,7 @@ public class Shop implements Runnable{
      * @param i the inventory to be assigned to the Shop. 
      * @throws FileNotFoundException thrown if there is an issue with file access. 
      */
-    public Shop(Order o, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
+    public Shop(Order o, DatabaseController db, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
         order = o;
         suppliers = s;
         inventory = i;
@@ -60,6 +62,8 @@ public class Shop implements Runnable{
             sendString("error");
             a.printStackTrace();
         }
+
+        database = db;
 
         addSuppliersText();
         // inventory.addItemsText();
@@ -142,8 +146,10 @@ public class Shop implements Runnable{
             System.out.println("error converting socket input to int in Shop.deleteItem()");
         }
 
-        Item toBeDeleted = searchID(id);
-        inventory.deleteItem(toBeDeleted);
+        database.deleteItem(id);
+        
+        // Item toBeDeleted = searchID(id);
+        // inventory.deleteItem(toBeDeleted);
 
         // System.out.println(inventory.toString());
 
@@ -158,9 +164,7 @@ public class Shop implements Runnable{
         } catch(NumberFormatException a){
             System.out.println("error converting socket input to int in Shop.decreaseItem()");
         }
-
-        Item p = searchID(id);      // item to be decreased
-
+        // Item p = searchID(id);      // item to be decreased
         String amountTobeDecreased = in.readLine();
         int amount = -1;
         
@@ -170,15 +174,30 @@ public class Shop implements Runnable{
             System.out.println("error converting socket input to int in Shop.decreaseItem()");
         }
 
-        if(amount > p.getStock()){
-            sendString("notEnoughSelling: " + p.getStock());
-            amount =  p.getStock();
+        // if(amount > p.getStock()){
+        //     sendString("notEnoughSelling: " + p.getStock());
+        //     amount =  p.getStock();
+        // } else{
+        //     sendString("success");
+        // }
+        // p.setStock(p.getStock() - amount);
+        // if(p.getStock() < 40){
+        //     orderMore(p);
+        // }
+
+        int stockOfItem = database.getStock(id);
+
+        if(amount > stockOfItem){
+            sendString("notEnoughSelling: " + stockOfItem);
+            amount =  stockOfItem;
         } else{
             sendString("success");
         }
-        p.setStock(p.getStock() - amount);
-        if(p.getStock() < 40){
-            orderMore(p);
+        database.setStock(id, (stockOfItem - amount));
+        stockOfItem = database.getStock(id);
+        if(stockOfItem < 40){
+            // orderMore(p);
+            orderMore(id);
         }
     }
 
@@ -204,15 +223,26 @@ public class Shop implements Runnable{
         }
     }
 
-    /**
-     * Generates an orderline for the specified Item.
-     * @param item the Item object for which to generate an order.
-     * @throws IOException thrown if there is an issue with IO stream.
-     */
-    public void orderMore(Item item) throws IOException{
-        int amount = 50 - item.getStock();
-        item.setStock(item.getStock() + amount);
-        order.newOrder(item, amount);
+    // /**
+    //  * Generates an orderline for the specified Item.
+    //  * @param item the Item object for which to generate an order.
+    //  * @throws IOException thrown if there is an issue with IO stream.
+    //  */
+    // @Deprecated
+    // public void orderMore(Item item) throws IOException{
+    //     int amount = 50 - item.getStock();
+    //     item.setStock(item.getStock() + amount);
+    //     order.newOrder(item, amount);
+    // }
+    
+    public void orderMore(int itemId) throws IOException{
+        int itemStock = database.getStock(itemId);
+        int amount = 50 - itemStock;
+        database.setStock(itemId, (itemStock + amount));
+        System.out.println("ordering more");
+        String itemToString2 = database.toString2(itemId, amount);
+
+        order.newOrder(itemId, itemToString2);
     }
 
     /**
@@ -321,7 +351,9 @@ public class Shop implements Runnable{
     public void listAllItems(){
         // sendString("Items in inventory and their details:");    
         // sendString("Items in inventory and their details:");
-        sendString(inventory.toString());
+        // sendString("41");
+        sendString(database.getItemCount());
+        sendString(database.listAll());
     }
 
     /**

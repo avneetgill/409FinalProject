@@ -1,9 +1,10 @@
 **********************************************
-ORDER ID: 22181
-Date Ordered: Tue Apr 09 21:34:37 MDT 2019
-
+Item description: Handy Pandies
+Amount ordered: 50
+Supplier: 8017
+**********************************************
 Item description: Googly Eyes
 Amount ordered: 50
-Supplier: Grommet Builders
+Supplier: 8001
 **********************************************
 

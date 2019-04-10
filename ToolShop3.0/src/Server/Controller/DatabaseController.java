@@ -9,7 +9,7 @@ public class DatabaseController{
     String query;
     PreparedStatement preStmt;
 
-    DatabaseController(){
+    public DatabaseController(){
         try {
             myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         } catch (Exception e) {
@@ -97,6 +97,7 @@ public class DatabaseController{
                 int stock = rs.getInt("stock");
                 list += toString(id, name, stock, price, supId) + "\n";
             }
+            list = list.substring(0, list.length() -1);
             return list;
         }catch(SQLException e){
             e.printStackTrace();
@@ -247,18 +248,61 @@ public class DatabaseController{
                 ", supplier id: " + supId;
     }
 
+    public String getItemCount(){
+        // System.out.println("   db: counting items");
+        int rows = 0;
+        try {
+            preStmt = myConn.prepareStatement("SELECT COUNT(*) FROM `items`");
+            ResultSet rs = preStmt.executeQuery();
+            System.out.println("yuhhh");
+            rs.next();
+            rows = rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // System.out.println("   db: finished counting items");
+        return Integer.toString(rows);
+    }
+
+    public String toString2(int itemId, int amountOrdered){
+        String itemToString2 = null;
+        try {
+            query = "SELECT * FROM `items` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, itemId);
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return null;
+            }
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            double price = rs.getDouble("price");
+            int supId = rs.getInt("suppId");
+            int stock = rs.getInt("stock");
+
+            itemToString2 = "Item description: " + name + "\n" +
+            "Amount ordered: " + amountOrdered + "\n" +
+            "Supplier: " + supId;       // TODO needs to be changed to supplier name
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return itemToString2;
+    }
+
     public static void main(String[] args) {
         DatabaseController db = new DatabaseController();
 
-        // db.populateDatabase();
-        // db.clearDatabase();
+        db.clearDatabase();
+        db.populateDatabase();
         // db.deleteItem(1040);
         // db.deleteItem(1000);
         // String yuh = db.listAll();
         // db.decreaseQuantity(1002, 19);
         // int yuh = db.getStock(9999);
         // db.setStock(1001, 999);
-        String yuh = db.search("Widgets");
+        // String yuh = db.search("Widgets");
+        String yuh = db.getItemCount();
 
         System.out.println(yuh);
     }

@@ -31,10 +31,10 @@ public class Order{
      * @param amount the amount of stock to be ordered.
      * @throws IOException thrown if there is an issue with IO stream.
      */
-    public void newOrder(Item i, int amount)throws IOException{
+    public void newOrder(int itemId, String itemToString2)throws IOException{
         Date date = new Date();
         int id = generateID();
-        OrderLine OrderNew = new OrderLine(i, date, id, amount);
+        OrderLine OrderNew = new OrderLine(itemId, date, id, itemToString2);
         lines.add(OrderNew);
         writeTxt();
     }

@@ -31,6 +31,18 @@ public class Server {
      */
     private ExecutorService pool;
 
+    
+    
+    ArrayList<OrderLine> line;
+    Order order;
+
+    ArrayList<Item> items;
+    Inventory inventory;
+
+    ArrayList<Supplier> suppliers;
+
+    DatabaseController database;
+
     /** 
      * Constructs a Server and initializes the ServerSocket. 
      * @param portNumber the port that the ServerSocket will be initialized to
@@ -44,17 +56,6 @@ public class Server {
         }
         System.out.println("<< Server is Running >>");
     }
-    
-    ArrayList<OrderLine> line;
-    Order order;
-
-    ArrayList<Item> items;
-    Inventory inventory;
-
-    ArrayList<Supplier> suppliers;
-
-    // Shop store;
-    // FrontEnd f;
 
     void constructObjects()throws Exception{
 
@@ -79,6 +80,9 @@ public class Server {
         items = new ArrayList<Item>();
         inventory = new Inventory(items);
         inventory.addItemsText();
+
+        database = new DatabaseController();
+
         try{
             while(true){
                 System.out.println(" At loopTop ");
@@ -96,7 +100,7 @@ public class Server {
                 suppliers = new ArrayList<Supplier>();
 
 
-                Shop store = new Shop(order, suppliers, inventory, aSocket);
+                Shop store = new Shop(order, database, suppliers, inventory, aSocket);
                 // store.setSocketIn(aSocket);
 
                 // FrontEnd f = new FrontEnd(store);        // no longer used

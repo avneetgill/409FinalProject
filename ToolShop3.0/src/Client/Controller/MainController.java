@@ -35,7 +35,9 @@ public class MainController{
                     c.socketOut.flush();
                     int itemAmount = Integer.parseInt(c.socketIn.readLine());
                     for(int i = 0; i < itemAmount; i++){
-                        c.view.addElementTextBox(c.socketIn.readLine());
+                        String temp = c.socketIn.readLine();
+                        // System.out.println(temp);
+                        c.view.addElementTextBox(temp);
                     }
                     System.out.println("Showing items");
                     c.view.changeButtonState(true);
@@ -106,6 +108,8 @@ public class MainController{
                             c.socketOut.println(temp2);             // gives Shop.decreaseItem() the amount to be deleted
                             
                             temp2 = c.socketIn.readLine();
+
+                            // System.out.println(temp2 + " temp 2 value");
 
                             if(temp2.contains("notEnoughSelling: ")){       // if not enough to sell
                                 arr = temp2.split(" ");
