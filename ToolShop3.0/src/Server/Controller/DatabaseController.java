@@ -11,12 +11,16 @@ public class DatabaseController{
 
     DatabaseController(){
         try {
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo?user=root","root", "Rocky@299");
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         } catch (Exception e) {
+            System.err.println("error connecting to database");
             e.printStackTrace();
         }
     }
 
+    /**
+     * only to be used at the beginning once to fill database with items from text file
+     */
     public void populateDatabase(){
         try {
             Scanner read = new Scanner(new File("items.txt"));
@@ -66,6 +70,9 @@ public class DatabaseController{
         }   
     }
 
+    /**
+     * completely clears database, deletes all rows
+     */
     public void clearDatabase(){
         try{
             query = "DELETE FROM `items`";
@@ -79,18 +86,18 @@ public class DatabaseController{
     public String listAll(){
         String query = "SELECT * FROM `items`";
         try{
-        Statement stmt = myConn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        String list = "";
-        while(rs.next()){
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            Double price = rs.getDouble("price");
-            int supId = rs.getInt("suppId");
-            int stock = rs.getInt("stock");
-            list += toString(id, name, stock, price, supId) + "\n";
-        }
-        return list;
+            Statement stmt = myConn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            String list = "";
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Double price = rs.getDouble("price");
+                int supId = rs.getInt("suppId");
+                int stock = rs.getInt("stock");
+                list += toString(id, name, stock, price, supId) + "\n";
+            }
+            return list;
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -99,9 +106,11 @@ public class DatabaseController{
 
     public void deleteItem(String itemName){
         try{
-            query = "DELETE FROM `items` WHERE `name` =" + itemName;
+            // query = "DELETE FROM `items` WHERE name like" + "`%" + itemName + "%`";
+            query = "DELETE FROM `items` WHERE `name` = ?";
             preStmt = myConn.prepareStatement(query);
-            preStmt.execute();
+            preStmt.setString(1, itemName);
+            preStmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -109,36 +118,122 @@ public class DatabaseController{
 
     public void deleteItem(int itemId){
         try{
-            query = "DELETE FROM `items` WHERE `id` = " + itemId;
+            query = "DELETE FROM `items` WHERE `id` = ?";// + itemId;
             preStmt = myConn.prepareStatement(query);
-            preStmt.execute();
+            preStmt.setInt(1, itemId);
+            preStmt.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
 
+    public String search(int itemId){
+        String itemToString = null;
+        try{
+            query = "SELECT * FROM `items` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, itemId);
+            // preStmt.execute();
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return null;
+            }
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            double price = rs.getDouble("price");
+            int supId = rs.getInt("suppId");
+            int stock = rs.getInt("stock");
+            itemToString = toString(id, name, stock, price, supId);
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return itemToString;
+    }
+
+    public String search(String itemName){
+        String itemToString = null;
+        try{
+            query = "SELECT * FROM `items` WHERE `name` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setString(1, itemName);
+            // preStmt.execute();
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return null;
+            }
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            double price = rs.getDouble("price");
+            int supId = rs.getInt("suppId");
+            int stock = rs.getInt("stock");
+            itemToString = toString(id, name, stock, price, supId);
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return itemToString;
+    }
+
+    /**
+     * 
+     * @param itemId
+     * @return stock of item, or -1 if no such item
+     */
+    public int getStock(int itemId){
+        try{
+            query = "SELECT `stock` FROM `items` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, itemId);
+            // preStmt.execute();
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return -1;
+            }
+            // rs.next();
+            return rs.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void setStock(int itemId, int newStock){
+        try{
+            query = "UPDATE `items` SET `stock` = ? WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, newStock);
+            preStmt.setInt(2, itemId);
+            preStmt.execute();
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.err.println("error setting stock");
+        }
+    }
+
+    @Deprecated
     public void decreaseQuantity(int itemId, int amount){
         int currentStock = 0;
         String query = "SELECT * FROM `items`";
         try{
-        Statement stmt = myConn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        while(rs.next()){
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            Double price = rs.getDouble("price");
-            int supId = rs.getInt("suppId");
-            int stock = rs.getInt("stock");
-            if(id == itemId){
-                currentStock = stock;
-                break;
+            Statement stmt = myConn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                Double price = rs.getDouble("price");
+                int supId = rs.getInt("suppId");
+                int stock = rs.getInt("stock");
+                if(id == itemId){
+                    currentStock = stock;
+                    break;
+                }
             }
-        }
             if(currentStock > amount){
-            int newStock = currentStock - amount;
-            query = "UPDATE `items` SET `stock` = " + newStock + " WHERE `id` = " + itemId;
-            preStmt = myConn.prepareStatement(query);
-            preStmt.execute();
+                int newStock = currentStock - amount;
+                query = "UPDATE `items` SET `stock` = " + newStock + " WHERE `id` = " + itemId;
+                preStmt = myConn.prepareStatement(query);
+                preStmt.execute();
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -150,6 +245,22 @@ public class DatabaseController{
                 ", quantity in stock: " + stock + 
                 ", price: $" + price +
                 ", supplier id: " + supId;
+    }
+
+    public static void main(String[] args) {
+        DatabaseController db = new DatabaseController();
+
+        // db.populateDatabase();
+        // db.clearDatabase();
+        // db.deleteItem(1040);
+        // db.deleteItem(1000);
+        // String yuh = db.listAll();
+        // db.decreaseQuantity(1002, 19);
+        // int yuh = db.getStock(9999);
+        // db.setStock(1001, 999);
+        String yuh = db.search("Widgets");
+
+        System.out.println(yuh);
     }
 
 }

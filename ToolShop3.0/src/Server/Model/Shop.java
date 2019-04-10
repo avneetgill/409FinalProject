@@ -16,7 +16,7 @@ import java.io.FileNotFoundException;
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
-public class Shop{
+public class Shop implements Runnable{
 
     /**
      * The object of Order that manages the orderlines for the shop. 
@@ -354,5 +354,22 @@ public class Shop{
 
     public Item searchName(String name) throws IOException{
         return inventory.searchByName(name);
+    }
+
+    @Override
+    public void run() {
+        try{
+            menuRunner();
+        }catch(SocketException a){
+            System.err.println("    ---A Client disconnected");
+            Thread.currentThread().interrupt();
+            return;      
+        }catch(IOException a){
+            System.err.println(" run caught error ");
+            a.printStackTrace();
+        }catch(Exception b){
+            System.err.println(" run caught error 2 ");
+            b.printStackTrace();
+        }
     }
 }

@@ -99,10 +99,10 @@ public class Server {
                 Shop store = new Shop(order, suppliers, inventory, aSocket);
                 // store.setSocketIn(aSocket);
 
-                FrontEnd f = new FrontEnd(store);
+                // FrontEnd f = new FrontEnd(store);        // no longer used
 
                 System.out.println("<< Shop app started >>");
-                pool.execute(f);
+                pool.execute(store);
                 pool.shutdown();
             }
         } catch(Exception a){
