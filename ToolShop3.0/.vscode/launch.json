@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - LoginDatabaseController",
+            "request": "launch",
+            "mainClass": "Server.Controller.LoginDatabaseController",
+            "projectName": "ToolShop3.0"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - DatabaseController",
             "request": "launch",
             "mainClass": "Server.Controller.DatabaseController",

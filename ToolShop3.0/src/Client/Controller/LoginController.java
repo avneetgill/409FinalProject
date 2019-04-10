@@ -15,7 +15,6 @@ public class LoginController {
         addListeners();
     }
     
-
     class MyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -28,11 +27,18 @@ public class LoginController {
                         System.out.println("error");
                         c.login.errorMessage("Please Enter Username and Password");
                     } else{
-                        // if(username.valid() && password.valid()){
-                            // check if user and pass are valid
-                        // }
-                        c.login.setVisible(false);
-                        c.view.setVisible(true);
+                        c.socketOut.println("6");
+                        c.socketOut.println(username);
+                        c.socketOut.println(pass);
+
+                        String result = c.socketIn.readLine();
+
+                        if(result.contains("fail")){
+                            c.login.errorMessage("EmployeeId or password invalid");
+                        } else{
+                            c.login.setVisible(false);
+                            c.view.setVisible(true);
+                        }
                     }
                 }
             }catch(Exception a){

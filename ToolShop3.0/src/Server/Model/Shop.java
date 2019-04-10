@@ -34,6 +34,8 @@ public class Shop implements Runnable{
     private Inventory inventory;
 
     private DatabaseController database;
+    private LoginDatabaseController logindDb;
+
 
     Socket socketIn;
     PrintWriter out;
@@ -49,7 +51,7 @@ public class Shop implements Runnable{
      * @param i the inventory to be assigned to the Shop. 
      * @throws FileNotFoundException thrown if there is an issue with file access. 
      */
-    public Shop(Order o, DatabaseController db, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
+    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
         order = o;
         suppliers = s;
         inventory = i;
@@ -64,6 +66,7 @@ public class Shop implements Runnable{
         }
 
         database = db;
+        this.logindDb = loginDb;
 
         addSuppliersText();
         // inventory.addItemsText();
@@ -118,7 +121,7 @@ public class Shop implements Runnable{
                     // checkQuantity();
                     break;
                 case 6:
-                    // decreaseQuantity();
+                    validateLogin();
                     break;
                 case 7:
                     addItem();
@@ -134,6 +137,19 @@ public class Shop implements Runnable{
             }
         }
 
+    }
+
+    public void validateLogin()throws IOException{
+        String user = in.readLine();
+        String pass = in.readLine();
+
+        boolean valid = logindDb.validateUser(user, pass);
+
+        if(!valid){
+            sendString("fail");
+        } else{
+            sendString("success");
+        }
     }
     
     public void deleteItem() throws IOException{
