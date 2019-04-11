@@ -104,7 +104,7 @@ public class Server {
                 suppliers = new ArrayList<Supplier>();
 
 
-                Shop store = new Shop(order, database, loginDatabase, supplierDatabase, suppliers, inventory, aSocket);
+                Shop store = new Shop(order, database, loginDatabase, supplierDatabase, aSocket);
                 // store.setSocketIn(aSocket);
 
                 // FrontEnd f = new FrontEnd(store);        // no longer used

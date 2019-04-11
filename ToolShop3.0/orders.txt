@@ -1,6 +1,6 @@
 1
 **********************************************
-Item description: Ding Darns
-Amount ordered: 50
-Supplier: 8019
+Item description: Googly Eyes
+Amount ordered: 44
+Supplier: 8001
 *********************************************

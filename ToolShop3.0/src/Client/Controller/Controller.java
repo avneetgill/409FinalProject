@@ -45,7 +45,7 @@ public class Controller {
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Client.Controller.Controller
 
         // 10.12.140.162
-        Controller c = new Controller(9091, "10.13.140.162");
+        Controller c = new Controller(9091, "localhost");
         
         AddController addController = new AddController(c);
         MainController main = new MainController(c);

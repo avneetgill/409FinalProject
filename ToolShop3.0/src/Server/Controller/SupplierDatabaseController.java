@@ -93,6 +93,22 @@ public class SupplierDatabaseController{
         return "something went wrong";
     }
 
+    public boolean supplierExists(int supId){
+        try{
+            query = "SELECT * FROM `suppliers` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, supId);
+            // preStmt.execute();
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return false;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return true;
+    }
+
     public String toString(int id, String name, String address, String contact){
         return "id: " + id + ", name: " +name+ ", address: " + address + ", contact: " + contact;
     }
@@ -101,10 +117,8 @@ public class SupplierDatabaseController{
         SupplierDatabaseController db = new SupplierDatabaseController();
         db.clearDatabase();
         db.populateDatabase();
-        // String yuh = db.listAll();
-        // System.out.println(yuh);
-        System.out.println("Supplier database reset");
 
+        System.out.println("Supplier database reset");
     }
 
 }

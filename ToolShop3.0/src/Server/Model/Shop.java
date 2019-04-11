@@ -52,10 +52,10 @@ public class Shop implements Runnable{
      * @param i the inventory to be assigned to the Shop. 
      * @throws FileNotFoundException thrown if there is an issue with file access. 
      */
-    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
+    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, Socket socket) throws FileNotFoundException{
         order = o;
-        suppliers = s;
-        inventory = i;
+        // suppliers = s;
+        // inventory = i;
         socketIn = socket;
 
         try{
@@ -70,9 +70,9 @@ public class Shop implements Runnable{
         this.logindDb = loginDb;
         this.supplierDb = supplierDb;
 
-        addSuppliersText();
+        // addSuppliersText();
         // inventory.addItemsText();
-        assignSuppliers();
+        // assignSuppliers();
     }
 
     public void setSocketIn(Socket socketIn) {
@@ -224,7 +224,8 @@ public class Shop implements Runnable{
     public void search() throws IOException{
         String nameOrId = in.readLine();
         int id = -1;
-        Item p = null;
+        // Item p = null;
+        String itemToString = null;
 
         if(nameOrId.equals("id")){
             try{
@@ -232,14 +233,17 @@ public class Shop implements Runnable{
             } catch(NumberFormatException a){
                 System.out.println("error converting socket input to int in Shop.search()");
             }
-            p = searchID(id);
+            // p = searchID(id);
+            itemToString = database.search(id);
         } else{
-            p = searchName(in.readLine());
+            // p = searchName(in.readLine());
+            itemToString = database.search(in.readLine());
         }
-        if(p == null){
+        if(itemToString == null){
             sendString("fail");
         } else{
-            sendString(p.toString());
+            // sendString(p.toString());
+            sendString(itemToString);
         }
     }
 
@@ -350,15 +354,19 @@ public class Shop implements Runnable{
             }
 
         supID = Integer.parseInt(in.readLine());
-            if(!supplierIDChecker(supID)){
+            // if(!supplierIDChecker(supID)){
+            //     error += "supplier ";
+            // }
+            if(!supplierDb.supplierExists(supID)){
                 error += "supplier ";
             }
 
         price = Double.parseDouble(in.readLine());
         
         if(error.equals("")){
-            addItem(name, id, price, stock, supID);
-            assignSuppliers();
+            // addItem(name, id, price, stock, supID);
+            database.addData(id, name, price, supID, stock);
+            // assignSuppliers();
             sendString("success");
         } else{
             sendString(error);
