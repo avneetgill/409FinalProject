@@ -1,10 +1,6 @@
 **********************************************
-Item description: Handy Pandies
+Item description: Foo Figs
 Amount ordered: 50
-Supplier: 8017
-**********************************************
-Item description: Googly Eyes
-Amount ordered: 50
-Supplier: 8001
+Supplier: 8018
 **********************************************
 

@@ -43,6 +43,7 @@ public class Server {
 
     DatabaseController database;
     LoginDatabaseController loginDatabase;
+    SupplierDatabaseController supplierDatabase;
 
     /** 
      * Constructs a Server and initializes the ServerSocket. 
@@ -80,10 +81,11 @@ public class Server {
     public void communicateClient()throws IOException{
         items = new ArrayList<Item>();
         inventory = new Inventory(items);
-        inventory.addItemsText();
+        // inventory.addItemsText();
 
         database = new DatabaseController();
         loginDatabase = new LoginDatabaseController();
+        supplierDatabase = new SupplierDatabaseController();
 
         try{
             while(true){
@@ -102,7 +104,7 @@ public class Server {
                 suppliers = new ArrayList<Supplier>();
 
 
-                Shop store = new Shop(order, database, loginDatabase, suppliers, inventory, aSocket);
+                Shop store = new Shop(order, database, loginDatabase, supplierDatabase, suppliers, inventory, aSocket);
                 // store.setSocketIn(aSocket);
 
                 // FrontEnd f = new FrontEnd(store);        // no longer used

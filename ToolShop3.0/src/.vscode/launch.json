@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "mainClass": "Server.Controller.Server",
+            "projectName": "src_b11b201e"
+        }
+    ]
+}

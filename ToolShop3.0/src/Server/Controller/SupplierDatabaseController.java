@@ -11,7 +11,7 @@ public class SupplierDatabaseController{
 
     SupplierDatabaseController(){
         try {
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/demo?user=root","root", "Rocky@299");
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,6 +95,14 @@ public class SupplierDatabaseController{
 
     public String toString(int id, String name, String address, String contact){
         return "id: " + id + ", name: " +name+ ", address: " + address + ", contact: " + contact;
+    }
+
+    public static void main(String[] args) {
+        SupplierDatabaseController db = new SupplierDatabaseController();
+        db.populateDatabase();
+        String yuh = db.listAll();
+        System.out.println(yuh);
+
     }
 
 }

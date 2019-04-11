@@ -35,6 +35,7 @@ public class Shop implements Runnable{
 
     private DatabaseController database;
     private LoginDatabaseController logindDb;
+    private SupplierDatabaseController supplierDb;
 
 
     Socket socketIn;
@@ -51,7 +52,7 @@ public class Shop implements Runnable{
      * @param i the inventory to be assigned to the Shop. 
      * @throws FileNotFoundException thrown if there is an issue with file access. 
      */
-    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
+    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, ArrayList<Supplier> s, Inventory i, Socket socket) throws FileNotFoundException{
         order = o;
         suppliers = s;
         inventory = i;
@@ -67,6 +68,7 @@ public class Shop implements Runnable{
 
         database = db;
         this.logindDb = loginDb;
+        this.supplierDb = supplierDb;
 
         addSuppliersText();
         // inventory.addItemsText();
@@ -375,7 +377,8 @@ public class Shop implements Runnable{
     /**
      * Prints all Suppliers that the shop has with their details.
      */
-    public void listAllSuppliers(){
+    @Deprecated
+    public void listAllSuppliers2(){
         // sendString("Suppliers and their details:");
         // System.out.println("in lisTsupplier");
         String s = "";
@@ -386,6 +389,10 @@ public class Shop implements Runnable{
         sendString(s);
     }
 
+    public void listAllSuppliers(){
+        String list = supplierDb.listAll();
+        sendString(list);
+    }
 
 
     /**
