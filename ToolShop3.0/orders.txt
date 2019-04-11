@@ -1,6 +1,34 @@
+8
 **********************************************
-Item description: Foo Figs
+Item description: Widgets
 Amount ordered: 50
-Supplier: 8018
+Supplier: 8004
 **********************************************
-
+Item description: Wing Bats
+Amount ordered: 50
+Supplier: 8003
+**********************************************
+Item description: Pong Pangs
+Amount ordered: 50
+Supplier: 8002
+**********************************************
+Item description: Pong Pangs
+Amount ordered: 50
+Supplier: 8002
+**********************************************
+Item description: Barn Bins
+Amount ordered: 50
+Supplier: 8006
+**********************************************
+Item description: Lilly Larks
+Amount ordered: 50
+Supplier: 8007
+**********************************************
+Item description: Nic Nacs
+Amount ordered: 50
+Supplier: 8015
+**********************************************
+Item description: Minnie Morks
+Amount ordered: 50
+Supplier: 8007
+*********************************************

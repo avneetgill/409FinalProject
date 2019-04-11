@@ -28,7 +28,7 @@ public class ToolShopView extends JFrame{
     public JButton searchButton = new JButton("Search");
     public JButton listToolButton = new JButton("List Tools");
     public JButton listSupButton = new JButton("List Suppliers");
-    public JButton loadButton = new JButton("Quit");
+    public JButton orderButton = new JButton("View Orders");
     public JButton decreaseButton = new JButton("Decrease Quantity"); //maybe change to 'buy'
     public JButton deleteButton = new JButton("Delete");
     public JButton addButton = new JButton("Add");
@@ -61,7 +61,7 @@ public class ToolShopView extends JFrame{
         setButtonFontSize(20);
         topButtons.add(searchButton);
         topButtons.add(listToolButton);
-        topButtons.add(loadButton);
+        topButtons.add(orderButton);
         topButtons.add(listSupButton);
         topButtons.setBorder(new EmptyBorder(10, 15, 0, 15));
 
@@ -103,7 +103,7 @@ public class ToolShopView extends JFrame{
         searchButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         listSupButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         listToolButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
-        loadButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
+        orderButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         addButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         decreaseButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         deleteButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
@@ -147,8 +147,8 @@ public class ToolShopView extends JFrame{
     public void addListToolListener(ActionListener a){
         listToolButton.addActionListener(a);
     }
-    public void addLoadListener(ActionListener a){
-        loadButton.addActionListener(a);
+    public void addOrderListener(ActionListener a){
+        orderButton.addActionListener(a);
     }
     public void addListSupListener(ActionListener a){
         listSupButton.addActionListener(a);

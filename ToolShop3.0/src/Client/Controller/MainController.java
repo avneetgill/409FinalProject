@@ -132,6 +132,23 @@ public class MainController{
                     c.search.setVisible(true);
                 }
 
+                else if(e.getSource() == c.view.orderButton){
+                    c.socketOut.println("8");
+                    c.orders.setTextArea("");
+                    int numberOfEntries = Integer.parseInt(c.socketIn.readLine());
+                    numberOfEntries = 4*numberOfEntries +1;     //each entry has 2 lines of [***] and 3 lines of info
+                    System.out.println(numberOfEntries);
+                    String result = "";
+                    for(int i = 0; i < numberOfEntries; i++){
+                        String temp = c.socketIn.readLine();
+                        // System.out.println(temp + "    XXX");
+                        result += temp + "\n";
+                    }
+                    // System.out.println(c.socketIn.readLine());
+                    c.orders.setTextArea(result);
+                    c.orders.setVisible(true);
+                }
+
             }catch(Exception a){
                 a.printStackTrace();
                 System.err.println(" *** problem *** ");
@@ -143,7 +160,7 @@ public class MainController{
     public void addListeners() {
         c.view.addSearchListener(listener);
         c.view.addListToolListener(listener);
-        c.view.addLoadListener(listener);
+        c.view.addOrderListener(listener);
         c.view.addListSupListener(listener);
         c.view.addDecreaseListener(listener);
         c.view.addDeleteListener(listener);

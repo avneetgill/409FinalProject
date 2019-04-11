@@ -17,6 +17,7 @@ public class Controller {
     public LoginView login;
     public AddView add;
     public SearchView search;
+    public OrderView orders;
 
     public Controller(int port, String name){//, MainController main, LoginController login, AddController add) {
         try {
@@ -31,7 +32,7 @@ public class Controller {
         login = new LoginView();
         add = new AddView();
         search = new SearchView();
-        
+        orders = new OrderView();
     }
 
     public void startGui(){

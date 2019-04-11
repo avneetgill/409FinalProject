@@ -89,10 +89,6 @@ public class Shop implements Runnable{
     public int menu() throws IOException {
         String temp; int choice = 0;
         temp = in.readLine();
-        // if(temp.equalsIgnoreCase("quit")){
-        //     // input.close();
-        //     return 8;
-        // }
         choice = Integer.parseInt(temp);
         return choice;
     }
@@ -128,6 +124,9 @@ public class Shop implements Runnable{
                 case 7:
                     addItem();
                     break;
+                case 8:
+                    displayOrders();
+                    break;
                 default:
                     quit = true;                // this was below
                     sendString("Goodbye\1");    //order of these 2 lines were flipped
@@ -139,6 +138,11 @@ public class Shop implements Runnable{
             }
         }
 
+    }
+
+    public void displayOrders(){
+        System.out.println(order.toString());
+        sendString(order.toString());
     }
 
     public void validateLogin()throws IOException{

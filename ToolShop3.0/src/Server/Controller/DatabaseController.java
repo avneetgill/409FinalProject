@@ -254,7 +254,6 @@ public class DatabaseController{
         try {
             preStmt = myConn.prepareStatement("SELECT COUNT(*) FROM `items`");
             ResultSet rs = preStmt.executeQuery();
-            System.out.println("yuhhh");
             rs.next();
             rows = rs.getInt(1);
         } catch (Exception e) {

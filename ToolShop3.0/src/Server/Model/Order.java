@@ -74,11 +74,13 @@ public class Order{
      */
     public String toString(){
         String s = "";
+        s += lines.size() + "\n";
         for(OrderLine n: lines){
             s += "**********************************************\n";
             s += n.toString() + "\n";
         }
         s += "**********************************************\n";
+        s = s.substring(0, s.length()-2);
         return s;
     }
 

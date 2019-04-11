@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - OrderView",
+            "request": "launch",
+            "mainClass": "Client.View.OrderView",
+            "projectName": "ToolShop3.0"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - SupplierDatabaseController",
             "request": "launch",
             "mainClass": "Server.Controller.SupplierDatabaseController",
