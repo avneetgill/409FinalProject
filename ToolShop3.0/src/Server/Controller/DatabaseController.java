@@ -289,6 +289,21 @@ public class DatabaseController{
         return itemToString2;
     }
 
+    public boolean itemAlreadyExists(int itemId){
+        try{
+            query = "SELECT * FROM `items` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, itemId);
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return false;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return true;
+    }
+    
     public static void main(String[] args) {
         DatabaseController db = new DatabaseController();
 

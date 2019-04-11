@@ -31,15 +31,8 @@ public class Server {
      */
     private ExecutorService pool;
 
-    
-    
     ArrayList<OrderLine> line;
     Order order;
-
-    ArrayList<Item> items;
-    Inventory inventory;
-
-    ArrayList<Supplier> suppliers;
 
     DatabaseController database;
     LoginDatabaseController loginDatabase;
@@ -60,29 +53,14 @@ public class Server {
     }
 
     void constructObjects()throws Exception{
-
         line = new ArrayList<OrderLine>();
         order = new Order(line);
-
-        items = new ArrayList<Item>();
-        inventory = new Inventory(items);
-        inventory.addItemsText();
-
-        suppliers = new ArrayList<Supplier>();
-
-        // store = new Shop(order, suppliers, inventory);//, aSocket);
-
-        // f = new FrontEnd(store);
     }
     /**
      * Allows communication between the Server and the clients, runs the game of tic tac toe once enough clients have joined. 
      * @throws IOException thrown if there is an issue with I/O. 
      */
     public void communicateClient()throws IOException{
-        items = new ArrayList<Item>();
-        inventory = new Inventory(items);
-        // inventory.addItemsText();
-
         database = new DatabaseController();
         loginDatabase = new LoginDatabaseController();
         supplierDatabase = new SupplierDatabaseController();
@@ -93,21 +71,10 @@ public class Server {
                 pool = Executors.newCachedThreadPool();
                 aSocket = myServer.accept();
 
-
                 line = new ArrayList<OrderLine>();
                 order = new Order(line);
 
-                // items = new ArrayList<Item>();
-                // inventory = new Inventory(items);
-                // inventory.addItemsText();
-
-                suppliers = new ArrayList<Supplier>();
-
-
                 Shop store = new Shop(order, database, loginDatabase, supplierDatabase, aSocket);
-                // store.setSocketIn(aSocket);
-
-                // FrontEnd f = new FrontEnd(store);        // no longer used
 
                 System.out.println("<< Shop app started >>");
                 pool.execute(store);

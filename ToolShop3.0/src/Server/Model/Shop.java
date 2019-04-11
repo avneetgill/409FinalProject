@@ -26,12 +26,12 @@ public class Shop implements Runnable{
     /**
      * The ArrayList of Suppliers for the shop. 
      */
-    private ArrayList<Supplier> suppliers;
+    // private ArrayList<Supplier> suppliers;
 
     /**
      * The shop's inventory which manages all its items. 
      */
-    private Inventory inventory;
+    // private Inventory inventory;
 
     private DatabaseController database;
     private LoginDatabaseController logindDb;
@@ -269,66 +269,18 @@ public class Shop implements Runnable{
         order.newOrder(itemId, itemToString2);
     }
 
-    /**
-     * Links the Suppliers to the appropriate Items in the inventory. 
-     */
-    public void assignSuppliers(){
-        for(int i = 0; i < inventory.getSize(); i++){
-            for(Supplier s: suppliers){
-                if(inventory.getItemAt(i).getSupplierID() == s.getID())
-                    inventory.getItemAt(i).assignSupplier(s);
-            }
-        }
-    }
+    // /**
+    //  * Links the Suppliers to the appropriate Items in the inventory. 
+    //  */
+    // public void assignSuppliers(){
+    //     for(int i = 0; i < inventory.getSize(); i++){
+    //         for(Supplier s: suppliers){
+    //             if(inventory.getItemAt(i).getSupplierID() == s.getID())
+    //                 inventory.getItemAt(i).assignSupplier(s);
+    //         }
+    //     }
+    // }
 
-    /**
-     * Adds Suppliers to the shop by reading from a text file.
-     * @throws FileNotFoundException thrown if there is an issue with file access. 
-     */
-    public void addSuppliersText() throws FileNotFoundException{
-        Scanner read = new Scanner(new File("suppliers.txt"));
-        read.useDelimiter(";");
-        String id, name, address, contact, nextLine;
-        String[] arr = new String[4];
-        int ID;
-        while(read.hasNext()){
-            nextLine = read.nextLine();
-            arr = nextLine.split(";");
-            id = arr[0];
-            name = arr[1];
-            address = arr[2];
-            contact = arr[3];
-            
-            ID = Integer.parseInt(id);
-            suppliers.add(new Supplier(ID, name, address, contact));
-        }
-        read.close();
-    }
-
-    /**
-     * Adds an item to the inventory with the specified values.
-     * @param name the name of the item.
-     * @param id the id number of the item.
-     * @param price the price of the item.
-     * @param stock the amount in stock for the item.
-     * @param supID the supplier id for the item.
-     */
-    private void addItem(String name, int id, double price, int stock, int supID){
-        inventory.addItem(new Item(id, name, price, stock, supID));
-    }
-
-    /**
-     * Checks if the Supplier specified by the id exists.
-     * @param id the id of the supplier to be checked for existance.
-     * @return returns true if the Supplier exists, false if it does not.
-     */
-    private boolean supplierIDChecker(int id){
-        for(Supplier s: suppliers){
-            if(id == s.getID())
-                return true;
-        }
-        return false;
-    }
 
     /**
      * Adds an item to the inventory, read from the input stream, prompting the
@@ -344,7 +296,7 @@ public class Shop implements Runnable{
             }
 
         id = Integer.parseInt(in.readLine());
-            if(id < 0 || id > 9999 || inventory.itemIDChecker(id)){
+            if(id < 0 || id > 9999 || database.itemAlreadyExists(id)){
                 error += "id ";
             }
 
@@ -384,41 +336,9 @@ public class Shop implements Runnable{
         sendString(database.listAll());
     }
 
-    /**
-     * Prints all Suppliers that the shop has with their details.
-     */
-    @Deprecated
-    public void listAllSuppliers2(){
-        // sendString("Suppliers and their details:");
-        // System.out.println("in lisTsupplier");
-        String s = "";
-        for(Supplier sup: suppliers){
-            s += sup.toString() + "\n";
-        }
-        s = s.substring(0, s.length()-1);
-        sendString(s);
-    }
-
     public void listAllSuppliers(){
         String list = supplierDb.listAll();
         sendString(list);
-    }
-
-
-    /**
-     * Searches for an item in the inventory by prompting the user to enter
-     * id number of the item. 
-     * @param option determines what the method will do: 1 to print details
-     * about an item, or 2 to return the item to be used by another method.
-     * @return returns an item if the parameter is 1, returns null if user
-     * quits or the parameter is 2. 
-     */
-    public Item searchID(int itemId)throws IOException{
-        return inventory.searchById(itemId);
-    }
-
-    public Item searchName(String name) throws IOException{
-        return inventory.searchByName(name);
     }
 
     @Override

@@ -1,6 +1,6 @@
 1
 **********************************************
-Item description: Googly Eyes
-Amount ordered: 44
-Supplier: 8001
+Item description: pendi
+Amount ordered: 50
+Supplier: 8010
 *********************************************
