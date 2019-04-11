@@ -294,16 +294,8 @@ public class DatabaseController{
 
         db.clearDatabase();
         db.populateDatabase();
-        // db.deleteItem(1040);
-        // db.deleteItem(1000);
-        // String yuh = db.listAll();
-        // db.decreaseQuantity(1002, 19);
-        // int yuh = db.getStock(9999);
-        // db.setStock(1001, 999);
-        // String yuh = db.search("Widgets");
-        String yuh = db.getItemCount();
 
-        System.out.println(yuh);
+        System.out.println("items database reset");
     }
 
 }

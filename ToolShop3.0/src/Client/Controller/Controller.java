@@ -44,7 +44,8 @@ public class Controller {
         // to run this main: javac -d classes Client/Controller/Controller.java
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Client.Controller.Controller
 
-        Controller c = new Controller(9091, "localhost");
+        // 10.12.140.162
+        Controller c = new Controller(9091, "10.13.140.162");
         
         AddController addController = new AddController(c);
         MainController main = new MainController(c);

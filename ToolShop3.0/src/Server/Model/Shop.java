@@ -116,7 +116,6 @@ public class Shop implements Runnable{
                     break;
                 case 5:
                     search();
-                    // checkQuantity();
                     break;
                 case 6:
                     validateLogin();
@@ -137,7 +136,6 @@ public class Shop implements Runnable{
                 break;
             }
         }
-
     }
 
     public void displayOrders(){

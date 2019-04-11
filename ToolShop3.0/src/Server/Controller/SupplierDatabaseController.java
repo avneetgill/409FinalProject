@@ -99,9 +99,11 @@ public class SupplierDatabaseController{
 
     public static void main(String[] args) {
         SupplierDatabaseController db = new SupplierDatabaseController();
+        db.clearDatabase();
         db.populateDatabase();
-        String yuh = db.listAll();
-        System.out.println(yuh);
+        // String yuh = db.listAll();
+        // System.out.println(yuh);
+        System.out.println("Supplier database reset");
 
     }
 

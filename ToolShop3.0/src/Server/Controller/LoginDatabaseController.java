@@ -95,8 +95,10 @@ public class LoginDatabaseController{
     public static void main(String[] args) {
         LoginDatabaseController db = new LoginDatabaseController();
 
-        // db.addData("TerryLund", "8002");
-        // db.addData("PendiFud", "1998");
+        db.addData("TerryLund", "8002");
+        db.addData("PendiFud", "1998");
+
+        System.out.println("Logins reset");
 
         // boolean yuh = db.validateUser("PendiFud", "1998");
         // System.out.println(yuh);
