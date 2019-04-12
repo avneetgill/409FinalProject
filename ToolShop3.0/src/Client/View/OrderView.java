@@ -3,12 +3,8 @@ package Client.View;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.Color;
-
-
 
 public class OrderView extends JFrame{
 	/**

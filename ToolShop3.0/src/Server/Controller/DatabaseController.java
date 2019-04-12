@@ -9,9 +9,9 @@ public class DatabaseController{
     String query;
     PreparedStatement preStmt;
 
-    public DatabaseController(){
+    public DatabaseController(Connection conn){
         try {
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
+            myConn = conn;
         } catch (Exception e) {
             System.err.println("error connecting to database");
             e.printStackTrace();
@@ -199,6 +199,24 @@ public class DatabaseController{
         return 0;
     }
 
+    public int getSupplierId(int itemId){
+        try{
+            query = "SELECT `suppId` FROM `items` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, itemId);
+            // preStmt.execute();
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return -1;
+            }
+            // rs.next();
+            return rs.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public void setStock(int itemId, int newStock){
         try{
             query = "UPDATE `items` SET `stock` = ? WHERE `id` = ?";// + itemId;
@@ -249,7 +267,6 @@ public class DatabaseController{
     }
 
     public String getItemCount(){
-        // System.out.println("   db: counting items");
         int rows = 0;
         try {
             preStmt = myConn.prepareStatement("SELECT COUNT(*) FROM `items`");
@@ -259,11 +276,10 @@ public class DatabaseController{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // System.out.println("   db: finished counting items");
         return Integer.toString(rows);
     }
 
-    public String toString2(int itemId, int amountOrdered){
+    public String toString2(int itemId, int amountOrdered, String supplierName){
         String itemToString2 = null;
         try {
             query = "SELECT * FROM `items` WHERE `id` = ?";// + itemId;
@@ -281,7 +297,7 @@ public class DatabaseController{
 
             itemToString2 = "Item description: " + name + "\n" +
             "Amount ordered: " + amountOrdered + "\n" +
-            "Supplier: " + supId;       // TODO needs to be changed to supplier name
+            "Supplier: " + supplierName;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -304,9 +320,10 @@ public class DatabaseController{
         return true;
     }
     
-    public static void main(String[] args) {
-        DatabaseController db = new DatabaseController();
-
+    public static void main(String[] args) throws SQLException{
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
+        DatabaseController db = new DatabaseController(myConn);
+        // to reset the database of items to items found in text file
         db.clearDatabase();
         db.populateDatabase();
 

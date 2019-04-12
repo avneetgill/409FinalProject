@@ -1,7 +1,5 @@
 package Client.View;
 
-
-import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;

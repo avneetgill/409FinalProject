@@ -9,9 +9,9 @@ public class SupplierDatabaseController{
     String query;
     PreparedStatement preStmt;
 
-    SupplierDatabaseController(){
+    SupplierDatabaseController(Connection conn){
         try {
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
+            myConn = conn;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,10 +95,9 @@ public class SupplierDatabaseController{
 
     public boolean supplierExists(int supId){
         try{
-            query = "SELECT * FROM `suppliers` WHERE `id` = ?";// + itemId;
+            query = "SELECT * FROM `suppliers` WHERE `id` = ?";
             preStmt = myConn.prepareStatement(query);
             preStmt.setInt(1, supId);
-            // preStmt.execute();
             ResultSet rs = preStmt.executeQuery();
             if(!rs.next()){
                 return false;
@@ -113,8 +112,27 @@ public class SupplierDatabaseController{
         return "id: " + id + ", name: " +name+ ", address: " + address + ", contact: " + contact;
     }
 
-    public static void main(String[] args) {
-        SupplierDatabaseController db = new SupplierDatabaseController();
+    public String getSupplierName(int supId){
+        try{
+            query = "SELECT `name` FROM `suppliers` WHERE `id` = ?";// + itemId;
+            preStmt = myConn.prepareStatement(query);
+            preStmt.setInt(1, supId);
+            // preStmt.execute();
+            ResultSet rs = preStmt.executeQuery();
+            if(!rs.next()){
+                return null;
+            }
+            // rs.next();
+            return rs.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void main(String[] args) throws SQLException{
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
+        SupplierDatabaseController db = new SupplierDatabaseController(myConn);
         db.clearDatabase();
         db.populateDatabase();
 

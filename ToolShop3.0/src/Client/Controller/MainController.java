@@ -51,7 +51,6 @@ public class MainController{
                     c.view.model.clear();
                     c.socketOut.println("2");
                     c.socketOut.flush();
-                    String m = "";
                     for(int i = 0; i < 20; i++){
                         c.view.addElementTextBox(c.socketIn.readLine());
                     }
@@ -141,10 +140,8 @@ public class MainController{
                     String result = "";
                     for(int i = 0; i < numberOfEntries; i++){
                         String temp = c.socketIn.readLine();
-                        // System.out.println(temp + "    XXX");
                         result += temp + "\n";
                     }
-                    // System.out.println(c.socketIn.readLine());
                     c.orders.setTextArea(result);
                     c.orders.setVisible(true);
                 }

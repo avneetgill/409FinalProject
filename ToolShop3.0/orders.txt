@@ -1,6 +1,10 @@
-1
+2
 **********************************************
 Item description: pendi
 Amount ordered: 50
-Supplier: 8010
+Supplier: Irkle Industries
+**********************************************
+Item description: Wog Wits
+Amount ordered: 50
+Supplier: Winork Manufacturing Inc.
 *********************************************

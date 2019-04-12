@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -31,12 +34,14 @@ public class Server {
      */
     private ExecutorService pool;
 
-    ArrayList<OrderLine> line;
-    Order order;
+    private ArrayList<OrderLine> line;
+    private Order order;
 
-    DatabaseController database;
-    LoginDatabaseController loginDatabase;
-    SupplierDatabaseController supplierDatabase;
+    private Connection myConn;
+
+    private DatabaseController database;
+    private LoginDatabaseController loginDatabase;
+    private SupplierDatabaseController supplierDatabase;
 
     /** 
      * Constructs a Server and initializes the ServerSocket. 
@@ -45,34 +50,34 @@ public class Server {
     public Server(int portNumber){
         try{
             myServer = new ServerSocket(portNumber);
+            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         } catch(IOException a){
             System.err.println("Error creating new ServerSocket");
+            a.printStackTrace();
+        } catch(SQLException a){
+            System.err.println("Error connecting to database");
             a.printStackTrace();
         }
         System.out.println("<< Server is Running >>");
     }
 
-    void constructObjects()throws Exception{
-        line = new ArrayList<OrderLine>();
-        order = new Order(line);
-    }
     /**
      * Allows communication between the Server and the clients, runs the game of tic tac toe once enough clients have joined. 
      * @throws IOException thrown if there is an issue with I/O. 
      */
     public void communicateClient()throws IOException{
-        database = new DatabaseController();
-        loginDatabase = new LoginDatabaseController();
-        supplierDatabase = new SupplierDatabaseController();
+        database = new DatabaseController(myConn);
+        loginDatabase = new LoginDatabaseController(myConn);
+        supplierDatabase = new SupplierDatabaseController(myConn);
+
+        line = new ArrayList<OrderLine>();
+        order = new Order(line);
 
         try{
             while(true){
                 System.out.println(" At loopTop ");
                 pool = Executors.newCachedThreadPool();
                 aSocket = myServer.accept();
-
-                line = new ArrayList<OrderLine>();
-                order = new Order(line);
 
                 Shop store = new Shop(order, database, loginDatabase, supplierDatabase, aSocket);
 
@@ -89,7 +94,7 @@ public class Server {
         }
     }
     /**
-     * runs the server with port number 8988
+     * runs the server with port number 9091
      * @param args command line arguments.
      */
     public static void main(String[] args) {

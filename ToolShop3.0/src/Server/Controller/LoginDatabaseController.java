@@ -1,17 +1,14 @@
 package Server.Controller;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.sql.*;
-import java.util.Scanner;
 
 public class LoginDatabaseController{
     Connection myConn;
     String query;
     PreparedStatement preStmt;
 
-    public LoginDatabaseController(){
+    public LoginDatabaseController(Connection conn){
         try {
-            myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
+            myConn = conn;
         } catch (Exception e) {
             System.err.println("error connecting to database");
             e.printStackTrace();
@@ -92,16 +89,14 @@ public class LoginDatabaseController{
         }
     }
 
-    public static void main(String[] args) {
-        LoginDatabaseController db = new LoginDatabaseController();
+    public static void main(String[] args) throws SQLException{
+        Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
+        LoginDatabaseController db = new LoginDatabaseController(myConn);
 
         db.addData("TerryLund", "8002");
         db.addData("PendiFud", "1998");
 
         System.out.println("Logins reset");
-
-        // boolean yuh = db.validateUser("PendiFud", "1998");
-        // System.out.println(yuh);
     }
 
 }

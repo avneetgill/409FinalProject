@@ -1,14 +1,11 @@
 package Server.Model;
 
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import Server.Controller.*;
 
@@ -22,16 +19,6 @@ public class Shop implements Runnable{
      * The object of Order that manages the orderlines for the shop. 
      */
     private Order order;
-
-    /**
-     * The ArrayList of Suppliers for the shop. 
-     */
-    // private ArrayList<Supplier> suppliers;
-
-    /**
-     * The shop's inventory which manages all its items. 
-     */
-    // private Inventory inventory;
 
     private DatabaseController database;
     private LoginDatabaseController logindDb;
@@ -54,8 +41,6 @@ public class Shop implements Runnable{
      */
     public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, Socket socket) throws FileNotFoundException{
         order = o;
-        // suppliers = s;
-        // inventory = i;
         socketIn = socket;
 
         try{
@@ -69,10 +54,6 @@ public class Shop implements Runnable{
         database = db;
         this.logindDb = loginDb;
         this.supplierDb = supplierDb;
-
-        // addSuppliersText();
-        // inventory.addItemsText();
-        // assignSuppliers();
     }
 
     public void setSocketIn(Socket socketIn) {
@@ -139,7 +120,6 @@ public class Shop implements Runnable{
     }
 
     public void displayOrders(){
-        System.out.println(order.toString());
         sendString(order.toString());
     }
 
@@ -167,12 +147,6 @@ public class Shop implements Runnable{
         }
 
         database.deleteItem(id);
-        
-        // Item toBeDeleted = searchID(id);
-        // inventory.deleteItem(toBeDeleted);
-
-        // System.out.println(inventory.toString());
-
     }
 
     public synchronized void decreaseQuantity() throws IOException{
@@ -194,17 +168,6 @@ public class Shop implements Runnable{
             System.out.println("error converting socket input to int in Shop.decreaseItem()");
         }
 
-        // if(amount > p.getStock()){
-        //     sendString("notEnoughSelling: " + p.getStock());
-        //     amount =  p.getStock();
-        // } else{
-        //     sendString("success");
-        // }
-        // p.setStock(p.getStock() - amount);
-        // if(p.getStock() < 40){
-        //     orderMore(p);
-        // }
-
         int stockOfItem = database.getStock(id);
 
         if(amount > stockOfItem){
@@ -216,7 +179,6 @@ public class Shop implements Runnable{
         database.setStock(id, (stockOfItem - amount));
         stockOfItem = database.getStock(id);
         if(stockOfItem < 40){
-            // orderMore(p);
             orderMore(id);
         }
     }
@@ -224,7 +186,6 @@ public class Shop implements Runnable{
     public void search() throws IOException{
         String nameOrId = in.readLine();
         int id = -1;
-        // Item p = null;
         String itemToString = null;
 
         if(nameOrId.equals("id")){
@@ -247,40 +208,19 @@ public class Shop implements Runnable{
         }
     }
 
-    // /**
-    //  * Generates an orderline for the specified Item.
-    //  * @param item the Item object for which to generate an order.
-    //  * @throws IOException thrown if there is an issue with IO stream.
-    //  */
-    // @Deprecated
-    // public void orderMore(Item item) throws IOException{
-    //     int amount = 50 - item.getStock();
-    //     item.setStock(item.getStock() + amount);
-    //     order.newOrder(item, amount);
-    // }
-    
     public void orderMore(int itemId) throws IOException{
         int itemStock = database.getStock(itemId);
         int amount = 50 - itemStock;
         database.setStock(itemId, (itemStock + amount));
         System.out.println("ordering more");
-        String itemToString2 = database.toString2(itemId, amount);
+
+        int supplierId = database.getSupplierId(itemId);
+        String supplierName = supplierDb.getSupplierName(supplierId);
+
+        String itemToString2 = database.toString2(itemId, amount, supplierName);
 
         order.newOrder(itemId, itemToString2);
     }
-
-    // /**
-    //  * Links the Suppliers to the appropriate Items in the inventory. 
-    //  */
-    // public void assignSuppliers(){
-    //     for(int i = 0; i < inventory.getSize(); i++){
-    //         for(Supplier s: suppliers){
-    //             if(inventory.getItemAt(i).getSupplierID() == s.getID())
-    //                 inventory.getItemAt(i).assignSupplier(s);
-    //         }
-    //     }
-    // }
-
 
     /**
      * Adds an item to the inventory, read from the input stream, prompting the
