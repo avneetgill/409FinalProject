@@ -98,7 +98,10 @@ public class ToolShopView extends JFrame{
         add("South", bottomButtons);
 
     }
-
+    /**
+     * Assigns font sizes to the buttons on the gui
+     * @param fontSize - the font size to assign
+     */
     public void setButtonFontSize(int fontSize){
         searchButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         listSupButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
@@ -108,20 +111,33 @@ public class ToolShopView extends JFrame{
         decreaseButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
         deleteButton.setFont(new Font("Sans", Font.PLAIN, fontSize));
     }
-
+    /**
+     * Adds a string to model
+     * @param value - string being added
+     */
     public void addElementTextBox(String value){
         model.addElement(value);
     }
 
+    /**
+     * assigns a listener to the selection button
+     * @param a - the list selection listener being assigned
+     */
     public void addSelectionListener(ListSelectionListener a){
         textBox.addListSelectionListener(a);
     }
-
+    /**
+     * changes the state of the button to either enabled or disabled 
+     * @param enabled - the state ( true for enable, false for disable)
+     */
     public void changeButtonState(boolean enabled){
         decreaseButton.setEnabled(enabled);                                                       
         deleteButton.setEnabled(enabled);  
     }
-
+    /**
+     * gets user input on how much to decrease an item quantity by
+     * @return - the amount to decrease by
+     */
     public String decreaseItemDialog(){
         return JOptionPane.showInputDialog(this, "Enter how much to decrease: ");
     }
@@ -134,31 +150,61 @@ public class ToolShopView extends JFrame{
     //     textBox.setText(s);
     //     textBox.setCaretPosition(0);
     // }
-
+    /**
+     * function used to communicate errors
+     * @param error - the error to display 
+     */
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);
     }
 
     //#region   <<<button listeners below>>> 
+    /**
+     * assigns an action listener to the search button
+     * @param a - the action listener beign assigned
+     */
     public void addSearchListener(ActionListener a){
         searchButton.addActionListener(a);
     }
-
+    /**
+     * assigns an action listener to the list tool button
+     * @param a - action listener being assigned
+     */
     public void addListToolListener(ActionListener a){
         listToolButton.addActionListener(a);
     }
+    /**
+     * assigns an action listener to the order button
+     * @param a - action listener being assigned
+     */
     public void addOrderListener(ActionListener a){
         orderButton.addActionListener(a);
     }
+     /**
+     * assigns an action listener to the supplier button
+     * @param a - action listener being assigned
+     */
     public void addListSupListener(ActionListener a){
         listSupButton.addActionListener(a);
     }
+     /**
+     * assigns an action listener to the decrease button
+     * @param a - action listener being assigned
+     */
     public void addDecreaseListener(ActionListener a){
         decreaseButton.addActionListener(a);
     }
+     /**
+     * assigns an action listener to the delete button
+     * @param a - action listener being assigned
+     */
     public void addDeleteListener(ActionListener a){
         deleteButton.addActionListener(a);
     }
+     /**
+     * assigns an action listener to the add button
+     * @param a - action listener being assigned
+     */
     public void addAddListener(ActionListener a){
         addButton.addActionListener(a);
     }
