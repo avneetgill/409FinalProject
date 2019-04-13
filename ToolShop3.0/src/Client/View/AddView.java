@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 /** 
+ * Creates a gui upon the add button being pressed in toolshop - prompts the user to enter info about the items 
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */

@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionListener;
 
 /**
+ * Creates the main GUI for the toolshop -  houses most of the functionality
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
