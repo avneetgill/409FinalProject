@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 /** 
+ * Class which is the server for the program. 
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
@@ -34,11 +35,20 @@ public class Server {
      */
     private ExecutorService pool;
 
+    /**
+     * Objects which deal with the new order that are created
+     */
     private ArrayList<OrderLine> line;
     private Order order;
 
+    /**
+     * The connection to the database
+     */
     private Connection myConn;
 
+    /**
+     * The classes that deal with the different tables on the database. 
+     */
     private DatabaseController database;
     private LoginDatabaseController loginDatabase;
     private SupplierDatabaseController supplierDatabase;
@@ -101,9 +111,6 @@ public class Server {
         // to run this main: javac -d classes Server/Controller/Server.java
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Server.Controller.Server
 
-        // my local ip address (ipv4): 10.0.0.94(Preferred)
-        //10.13.139.95
-        //10.13.133.25
         Server s = new Server(9091);
         try {
             // s.constructObjects();

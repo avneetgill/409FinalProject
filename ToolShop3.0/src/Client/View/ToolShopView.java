@@ -20,9 +20,14 @@ import javax.swing.event.ListSelectionListener;
  */
 public class ToolShopView extends JFrame{
     
+    /**
+     * The title bar
+     */
     JLabel title = new JLabel("Inventory Manager Pro" + "\u2122");
 
-    // public JTextArea textBox = new JTextArea(70, 30);
+    /**
+     * The textbox to display the items or the suppliers, and the Model which holds the info for the box. 
+     */
     public DefaultListModel<String> model = new DefaultListModel<>();
     public JList<String> textBox = new JList<>(model);
     /**
