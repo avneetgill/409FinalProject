@@ -13,13 +13,23 @@ import javax.swing.border.EmptyBorder;
  * @version 1.0
  */
 public class LoginView extends JFrame {
+    /**
+     * text field that holds the user name
+     */
     private JTextField userName = new JTextField(10);
+    /**
+     * text field that holds the password
+     */
     private JTextField password = new JTextField(10);
+
     private JLabel input = new JLabel("Employee Code");
     private JLabel passwordLabel = new JLabel("Password");
     private JPanel f = new JPanel();
     public JButton b = new JButton("Login");
 
+    /**
+     * Constructor that sets up the gui and assigns location to different panels
+     */
     public LoginView() {
         this.setTitle("Login");
         this.setSize(260, 240);

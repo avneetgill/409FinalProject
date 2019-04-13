@@ -18,7 +18,9 @@ public class OrderView extends JFrame{
      * TextArea that displays all students when browse is pressed. 
      */
 	private JTextArea textBox = new JTextArea(10, 30);
-    
+    /**
+     * Constructor that assigns locations to labels on the gui 
+     */
 	public OrderView(){
         JPanel mainPanel = new JPanel ();
         JPanel topTitle = new JPanel();

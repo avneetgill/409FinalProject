@@ -12,9 +12,17 @@ import javax.swing.border.EmptyBorder;
  * @version 1.0
  */
 public class AddView extends JFrame{
-
+    /**
+     * the header panel
+     */
     JPanel headerPanel = new JPanel();
+    /**
+     * panel containing text files
+     */
     JPanel textFields = new JPanel();
+    /**
+     * panel containging buttons
+     */
     JPanel buttons = new JPanel();
     
     JLabel header = new JLabel ("Add a new tool");
@@ -27,7 +35,10 @@ public class AddView extends JFrame{
     JTextField field3 =  new JTextField(10);
     JTextField field4 =  new JTextField(10);
     JTextField field5 = new JTextField(10);
-
+    
+    /**
+     * Constructor that initializes values for the panel and takes care of aesthetic functionalities
+     */
     public AddView(){
         this.setLayout(new BorderLayout());
         this.setTitle("Add New Item");
