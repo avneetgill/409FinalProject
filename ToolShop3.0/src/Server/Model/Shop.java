@@ -21,26 +21,45 @@ public class Shop implements Runnable{
      */
     private Order order;
 
+    /**
+     * Object which allows this class to communicate with the databse table of items. 
+     */
     private DatabaseController database;
+
+    /**
+     * Object which allows this class to communicate with the databse table of logins. 
+     */
     private LoginDatabaseController logindDb;
+
+    /**
+     * Object which allows this class to communicate with the databse table of suppliers. 
+     */
     private SupplierDatabaseController supplierDb;
 
-
+    /**
+     * The socket with which to communicate with the the client
+     */
     Socket socketIn;
+    /**
+     * writer to write to the socket. 
+     */
     PrintWriter out;
+
+    /**
+     * Reader to read input from the socket. 
+     */
     BufferedReader in;
     
     /**
      * Constructs an object of Shop with the specified objects. Calls functions
-     * to intialize the suppliers from a text file, to initialize inventory
-     * from a text file, and to link the Suppliers with the appropriate Items in
-     * the inventory. 
+     * to intialize the readers and writers for the socket. 
      * @param o the Order object assigned to Shop.
-     * @param s the ArrayList of Suppliers to be assigned to Shop.
-     * @param i the inventory to be assigned to the Shop. 
-     * @throws FileNotFoundException thrown if there is an issue with file access. 
+     * @param db the database controller for items table.
+     * @param loginDb the database controller for the logins table. 
+     * @param supplierDb the database controller for the supplier table. 
+     * @param socket the socket to communicate with the client. 
      */
-    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, Socket socket) throws FileNotFoundException{
+    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, Socket socket){
         order = o;
         socketIn = socket;
 
@@ -56,18 +75,11 @@ public class Shop implements Runnable{
         this.logindDb = loginDb;
         this.supplierDb = supplierDb;
     }
-
-    public void setSocketIn(Socket socketIn) {
-        this.socketIn = socketIn;
-        try{
-            in = new BufferedReader(new InputStreamReader(socketIn.getInputStream()));
-			out = new PrintWriter((socketIn.getOutputStream()), true);
-        }catch(Exception a){
-            sendString("error");
-            a.printStackTrace();
-        }
-    }
-
+    /**
+     * Reads input from the client through the socket and returns it. 
+     * @return integer which the client sent. 
+     * @throws IOException thrown if there is an issue with the socket. 
+     */
     public int menu() throws IOException {
         String temp; int choice = 0;
         temp = in.readLine();
@@ -75,11 +87,19 @@ public class Shop implements Runnable{
         return choice;
     }
 
+    /**
+     * Writes to the socket to send to the client. 
+     * @param toSend the String to be sent to the client. 
+     */
     void sendString(String toSend){
         out.println(toSend);
         out.flush();
     }
 
+    /**
+     * Swich statement which receives an integer from the menu() method, calls the method requested by the client. 
+     * @throws IOException thrown if there is an issue with the socket. 
+     */
     public void menuRunner() throws IOException{
         boolean quit = false;
         while(true){
@@ -120,6 +140,9 @@ public class Shop implements Runnable{
         }
     }
 
+    /**
+     * 
+     */
     public void displayOrders(){
         sendString(order.toString());
     }
