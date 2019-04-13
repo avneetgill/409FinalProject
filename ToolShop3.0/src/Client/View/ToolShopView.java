@@ -18,21 +18,44 @@ import javax.swing.event.ListSelectionListener;
  * @version 1.0
  */
 public class ToolShopView extends JFrame{
-
+    
     JLabel title = new JLabel("Inventory Manager Pro" + "\u2122");
 
     // public JTextArea textBox = new JTextArea(70, 30);
     public DefaultListModel<String> model = new DefaultListModel<>();
     public JList<String> textBox = new JList<>(model);
-
+    /**
+     *  button for search functionality 
+     */
     public JButton searchButton = new JButton("Search");
+      /**
+     *  button for list tools functionality 
+     */
     public JButton listToolButton = new JButton("List Tools");
+      /**
+     *  button for list supplier functionality 
+     */
     public JButton listSupButton = new JButton("List Suppliers");
+    /**
+     *  button for displaying order functionality 
+     */
     public JButton orderButton = new JButton("View Orders");
+      /**
+     *  button for decrease functionality 
+     */
     public JButton decreaseButton = new JButton("Decrease Quantity"); //maybe change to 'buy'
+      /**
+     *  button for delete functionality 
+     */
     public JButton deleteButton = new JButton("Delete");
+      /**
+     *  button for add functionality 
+     */
     public JButton addButton = new JButton("Add");
 
+    /**
+     * Constructor that assigns the label and buttons to specific places on the gui
+     */
     public ToolShopView(){
         JPanel mainPanel = new JPanel ();
         //mainPanel.setBackground(Color.WHITE);

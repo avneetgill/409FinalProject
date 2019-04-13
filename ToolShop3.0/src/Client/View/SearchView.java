@@ -14,9 +14,14 @@ import javax.swing.border.EmptyBorder;
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
-public class SearchView extends JFrame {
-
+public class SearchView extends JFrame { 
+    /**
+     * label of the gui
+     */
     private JLabel title = new JLabel("Search Item");
+    /**
+     * drop down menu options
+     */
     private String[] options = { "--choose one--", "Search by ID", "Search by Name" };
     public JComboBox<String> dropdown = new JComboBox<String>(options);
 
@@ -28,7 +33,9 @@ public class SearchView extends JFrame {
 
     // private JOptionPane errorMessage = new JOptionPane();
     private JLabel errorLabel = new JLabel();
-
+    /**
+     * Constructor that assigns locations to panels on the gui and other aesthetic features
+     */
     public SearchView() {
         this.setTitle("Search Item");
         this.setSize(260, 240);
