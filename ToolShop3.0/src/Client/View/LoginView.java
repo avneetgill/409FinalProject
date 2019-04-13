@@ -49,36 +49,6 @@ public class LoginView extends JFrame {
         f.add(password);
         f.add(b);
 
-        // userName.addActionListener(new ActionListener() {
-
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         v.setVisible(true);
-        //         String input = "";
-        //         do {
-        //             input = getUserName(userName);
-        //         } while (!realEmployee(input));
-        //         System.out.println(input);
-        //         v.setTitle("Employee #: " + input);
-        //         setVisible(false);
-        //     }
-        // });
-
-        // b.addActionListener(new ActionListener() {
-
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         v.setVisible(true);
-        //         String input = "";
-        //         do {
-        //             input = getUserName(userName);
-        //         } while (!realEmployee(input));
-        //         System.out.println(input);
-        //         v.setTitle("Employee #: " + input);
-        //         setVisible(false);
-        //     }
-        // });
-
         add(f);
     }
     /**
