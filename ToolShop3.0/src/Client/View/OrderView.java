@@ -5,7 +5,10 @@ import java.awt.Font;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
-
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
+ */
 public class OrderView extends JFrame{
 	/**
      * Main Label for  student record maintainer
@@ -55,7 +58,10 @@ public class OrderView extends JFrame{
     public void setTextArea(String text){
         textBox.setText(text);
     }
-    
+    /**
+     * used to display error messages 
+     * @param error - the message to display
+     */
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);
     }

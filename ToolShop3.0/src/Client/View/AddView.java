@@ -80,7 +80,10 @@ public class AddView extends JFrame{
         this.add("South", buttons);
         
     }
-
+    /**
+     * Assigns text box font sizes
+     * @param fontSize - size of font
+     */
     public void setTextBoxFont(int fontSize){
         field1.setFont(new Font("Sans", Font.PLAIN, fontSize));
         field2.setFont(new Font("Sans", Font.PLAIN, fontSize));
@@ -88,27 +91,42 @@ public class AddView extends JFrame{
         field4.setFont(new Font("Sans", Font.PLAIN, fontSize));
         field5.setFont(new Font("Sans", Font.PLAIN, fontSize));
     }
-
+    /**
+     * adds a listener to the close button
+     * @param a - the window adapter being added
+     */
     public void addCloseListener(WindowAdapter a){
         this.addWindowListener(a);
     }
 
+    /**
+     * returns a name for the item from the user
+     */
     public String getName(){
         return field1.getText();
     }
 
+    /**
+     * returns a double for the price from the user
+     */
     public String getPrice(){
         return field2.getText();
     }
-
+    /**
+     * returns an int for the id frum the user
+     */
     public String getID(){
         return field3.getText();
     }
-
+    /**
+     * returns an int for the stock from the user
+     */
     public String getStock(){
         return field4.getText();
     }
-
+    /**
+     * returns an int for the supplier id from the user
+     */
     public String getSupID(){
         return field5.getText();
     }
@@ -120,7 +138,10 @@ public class AddView extends JFrame{
         field4.setText(null);
         field5.setText(null);
     }
-
+    /**
+     * adds a listener to the insert button
+     * @param a - action listener being assigned
+     */
     public void addInsertListener(ActionListener a){
         insertButton.addActionListener(a);
     }
@@ -128,7 +149,10 @@ public class AddView extends JFrame{
     // public void addReturnListener(ActionListener a){
     //     returnButton.addActionListener(a);
     // }
-
+    /**
+     * function used to display errors
+     * @param error - error being displayed
+     */
     public void errorMessage(String error){
         JOptionPane.showMessageDialog(this, error);
     }

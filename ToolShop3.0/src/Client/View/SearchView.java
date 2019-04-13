@@ -10,8 +10,9 @@ import java.awt.event.WindowAdapter;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-/**
- * SearchView
+/** 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
  */
 public class SearchView extends JFrame {
 
@@ -61,34 +62,53 @@ public class SearchView extends JFrame {
         add(mainPanel);
 
     }
-
+    /**
+     * a refresh button that refreshes the list of items after changes have beeen made
+     */
     public void refreshOptions(){
         inputField.setText("");
         dropdown.setSelectedItem("--choose one--");
     }
-
+    /**
+     * assigns a listener to the close button
+     * @param a - the window adapter being assigned
+     */ 
     public void addCloseListener(WindowAdapter a){
         this.addWindowListener(a);
     }
-
+    /**
+     * a function used to display errors
+     * @param error - the error to display
+     */
     public void errorMessage(String error){
         // errorLabel.setText(error);
         // errorLabel.setFont(new Font("Sans", Font.PLAIN, 20));
         JOptionPane.showMessageDialog(this, error);
     }
-
+    /**
+     * Assigns a listener to the submit button
+     * @param a - the listener being assigned 
+     */
     public void addSubmitListener(ActionListener a) {
         searchSubmitButton.addActionListener(a);
     }
-
+    /**
+     * assigns a listener to the drop down menu button
+     * @param a - the item listener being assisnged
+     */
     public void addDropdownListener(ItemListener a) {
         dropdown.addItemListener(a);
     }
-
+    /**
+     * gets input form the user and returns a string
+     */
     public String getInputText(){
         return inputField.getText();
     }
-
+    /**
+     * used to enable/disable the button
+     * @param f - boolean true for enable fasle for disable
+     */
     public void buttonState(boolean f){
         searchSubmitButton.setEnabled(f);
     }
