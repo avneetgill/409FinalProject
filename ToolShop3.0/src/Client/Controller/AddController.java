@@ -22,7 +22,7 @@ public class AddController{
 
     /**
      * Constructs an AddController object
-     * @param c The controller object that this object is linked with
+     * @param c The client object that this object is linked with
      */
     public AddController(Client c) {
         // super();

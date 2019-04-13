@@ -5,23 +5,47 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-/**
- * MainController
+/** 
+ * Controller for the Main ToolShopView GUI
+ * 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
  */
 public class MainController{
     
+    /**
+     * The inner Listener class that will be assigned to the gui elements for add items view
+     */
     private MyListener listener;
+
+    /**
+     * Controller object that connects all the Gui controller classes and lets them work together, and allows this class to access the GUIs. 
+     */
     public Client c;
 
+    /**
+     * string which indicate the status of the GUI, which item has been selected from the list
+     */
     public String selected;
+    
+    /**
+     * string which indicate the status of the GUI, list is being displayed, item or supplier
+     */
     public String itemOrSupplier;
     
+    /**
+     * Constructs a MainController object
+     * @param c The Client object that this object is linked with
+     */
     public MainController(Client c) {
         this.c = c;
         listener = new MyListener();
         addListeners();
     }
 
+    /**
+     * Inner class that is the listener for the Login view gui components. 
+     */
     class MyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -154,6 +178,9 @@ public class MainController{
         }
     }
 
+    /**
+     * Assigns the listener object to all the GUI components in login View GUI
+     */
     public void addListeners() {
         c.view.addSearchListener(listener);
         c.view.addListToolListener(listener);
@@ -168,10 +195,6 @@ public class MainController{
             public void valueChanged(ListSelectionEvent e) {
                 if(!e.getValueIsAdjusting()){
                     selected = c.view.textBox.getSelectedValue();
-
-                    // if(itemOrSupplier.equals("item")){
-                    //     c.view.changeButtonState(true);
-                    // }
 
                     if(selected != null){
                         // c.view.errorMessage(" xxxx " + selected);

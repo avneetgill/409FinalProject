@@ -40,7 +40,9 @@ public class Client {
     public OrderView orders;
 
     /**
-     * Constructs the client with the 
+     * Constructs the client with the port name and number of the server. Also initializes various views and readers/writers to be used. 
+     * @param port the port number to communicate with the server
+     * @param name the server's address
      */
     public Client(int port, String name) {// , MainController main, LoginController login, AddController add) {
         try {
@@ -58,13 +60,17 @@ public class Client {
         orders = new OrderView();
     }
 
+    /**
+     * Starts the GUI by making the login screen visible
+     */
     public void startGui() {
         login.setVisible(true);
     }
 
-    protected void addListeners() {
-    }
-
+    /**
+     * Activates the Client
+     * @param args command line arguments are not used
+     */
     public static void main(String[] args) {
         // to run this main: javac -d classes Client/Controller/Controller.java
         // java -cp
