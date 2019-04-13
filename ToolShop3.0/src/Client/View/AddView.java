@@ -113,6 +113,7 @@ public class AddView extends JFrame{
 
     /**
      * returns a name for the item from the user
+     * @return name
      */
     public String getName(){
         return field1.getText();
@@ -120,24 +121,28 @@ public class AddView extends JFrame{
 
     /**
      * returns a double for the price from the user
+     * @return price
      */
     public String getPrice(){
         return field2.getText();
     }
     /**
      * returns an int for the id frum the user
+     * @return id
      */
     public String getID(){
         return field3.getText();
     }
     /**
      * returns an int for the stock from the user
+     * @return stock
      */
     public String getStock(){
         return field4.getText();
     }
     /**
      * returns an int for the supplier id from the user
+     * @return supplier ID
      */
     public String getSupID(){
         return field5.getText();

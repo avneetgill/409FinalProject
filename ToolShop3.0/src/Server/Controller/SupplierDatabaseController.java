@@ -184,6 +184,8 @@ public class SupplierDatabaseController{
     }
     /**
      * the main function of the class, used at beginning to fill suppliers table with supplier from the text file
+     * @param args not used
+     * @throws SQLException if there is issues
      */
     public static void main(String[] args) throws SQLException{
         Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");

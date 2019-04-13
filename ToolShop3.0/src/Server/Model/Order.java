@@ -30,7 +30,7 @@ public class Order{
     /**
      * Creates a new OrderLine and adds it to the lines with the specified values.
      * @param itemId the itemId of the item being ordered
-     * @param itemToStrin2 the String conatining information about the item
+     * @param itemToString2 the String conatining information about the item
      * @throws IOException thrown if there is an issue with IO stream.
      */
     public void newOrder(int itemId, String itemToString2)throws IOException{

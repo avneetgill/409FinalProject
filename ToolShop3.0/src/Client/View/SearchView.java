@@ -109,6 +109,7 @@ public class SearchView extends JFrame {
     }
     /**
      * gets input form the user and returns a string
+     * @return input text
      */
     public String getInputText(){
         return inputField.getText();

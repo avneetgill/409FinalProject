@@ -386,7 +386,7 @@ public class ItemDatabaseController{
 
     /**
      * check if item alreayt exist 
-     * @param the item to be checked 
+     * @param itemId the item to be checked 
      * @return true if item already exists, false otherwise
      */
     public boolean itemAlreadyExists(int itemId){
