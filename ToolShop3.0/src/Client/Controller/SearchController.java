@@ -5,17 +5,35 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+/** 
+ * Controller for the Search item GUI
+ * 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
+ */
 public class SearchController{
     
-    // private MyListener listener;
-    public Controller c;
+    /**
+     * Controller object that connects all the Gui controller classes and lets them work together, and allows this class to access the GUIs. 
+     */
+    public Client c;
+
+    /**
+     * string which indicate the status of the GUI, which option has been selected from the dropdown menu in the search GUI 
+     */
     private String choice;
 
-    public SearchController(Controller c) {
+    /**
+     * Constructs a MainController object
+     * @param c The Client object that this object is linked with
+     */
+    public SearchController(Client c) {
         this.c = c;
         addListeners();
     }
-
+    /**
+     * Assigns the listener object to all the GUI components in login View GUI
+     */
     public void addListeners() {
         c.search.addSubmitListener(new ActionListener(){
             @Override

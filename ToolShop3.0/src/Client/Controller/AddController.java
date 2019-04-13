@@ -2,15 +2,29 @@ package Client.Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-/**
- * AddController
+/** 
+ * Controller for the Add items GUI
+ * 
+ * @author Shamin Rahman, Avneet Gill, Kelvin Tran
+ * @version 1.0
  */
 public class AddController{
     
+    /**
+     * The inner Listener class that will be assigned to the gui elements for add items view
+     */
     private MyListener listener;
-    public Controller c;
 
-    public AddController(Controller c) {
+    /**
+     * Controller object that connects all the Gui controller classes and lets them work together, and allows this class to access the GUIs. 
+     */
+    public Client c;
+
+    /**
+     * Constructs an AddController object
+     * @param c The client object that this object is linked with
+     */
+    public AddController(Client c) {
         // super();
         // c.setAdd(add);
         this.c = c;
@@ -18,6 +32,10 @@ public class AddController{
         addListeners();
     }
     
+    /**
+     * Shows the user the meaning of the error received in the socket when incorrectly trying to add an item. 
+     * @param error the error message sent by the Server to describe issues with the item trying to be added. 
+     */
     public void errorMeaning(String error){
         String toShow = "";
 
@@ -37,6 +55,9 @@ public class AddController{
         c.add.errorMessage(toShow);
     }
 
+    /**
+     * Inner class that is the listener for the Add view gui components. 
+     */
     class MyListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e){
@@ -92,6 +113,9 @@ public class AddController{
         }
     }
 
+    /**
+     * Assigns the listener object to all the GUI components in Add View GUI
+     */
     public void addListeners() {
         // c.add.addReturnListener(listener);
         c.add.addInsertListener(listener);
