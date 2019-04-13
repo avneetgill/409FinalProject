@@ -93,8 +93,10 @@ public class LoginDatabaseController{
         Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         LoginDatabaseController db = new LoginDatabaseController(myConn);
 
-        db.addData("TerryLund", "8002");
-        db.addData("PendiFud", "1998");
+        db.clearDatabase();
+
+        db.addData("JohnSmith", "8002");
+        db.addData("Yahoo", "1998");
 
         System.out.println("Logins reset");
     }

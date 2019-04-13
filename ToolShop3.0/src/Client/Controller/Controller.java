@@ -44,7 +44,7 @@ public class Controller {
         // to run this main: javac -d classes Client/Controller/Controller.java
         // java -cp classes;C:\class\ensf409\FinalProject\409FinalProject\FinalTool2.0\classes Client.Controller.Controller
 
-        // 10.12.140.162
+        // for network connection, put instead of localhost the ip address (ipv4) of the server computer
         Controller c = new Controller(9091, "localhost");
         
         AddController addController = new AddController(c);
