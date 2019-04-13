@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Random;
 
 /** 
+ * Class which handles the new orders for items, combining Orderlines to assemble a cohesive Order 
+ * 
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
@@ -27,8 +29,8 @@ public class Order{
 
     /**
      * Creates a new OrderLine and adds it to the lines with the specified values.
-     * @param i the item for which the orderline is being created.
-     * @param amount the amount of stock to be ordered.
+     * @param itemId the itemId of the item being ordered
+     * @param itemToStrin2 the String conatining information about the item
      * @throws IOException thrown if there is an issue with IO stream.
      */
     public void newOrder(int itemId, String itemToString2)throws IOException{
