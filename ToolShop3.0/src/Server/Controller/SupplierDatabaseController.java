@@ -4,11 +4,29 @@ import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.Scanner;
 
+/**
+ * class that deals with the supplier table in the database
+ * @author kelvin, shamin , avneet
+ * @since April 12 2019
+ */
 public class SupplierDatabaseController{
+    /**
+     * connection to the data base 
+     */
     Connection myConn;
+    /**
+     * string query used to communicate with the database 
+     */
     String query;
+    /**
+     * prepared statement for the database 
+     */
     PreparedStatement preStmt;
 
+    /**
+     * constructor for the class, that initializes variables to desired values
+     * @param conn the connection to the database 
+     */
     SupplierDatabaseController(Connection conn){
         try {
             myConn = conn;
@@ -17,6 +35,9 @@ public class SupplierDatabaseController{
         }
     }
 
+    /**
+     * populates the database 
+     */
     public void populateDatabase(){
         try {
             Scanner read = new Scanner(new File("suppliers.txt"));
@@ -43,6 +64,13 @@ public class SupplierDatabaseController{
         
     }
 
+    /**
+     * adds item to the database 
+     * @param id supplier id 
+     * @param name supplier name 
+     * @param contact supplier contact 
+     * @param address supplier address 
+     */
     public void addData(int id, String name, String contact, String address){
         try {
             query =  "INSERT INTO `suppliers` (`id`,`name`, `contact`, `address`)"
@@ -61,6 +89,9 @@ public class SupplierDatabaseController{
         }   
     }
 
+    /**
+     * clears the supplier table
+     */
     public void clearDatabase(){
         try{
             query = "DELETE FROM `suppliers`";
@@ -71,6 +102,10 @@ public class SupplierDatabaseController{
         }
     }
 
+    /**
+     * list all of the suppliers in the table
+     * @return the suppliers 
+     */
     public String listAll(){
         String query = "SELECT * FROM `suppliers`";
         try{
@@ -93,6 +128,11 @@ public class SupplierDatabaseController{
         return "something went wrong";
     }
 
+    /**
+     * checks if the given supplier exist 
+     * @param supId supplier id 
+     * @return returns true if it does, or false otherwise
+     */
     public boolean supplierExists(int supId){
         try{
             query = "SELECT * FROM `suppliers` WHERE `id` = ?";
@@ -108,10 +148,23 @@ public class SupplierDatabaseController{
         return true;
     }
 
+    /**
+     * retursn the following information in a string format 
+     * @param id supplier id 
+     * @param name supplier name 
+     * @param address supplier address 
+     * @param contact supplier contact 
+     * @return String containing all the information
+     */
     public String toString(int id, String name, String address, String contact){
         return "id: " + id + ", name: " +name+ ", address: " + address + ", contact: " + contact;
     }
 
+    /**
+     * returns the supplier name from the suppplier id 
+     * @param supId the supplier id for which to get name of
+     * @return name
+     */
     public String getSupplierName(int supId){
         try{
             query = "SELECT `name` FROM `suppliers` WHERE `id` = ?";// + itemId;
@@ -129,7 +182,9 @@ public class SupplierDatabaseController{
         }
         return null;
     }
-
+    /**
+     * the main function of the class, used at beginning to fill suppliers table with supplier from the text file
+     */
     public static void main(String[] args) throws SQLException{
         Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         SupplierDatabaseController db = new SupplierDatabaseController(myConn);

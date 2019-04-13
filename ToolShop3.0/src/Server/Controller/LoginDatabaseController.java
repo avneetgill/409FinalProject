@@ -1,11 +1,29 @@
 package Server.Controller;
 import java.sql.*;
 
+/**
+ * class that deals with the Logins table in the database
+ * @author kelvin, shamin , avneet
+ * @since April 12 2019
+ */
 public class LoginDatabaseController{
+    /**
+     * is the data base connection 
+     */
     Connection myConn;
+    /**
+     * string query used to communicate with the database 
+     */
     String query;
+    /**
+     * prepared statement for the data base 
+     */
     PreparedStatement preStmt;
 
+    /**
+     * class constructor used to intiallize variable to desired values 
+     * @param conn conncetion to the database
+     */
     public LoginDatabaseController(Connection conn){
         try {
             myConn = conn;
@@ -14,7 +32,12 @@ public class LoginDatabaseController{
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * inserts username and password 
+     * @param user the username 
+     * @param pass the password 
+     */
     public void addData(String user, String pass){
         try {
             query =  "INSERT INTO `logins` (`username`,`password`)"
@@ -30,7 +53,9 @@ public class LoginDatabaseController{
             e.printStackTrace();
         }   
     }
-
+    /**
+     * clears the logins table 
+     */
     public void clearDatabase(){
         try{
             query = "DELETE FROM `logins`";
@@ -41,6 +66,12 @@ public class LoginDatabaseController{
         }
     }
 
+    /**
+     * checks if the given user info is valid 
+     * @param user username of the person 
+     * @param pass password of the person 
+     * @return true if user is valid, false otherwise
+     */
     public boolean validateUser(String user, String pass){
         try{
             query = "SELECT * FROM `logins` WHERE `username` = ? AND `password` = ?";
@@ -58,37 +89,11 @@ public class LoginDatabaseController{
         return true;
     }
 
-    public int getStock(int itemId){
-        try{
-            query = "SELECT `stock` FROM `items` WHERE `id` = ?";// + itemId;
-            preStmt = myConn.prepareStatement(query);
-            preStmt.setInt(1, itemId);
-            // preStmt.execute();
-            ResultSet rs = preStmt.executeQuery();
-            if(!rs.next()){
-                return -1;
-            }
-            // rs.next();
-            return rs.getInt(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    public void setStock(int itemId, int newStock){
-        try{
-            query = "UPDATE `items` SET `stock` = ? WHERE `id` = ?";// + itemId;
-            preStmt = myConn.prepareStatement(query);
-            preStmt.setInt(1, newStock);
-            preStmt.setInt(2, itemId);
-            preStmt.execute();
-        }catch(SQLException e){
-            e.printStackTrace();
-            System.err.println("error setting stock");
-        }
-    }
-
+    /**
+     * login main menu 
+     * @param args value from command line 
+     * @throws SQLException if there is an issue with SQL database or queries 
+     */
     public static void main(String[] args) throws SQLException{
         Connection myConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/toolshop?user=root","root", "799228002");
         LoginDatabaseController db = new LoginDatabaseController(myConn);

@@ -49,7 +49,7 @@ public class Server {
     /**
      * The classes that deal with the different tables on the database. 
      */
-    private DatabaseController database;
+    private ItemDatabaseController database;
     private LoginDatabaseController loginDatabase;
     private SupplierDatabaseController supplierDatabase;
 
@@ -76,7 +76,7 @@ public class Server {
      * @throws IOException thrown if there is an issue with I/O. 
      */
     public void communicateClient()throws IOException{
-        database = new DatabaseController(myConn);
+        database = new ItemDatabaseController(myConn);
         loginDatabase = new LoginDatabaseController(myConn);
         supplierDatabase = new SupplierDatabaseController(myConn);
 

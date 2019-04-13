@@ -24,7 +24,7 @@ public class Shop implements Runnable{
     /**
      * Object which allows this class to communicate with the databse table of items. 
      */
-    private DatabaseController database;
+    private ItemDatabaseController database;
 
     /**
      * Object which allows this class to communicate with the databse table of logins. 
@@ -59,7 +59,7 @@ public class Shop implements Runnable{
      * @param supplierDb the database controller for the supplier table. 
      * @param socket the socket to communicate with the client. 
      */
-    public Shop(Order o, DatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, Socket socket){
+    public Shop(Order o, ItemDatabaseController db, LoginDatabaseController loginDb, SupplierDatabaseController supplierDb, Socket socket){
         order = o;
         socketIn = socket;
 
