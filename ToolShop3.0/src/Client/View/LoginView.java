@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 /** 
+ * Creates a gui that prompts the user to enter a username and password
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */

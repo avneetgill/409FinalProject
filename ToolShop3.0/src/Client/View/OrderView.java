@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 /** 
+ * creates a GUI that displays the current orders
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */

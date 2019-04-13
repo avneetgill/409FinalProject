@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 /** 
+ * Creates a gui that opens when the user is trying to search for an item - allows to search by id or name
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
