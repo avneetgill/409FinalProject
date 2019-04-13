@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import Server.Controller.*;
 
 /** 
+ * The class which acts as the main Shop, allowing the various classes on the server side to interface with the client side classses through the socket. 
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */

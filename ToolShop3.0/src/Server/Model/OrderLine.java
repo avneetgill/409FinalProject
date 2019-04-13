@@ -27,6 +27,9 @@ public class OrderLine{
      */
     private int orderID;
 
+    /**
+     * String containing info about the item being ordered
+     */
     private String itemToString2;
 
     /**
@@ -34,7 +37,7 @@ public class OrderLine{
      * @param i the item that is making the order.
      * @param d the Date that order was made.
      * @param id the id of the order.
-     * @param quantity the amount of stock that needs to be ordered. 
+     * @param itemToString2 String containing info about the item being ordered
      */
     public OrderLine(int i, Date d, int id, String itemToString2){
         date = d;
