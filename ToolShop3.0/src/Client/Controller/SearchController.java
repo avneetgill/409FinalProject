@@ -8,10 +8,10 @@ import java.awt.event.ItemListener;
 public class SearchController{
     
     // private MyListener listener;
-    public Controller c;
+    public Client c;
     private String choice;
 
-    public SearchController(Controller c) {
+    public SearchController(Client c) {
         this.c = c;
         addListeners();
     }

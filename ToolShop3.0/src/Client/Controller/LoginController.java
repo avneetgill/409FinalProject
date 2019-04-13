@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 public class LoginController {
     
     private MyListener listener;
-    public Controller c;
+    public Client c;
 
-    public LoginController(Controller c) {
+    public LoginController(Client c) {
         // c.setLogin(login);
         this.c = c;
         listener = new MyListener();

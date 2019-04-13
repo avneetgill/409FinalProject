@@ -11,12 +11,12 @@ import javax.swing.event.ListSelectionListener;
 public class MainController{
     
     private MyListener listener;
-    public Controller c;
+    public Client c;
 
     public String selected;
     public String itemOrSupplier;
     
-    public MainController(Controller c) {
+    public MainController(Client c) {
         this.c = c;
         listener = new MyListener();
         addListeners();

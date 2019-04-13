@@ -1,6 +1,6 @@
 1
 **********************************************
-Item description: Widgets
+Item description: Wog Wits
 Amount ordered: 50
 Supplier: Winork Manufacturing Inc.
 *********************************************
