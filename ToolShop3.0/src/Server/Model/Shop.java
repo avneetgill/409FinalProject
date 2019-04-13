@@ -141,12 +141,16 @@ public class Shop implements Runnable{
     }
 
     /**
-     * 
+     * sends the client the orders to be displayed
      */
     public void displayOrders(){
         sendString(order.toString());
     }
 
+    /**
+     * Takes login input from the client and compares them to the database of logins to make sure it is valid
+     * @throws IOException thrown if there is issue. 
+     */
     public void validateLogin()throws IOException{
         String user = in.readLine();
         String pass = in.readLine();
@@ -160,6 +164,10 @@ public class Shop implements Runnable{
         }
     }
     
+    /**
+     * deletes an item from the database based on the clients input
+     * @throws IOException thrown if there is issue
+     */
     public void deleteItem() throws IOException{
         String itemId = in.readLine();
         int id = -1;
@@ -173,6 +181,10 @@ public class Shop implements Runnable{
         database.deleteItem(id);
     }
 
+    /**
+     * decreases the stock of an item based on client input, creates a new order if it is required. 
+     * @throws IOException thrown if there is an issue
+     */
     public synchronized void decreaseQuantity() throws IOException{
         String itemId = in.readLine();
         int id = -1;
@@ -207,6 +219,10 @@ public class Shop implements Runnable{
         }
     }
 
+    /**
+     * searches for an item based on client input, sends the client item info or an error message if there is no such item. 
+     * @throws IOException thrown if there is an issue 
+     */
     public void search() throws IOException{
         String nameOrId = in.readLine();
         int id = -1;
@@ -232,6 +248,11 @@ public class Shop implements Runnable{
         }
     }
 
+    /**
+     * makes a new order for an item and restocks item to 50 if they fall below 40. 
+     * @param itemId the id of the item to be ordered more of
+     * @throws IOException thrown if there is an issue. 
+     */
     public void orderMore(int itemId) throws IOException{
         int itemStock = database.getStock(itemId);
         int amount = 50 - itemStock;
@@ -247,8 +268,8 @@ public class Shop implements Runnable{
     }
 
     /**
-     * Adds an item to the inventory, read from the input stream, prompting the
-     * user.  
+     * Adds an item based on client input, but return an error through the socket if conditions arent met. 
+     * @throws IOException thrown if there is an issue. 
      */
     public void addItem()throws IOException{
         String temp, name = ""; int id = -1; int stock = -1; int supID = -1; double price = -1;
@@ -300,11 +321,17 @@ public class Shop implements Runnable{
         sendString(database.listAll());
     }
 
+    /**
+     * sends string with all the items on the database. 
+     */
     public void listAllSuppliers(){
         String list = supplierDb.listAll();
         sendString(list);
     }
 
+    /**
+     * The run method which makes this class a runnable, calls the menuRunner() method. 
+     */
     @Override
     public void run() {
         try{
