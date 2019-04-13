@@ -3,6 +3,7 @@ package Server.Model;
 import java.util.Date;
 
 /** 
+ * One line of order
  * @author Shamin Rahman, Avneet Gill, Kelvin Tran
  * @version 1.0
  */
